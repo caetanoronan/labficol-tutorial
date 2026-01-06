@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tutorial LABFICOL — Oceanografia & Ficologia</title>
+    <style>
+      :root { --bg:#0f172a; --fg:#e2e8f0; --accent:#22c55e; --muted:#94a3b8; }
+      body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: var(--bg); color: var(--fg); }
+      .wrap { max-width: 900px; margin: 0 auto; padding: 32px; }
+      h1 { font-size: 2rem; margin: 0 0 16px; }
+      p { color: var(--muted); }
+      .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 24px; }
+      .card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 16px; }
+      .card h2 { font-size: 1.1rem; margin: 0 0 8px; }
+      .card ul { margin: 6px 0 0; padding-left: 18px; }
+      a { color: var(--accent); text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      footer { margin-top: 32px; font-size: 0.9rem; color: var(--muted); }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>Tutorial LABFICOL — Oceanografia & Ficologia</h1>
+      <p>Bem-vindo! Este site resume os módulos e links principais do tutorial. O conteúdo detalhado está no repositório GitHub (atualize o link abaixo após publicar).</p>
+      <p><strong>Repositório:</strong> <a href="https://github.com/caetanoronan/labficol-tutorial" id="repoLink">https://github.com/caetanoronan/labficol-tutorial</a></p>
+
+      <div class="grid">
+        <div class="card">
+          <h2>Nível Iniciante</h2>
+          <ul>
+            <li><a href="../0-Fundamentos/01-Introducao.md">Fundamentos</a></li>
+            <li><a href="../1-Python-Essencial/01-Sintaxe-Basica.md">Python Essencial</a></li>
+            <li><a href="../2-Analise-Geoespacial/01-GeoJSON-Basico.md">Análise Geoespacial</a></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2>Visualização Web</h2>
+          <ul>
+            <li><a href="../3-Visualizacao-Web/01-HTML5-Basico.md">HTML5 Básico</a></li>
+            <li><a href="../3-Visualizacao-Web/03-Leaflet-Mapas.md">Leaflet — Mapas</a></li>
+            <li><a href="../3-Visualizacao-Web/04-Git-GitHub-Pages.md">Publicar com GitHub Pages</a></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2>Casos Práticos</h2>
+          <ul>
+            <li><a href="../4-Casos-Praticos/01-Monitoramento-Costeiro.md">Monitoramento Costeiro</a></li>
+            <li><a href="../4-Casos-Praticos/03-Dashboard-Web-Completo.md">Dashboard Web Completo</a></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2>Avançado</h2>
+          <ul>
+            <li><a href="../5-Estatistica-Aplicada/01-Estatistica-Descritiva.md">Estatística Aplicada</a></li>
+            <li><a href="../6-Machine-Learning/02-Classificacao-Avancada.md">Classificação Avançada</a></li>
+            <li><a href="../6-Machine-Learning/03-Clusterizacao-PCA.md">Clusterização & PCA</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <footer>
+        <p>Após ativar o GitHub Pages (branch <code>main</code>, pasta <code>docs/</code>), este índice ficará disponível publicamente.</p>
+      </footer>
+    </div>
+    <script>
+      // Opcional: preencher automaticamente repoLink se hospedado no GitHub Pages
+      (function(){
+        try {
+          const host = location.hostname.toLowerCase();
+          const el = document.getElementById('repoLink');
+          if (host.includes('github.io')) {
+            const org = host.split('.')[0];
+            el.href = `https://github.com/${org}/NOME-DO-REPO`;
+            el.textContent = el.href;
+          }
+        } catch {}
+      })();
+    </script>
+  </body>
+</html>
