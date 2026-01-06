@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>📈 Correlação e Regressão</title>
+    <link rel="preload" href="..\assets/theme.css" as="style" />
+    <link rel="stylesheet" href="..\assets/theme.css" />
+  </head>
+  <body>
+    <a href="#conteudo" class="skip-link">Pular para conteúdo</a>
+    <header role="banner">
+      <div class="wrap">
+        <h1>📈 Correlação e Regressão</h1>
+        <nav aria-label="Navegação">
+          <a href="..\index.html">Início</a>
+          <a href="https://github.com/caetanoronan/labficol-tutorial">Repositório</a>
+          <a href="https://caetanoronan.github.io/labficol-tutorial/">Site</a>
+        </nav>
+        <div class="controls">
+          <button id="toggleHC" aria-pressed="false" aria-label="Alternar alto contraste">Alto contraste</button>
+          <button id="toggleBT" aria-pressed="false" aria-label="Alternar texto grande">Texto grande</button>
+          <button id="toggleLM" aria-pressed="false" aria-label="Reduzir movimento">Menos movimento</button>
+        </div>
+      </div>
+    </header>
+    <main id="conteudo" role="main">
+      <article class="md-content" aria-label="Conteúdo">
+        <h1 id="correlacao-e-regressao">📈 Correlação e Regressão</h1>
+<h2 id="objetivo-da-licao">🎯 Objetivo da Lição</h2>
+<p>Entender relações entre variáveis e criar modelos simples para previsão usando <strong>correlação</strong> e <strong>regressão</strong>.</p>
+<p>— Quando duas variáveis variam juntas, há correlação.
+— Regressão estima como uma variável explica outra.</p>
+<hr />
+<h2 id="correlacao-pearson">🔗 Correlação (Pearson)</h2>
+<p>Mede relação linear entre duas variáveis (−1 a +1).</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Exemplo: biomassa vs temperatura</span>
+<span class="n">biomassa</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">245.3</span><span class="p">,</span> <span class="mf">198.5</span><span class="p">,</span> <span class="mf">302.1</span><span class="p">,</span> <span class="mf">275.4</span><span class="p">,</span> <span class="mf">310.8</span><span class="p">,</span> <span class="mf">285.2</span><span class="p">,</span> <span class="mf">320.5</span><span class="p">,</span> <span class="mf">295.7</span><span class="p">,</span> <span class="mf">260.8</span><span class="p">,</span> <span class="mf">280.3</span><span class="p">])</span>
+<span class="n">temperatura</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">24.5</span><span class="p">,</span> <span class="mf">26.1</span><span class="p">,</span> <span class="mf">22.3</span><span class="p">,</span> <span class="mf">21.5</span><span class="p">,</span> <span class="mf">19.8</span><span class="p">,</span> <span class="mf">18.2</span><span class="p">,</span> <span class="mf">17.5</span><span class="p">,</span> <span class="mf">18.0</span><span class="p">,</span> <span class="mf">19.5</span><span class="p">,</span> <span class="mf">21.0</span><span class="p">])</span>
+
+<span class="c1"># Correlação de Pearson</span>
+<span class="n">corr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">biomassa</span><span class="p">,</span> <span class="n">temperatura</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Correlação (Pearson): </span><span class="si">{</span><span class="n">corr</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Interpretação:
+- |r| ≥ 0.7 → forte
+- 0.4–0.7 → moderada
+- 0.2–0.4 → fraca</p>
+<hr />
+<h2 id="matriz-de-correlacao">📊 Matriz de Correlação</h2>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Dataset de exemplo</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">dados</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;biomassa_g&#39;</span><span class="p">:</span> <span class="n">biomassa</span><span class="p">,</span>
+    <span class="s1">&#39;temperatura_c&#39;</span><span class="p">:</span> <span class="n">temperatura</span><span class="p">,</span>
+    <span class="s1">&#39;salinidade_psu&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">35.0</span><span class="p">,</span> <span class="mf">34.5</span><span class="p">,</span> <span class="mf">35.2</span><span class="p">,</span> <span class="mf">35.3</span><span class="p">,</span> <span class="mf">35.4</span><span class="p">,</span> <span class="mf">35.5</span><span class="p">,</span> <span class="mf">35.6</span><span class="p">,</span> <span class="mf">35.4</span><span class="p">,</span> <span class="mf">35.2</span><span class="p">,</span> <span class="mf">35.0</span><span class="p">],</span>
+    <span class="s1">&#39;profundidade_m&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">3.2</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">,</span> <span class="mf">3.6</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">,</span> <span class="mf">3.9</span><span class="p">,</span> <span class="mf">3.7</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span>
+
+<span class="n">corr_mtx</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">numeric_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">corr_mtx</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">corr_mtx</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Matriz de Correlação&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;matriz_correlacao.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+
+<hr />
+<h2 id="regressao-linear-simples">📉 Regressão Linear Simples</h2>
+<p>Modelo: y = a + b·x</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span><span class="p">,</span> <span class="n">mean_squared_error</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">temperatura</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">biomassa</span>
+
+<span class="n">modelo</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">modelo</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Coeficientes</span>
+<span class="n">intercepto</span> <span class="o">=</span> <span class="n">modelo</span><span class="o">.</span><span class="n">intercept_</span>
+<span class="n">coef</span> <span class="o">=</span> <span class="n">modelo</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Modelo: biomassa = </span><span class="si">{</span><span class="n">intercepto</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> + </span><span class="si">{</span><span class="n">coef</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">·temperatura&quot;</span><span class="p">)</span>
+
+<span class="c1"># Avaliação</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">modelo</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R²: </span><span class="si">{</span><span class="n">r2</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> | RMSE: </span><span class="si">{</span><span class="n">rmse</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">g&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Visualização:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">temperatura</span><span class="p">,</span> <span class="n">biomassa</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temperatura</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="s1">&#39;r--&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Temperatura (°C)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Biomassa (g)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Regressão Linear: Biomassa vs Temperatura&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;regressao_simples.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+
+<hr />
+<h2 id="regressao-multipla">📈 Regressão Múltipla</h2>
+<p>Várias variáveis explicam y.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;temperatura_c&#39;</span><span class="p">,</span> <span class="s1">&#39;salinidade_psu&#39;</span><span class="p">,</span> <span class="s1">&#39;profundidade_m&#39;</span><span class="p">]]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;biomassa_g&#39;</span><span class="p">]</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">modelo</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">modelo</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">coeficientes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">modelo</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Coeficientes:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">coeficientes</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="c1"># Avaliação</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">modelo</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R² (teste): </span><span class="si">{</span><span class="n">r2</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> | RMSE: </span><span class="si">{</span><span class="n">rmse</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">g&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="cuidados-comuns">⚠️ Cuidados Comuns</h2>
+<ul>
+<li>Correlação ≠ causalidade</li>
+<li>Verificar outliers e não-linearidade</li>
+<li>Normalizar variáveis com escalas muito diferentes</li>
+<li>Usar validação (train/test ou cross-validation)</li>
+</ul>
+<hr />
+<h2 id="checklist">🎓 Checklist</h2>
+<ul>
+<li>[ ] Calculei correlação entre variáveis</li>
+<li>[ ] Interpretei matriz de correlação</li>
+<li>[ ] Modelei regressão simples</li>
+<li>[ ] Modelei regressão múltipla</li>
+<li>[ ] Avaliei R² e RMSE</li>
+</ul>
+<p>— Próxima: Visualização estatística com Seaborn e Matplotlib (opcional).</p>
+      </article>
+    </main>
+    <footer role="contentinfo">
+      <p>Gerado automaticamente em 06/01/2026 16:10. Paleta: ColorBrewer BuGn.</p>
+    </footer>
+    <script src="..\assets/site.js"></script>
+  </body>
+</html>

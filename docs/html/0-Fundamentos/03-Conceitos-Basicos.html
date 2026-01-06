@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>🧠 Conceitos Básicos de Programação</title>
+    <link rel="preload" href="..\assets/theme.css" as="style" />
+    <link rel="stylesheet" href="..\assets/theme.css" />
+  </head>
+  <body>
+    <a href="#conteudo" class="skip-link">Pular para conteúdo</a>
+    <header role="banner">
+      <div class="wrap">
+        <h1>🧠 Conceitos Básicos de Programação</h1>
+        <nav aria-label="Navegação">
+          <a href="..\index.html">Início</a>
+          <a href="https://github.com/caetanoronan/labficol-tutorial">Repositório</a>
+          <a href="https://caetanoronan.github.io/labficol-tutorial/">Site</a>
+        </nav>
+        <div class="controls">
+          <button id="toggleHC" aria-pressed="false" aria-label="Alternar alto contraste">Alto contraste</button>
+          <button id="toggleBT" aria-pressed="false" aria-label="Alternar texto grande">Texto grande</button>
+          <button id="toggleLM" aria-pressed="false" aria-label="Reduzir movimento">Menos movimento</button>
+        </div>
+      </div>
+    </header>
+    <main id="conteudo" role="main">
+      <article class="md-content" aria-label="Conteúdo">
+        <h1 id="conceitos-basicos-de-programacao">🧠 Conceitos Básicos de Programação</h1>
+<h2 id="o-que-e-programacao">O que é Programação?</h2>
+<p><strong>Programação</strong> é dar instruções ao computador em uma linguagem que ele entende.</p>
+<h3 id="analogia-com-a-vida-real">Analogia com a Vida Real</h3>
+<div class="codehilite"><pre><span></span><code>PESSOAS                          COMPUTADORES
+├─ Entende português            ├─ Entende Python, JavaScript, etc
+├─ Segue instruções              ├─ Executa código
+├─ Toma decisões                 ├─ Segue lógica
+└─ Usa ferramentas               └─ Usa bibliotecas
+</code></pre></div>
+
+<hr />
+<h2 id="linguagens-de-programacao">🔤 Linguagens de Programação</h2>
+<p>Assim como temos português, inglês, espanhol...
+Temos linguagens de programação! </p>
+<h3 id="as-principais-para-biologiaoceanografia">As principais para Biologia/Oceanografia:</h3>
+<div class="codehilite"><pre><span></span><code>🐍 Python      → Análise de dados (MELHOR PARA COMEÇAR)
+🌐 JavaScript  → Mapas interativos web
+📊 R           → Estatística avançada
+🗺️ SQL         → Bancos de dados
+</code></pre></div>
+
+<p><strong>Você vai aprender:</strong> Python → JavaScript → GeoJSON/SQL</p>
+<hr />
+<h2 id="informacoes-basicas-bits-bytes">💾 Informações Básicas (Bits &amp; Bytes)</h2>
+<p>Antes de entender programação, você precisa entender como computadores armazenam dados.</p>
+<h3 id="a-unidade-mais-pequena-bit">A Unidade Mais Pequena: Bit</h3>
+<div class="codehilite"><pre><span></span><code><span class="mf">1</span><span class="w"> </span><span class="n">bit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="w"> </span><span class="n">ou</span><span class="w"> </span><span class="mf">1</span>
+<span class="w">        </span><span class="n">Falso</span><span class="w"> </span><span class="n">ou</span><span class="w"> </span><span class="n">Verdadeiro</span>
+<span class="w">        </span><span class="n">Desligado</span><span class="w"> </span><span class="n">ou</span><span class="w"> </span><span class="n">Ligado</span>
+</code></pre></div>
+
+<h3 id="unidades-de-armazenamento">Unidades de Armazenamento</h3>
+<div class="codehilite"><pre><span></span><code><span class="mf">1</span><span class="w"> </span><span class="n">Byte</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="mf">8</span><span class="w"> </span><span class="n">bits</span><span class="w">                    </span><span class="p">(</span><span class="n">caractere</span><span class="p">)</span>
+<span class="mf">1</span><span class="w"> </span><span class="n">Kilobyte</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mf">1.024</span><span class="w"> </span><span class="n">bytes</span><span class="w">              </span><span class="p">(</span><span class="err">~</span><span class="mf">1</span><span class="w"> </span><span class="n">página</span><span class="p">)</span>
+<span class="mf">1</span><span class="w"> </span><span class="n">Megabyte</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mf">1.024</span><span class="w"> </span><span class="n">KB</span><span class="w">                  </span><span class="p">(</span><span class="err">~</span><span class="n">música</span><span class="p">)</span>
+<span class="mf">1</span><span class="w"> </span><span class="n">Gigabyte</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mf">1.024</span><span class="w"> </span><span class="n">MB</span><span class="w">                  </span><span class="p">(</span><span class="err">~</span><span class="n">filme</span><span class="p">)</span>
+<span class="mf">1</span><span class="w"> </span><span class="n">Terabyte</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mf">1.024</span><span class="w"> </span><span class="n">GB</span><span class="w">                  </span><span class="p">(</span><span class="err">~</span><span class="n">biblioteca</span><span class="p">)</span>
+</code></pre></div>
+
+<p><strong>Exemplo real:</strong>
+- Uma foto do microscópio: ~5 MB
+- Datasets de pesquisa: 100 MB a 10 GB
+- Seu computador: 256 GB a 1 TB</p>
+<hr />
+<h2 id="tipos-de-dados-o-que-o-computador-armazena">📊 Tipos de Dados (O Que o Computador Armazena)</h2>
+<h3 id="1-numeros-inteiros-int">1. Números Inteiros (int)</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">idade</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="n">quantidade</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">profundidade</span> <span class="o">=</span> <span class="o">-</span><span class="mi">500</span>  <span class="c1"># negativo é permitido</span>
+</code></pre></div>
+
+<h3 id="2-numeros-decimais-float">2. Números Decimais (float)</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">temperatura</span> <span class="o">=</span> <span class="mf">22.5</span>
+<span class="n">salinidade</span> <span class="o">=</span> <span class="mf">35.0</span>
+<span class="n">pH</span> <span class="o">=</span> <span class="mf">7.8</span>
+</code></pre></div>
+
+<h3 id="3-texto-string">3. Texto (string)</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">nome</span> <span class="o">=</span> <span class="s2">&quot;Caetano Ronan&quot;</span>
+<span class="n">especie</span> <span class="o">=</span> <span class="s2">&quot;Ulva lactuca&quot;</span>
+<span class="n">localizacao</span> <span class="o">=</span> <span class="s2">&quot;Praia dos Ingleses&quot;</span>
+</code></pre></div>
+
+<h3 id="4-verdadeirofalso-bool">4. Verdadeiro/Falso (bool)</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">coletado</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">analisado</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">valido</span> <span class="o">=</span> <span class="kc">True</span>
+</code></pre></div>
+
+<h3 id="5-listas-collections">5. Listas (collections)</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">especies</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Ulva lactuca&quot;</span><span class="p">,</span> <span class="s2">&quot;Gracilaria&quot;</span><span class="p">,</span> <span class="s2">&quot;Sargassum&quot;</span><span class="p">]</span>
+<span class="n">temperaturas</span> <span class="o">=</span> <span class="p">[</span><span class="mf">22.5</span><span class="p">,</span> <span class="mf">23.1</span><span class="p">,</span> <span class="mf">22.8</span><span class="p">]</span>
+<span class="n">dados_mistos</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;espécie&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="mf">22.5</span><span class="p">]</span>
+</code></pre></div>
+
+<h3 id="6-dicionarios-dados-com-rotulo">6. Dicionários (dados com rótulo)</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">amostra</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;especie&quot;</span><span class="p">:</span> <span class="s2">&quot;Ulva lactuca&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;profundidade&quot;</span><span class="p">:</span> <span class="mf">5.2</span><span class="p">,</span>
+    <span class="s2">&quot;temperatura&quot;</span><span class="p">:</span> <span class="mf">22.5</span><span class="p">,</span>
+    <span class="s2">&quot;valida&quot;</span><span class="p">:</span> <span class="kc">True</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<hr />
+<h2 id="estruturas-de-controle">🔀 Estruturas de Controle</h2>
+<h3 id="1-sequencia">1. Sequência</h3>
+<p>Executar linhas uma por uma:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Linha 1</span>
+<span class="n">nome</span> <span class="o">=</span> <span class="s2">&quot;Oceanógrafo&quot;</span>
+
+<span class="c1"># Linha 2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">nome</span><span class="p">)</span>  <span class="c1"># Printa: &quot;Oceanógrafo&quot;</span>
+
+<span class="c1"># Linha 3</span>
+<span class="n">profissao</span> <span class="o">=</span> <span class="s2">&quot;Pesquisador&quot;</span>
+</code></pre></div>
+
+<h3 id="2-condicao-ifelse">2. Condição (if/else)</h3>
+<p>Tomar decisões:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">temperatura</span> <span class="o">=</span> <span class="mf">22.5</span>
+
+<span class="k">if</span> <span class="n">temperatura</span> <span class="o">&gt;</span> <span class="mi">25</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🌞 Água quente&quot;</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">temperatura</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🌤️ Temperatura ideal para coleta&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;❄️ Água fria&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Resultado: "🌤️ Temperatura ideal para coleta"</p>
+<h3 id="3-repeticao-loops">3. Repetição (loops)</h3>
+<p>Fazer algo múltiplas vezes:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">especies</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Ulva&quot;</span><span class="p">,</span> <span class="s2">&quot;Gracilaria&quot;</span><span class="p">,</span> <span class="s2">&quot;Sargassum&quot;</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">especie</span> <span class="ow">in</span> <span class="n">especies</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Analisando: </span><span class="si">{</span><span class="n">especie</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Resultado:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">Analisando</span><span class="o">:</span><span class="w"> </span><span class="n">Ulva</span>
+<span class="n">Analisando</span><span class="o">:</span><span class="w"> </span><span class="n">Gracilaria</span>
+<span class="n">Analisando</span><span class="o">:</span><span class="w"> </span><span class="n">Sargassum</span>
+</code></pre></div>
+
+<hr />
+<h2 id="funcoes-reutilizar-codigo">🛠️ Funções (Reutilizar Código)</h2>
+<p>Função = bloco de código que pode ser usado várias vezes.</p>
+<h3 id="exemplo-1-funcao-simples">Exemplo 1: Função Simples</h3>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">saudar</span><span class="p">(</span><span class="n">nome</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Olá, </span><span class="si">{</span><span class="n">nome</span><span class="si">}</span><span class="s2">! Bem-vindo à Oceanografia!&quot;</span>
+
+<span class="c1"># Usar a função</span>
+<span class="n">msg</span> <span class="o">=</span> <span class="n">saudar</span><span class="p">(</span><span class="s2">&quot;Caetano&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>  <span class="c1"># &quot;Olá, Caetano! Bem-vindo à Oceanografia!&quot;</span>
+</code></pre></div>
+
+<h3 id="exemplo-2-funcao-para-analise">Exemplo 2: Função para Análise</h3>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">calcular_media_temperatura</span><span class="p">(</span><span class="n">temperaturas</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calcula a temperatura média&quot;&quot;&quot;</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">temperaturas</span><span class="p">)</span>
+    <span class="n">quantidade</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">temperaturas</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">total</span> <span class="o">/</span> <span class="n">quantidade</span>
+
+<span class="c1"># Dados de coleta</span>
+<span class="n">temps</span> <span class="o">=</span> <span class="p">[</span><span class="mf">22.5</span><span class="p">,</span> <span class="mf">23.1</span><span class="p">,</span> <span class="mf">22.8</span><span class="p">,</span> <span class="mf">23.4</span><span class="p">]</span>
+<span class="n">media</span> <span class="o">=</span> <span class="n">calcular_media_temperatura</span><span class="p">(</span><span class="n">temps</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Temperatura média: </span><span class="si">{</span><span class="n">media</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°C&quot;</span><span class="p">)</span>  <span class="c1"># 22.95°C</span>
+</code></pre></div>
+
+<h3 id="exemplo-3-funcao-com-multiplas-operacoes">Exemplo 3: Função com Múltiplas Operações</h3>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">analisar_amostra</span><span class="p">(</span><span class="n">especie</span><span class="p">,</span> <span class="n">profundidade</span><span class="p">,</span> <span class="n">temperatura</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Analisa uma amostra de coleta&quot;&quot;&quot;</span>
+
+    <span class="c1"># Verificação</span>
+    <span class="k">if</span> <span class="n">profundidade</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;❌ Profundidade inválida&quot;</span>
+
+    <span class="c1"># Análise</span>
+    <span class="k">if</span> <span class="n">temperatura</span> <span class="o">&gt;</span> <span class="mi">25</span><span class="p">:</span>
+        <span class="n">condicao</span> <span class="o">=</span> <span class="s2">&quot;quente&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">condicao</span> <span class="o">=</span> <span class="s2">&quot;fria&quot;</span>
+
+    <span class="c1"># Resultado</span>
+    <span class="n">resultado</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;especie&quot;</span><span class="p">:</span> <span class="n">especie</span><span class="p">,</span>
+        <span class="s2">&quot;profundidade&quot;</span><span class="p">:</span> <span class="n">profundidade</span><span class="p">,</span>
+        <span class="s2">&quot;condicao&quot;</span><span class="p">:</span> <span class="n">condicao</span><span class="p">,</span>
+        <span class="s2">&quot;valida&quot;</span><span class="p">:</span> <span class="kc">True</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">resultado</span>
+
+<span class="c1"># Usar função</span>
+<span class="n">amostra</span> <span class="o">=</span> <span class="n">analisar_amostra</span><span class="p">(</span><span class="s2">&quot;Ulva lactuca&quot;</span><span class="p">,</span> <span class="mf">5.2</span><span class="p">,</span> <span class="mf">22.5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">amostra</span><span class="p">)</span>
+<span class="c1"># {&#39;especie&#39;: &#39;Ulva lactuca&#39;, &#39;profundidade&#39;: 5.2, </span>
+<span class="c1">#  &#39;condicao&#39;: &#39;fria&#39;, &#39;valida&#39;: True}</span>
+</code></pre></div>
+
+<hr />
+<h2 id="variaveis-conteineres-de-informacao">📚 Variáveis (Contêineres de Informação)</h2>
+<p>Variáveis são "caixas" que armazenam informações.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Criar variável</span>
+<span class="n">nome_pesquisador</span> <span class="o">=</span> <span class="s2">&quot;Caetano&quot;</span>
+<span class="n">anos_experiencia</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="c1"># Modificar variável</span>
+<span class="n">anos_experiencia</span> <span class="o">=</span> <span class="mi">6</span>
+
+<span class="c1"># Usar variável</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">nome_pesquisador</span><span class="si">}</span><span class="s2"> tem </span><span class="si">{</span><span class="n">anos_experiencia</span><span class="si">}</span><span class="s2"> anos de experiência&quot;</span><span class="p">)</span>
+<span class="c1"># Resultado: &quot;Caetano tem 6 anos de experiência&quot;</span>
+</code></pre></div>
+
+<h3 id="nomes-de-variaveis-regras">Nomes de Variáveis (Regras)</h3>
+<p>✅ Bom:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">temperatura_media</span> <span class="o">=</span> <span class="mf">22.5</span>
+<span class="n">especie_coletada</span> <span class="o">=</span> <span class="s2">&quot;Ulva&quot;</span>
+<span class="n">profundidade_m</span> <span class="o">=</span> <span class="mi">10</span>
+</code></pre></div>
+
+<p>❌ Ruim:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="mf">22.5</span>              <span class="c1"># muito genérico</span>
+<span class="n">temperatura</span> <span class="n">média</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># não use espaço</span>
+<span class="mi">9</span><span class="n">temperatura</span> <span class="o">=</span> <span class="mi">5</span>      <span class="c1"># não comece com número</span>
+</code></pre></div>
+
+<hr />
+<h2 id="operadores-operacoes-matematicas">🔗 Operadores (Operações Matemáticas)</h2>
+<h3 id="aritmeticos">Aritméticos</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="n">soma</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>        <span class="c1"># 13</span>
+<span class="n">subtracao</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span>   <span class="c1"># 7</span>
+<span class="n">multiplicacao</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>  <span class="c1"># 30</span>
+<span class="n">divisao</span> <span class="o">=</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>     <span class="c1"># 3.333...</span>
+<span class="n">inteira</span> <span class="o">=</span> <span class="n">a</span> <span class="o">//</span> <span class="n">b</span>    <span class="c1"># 3 (sem decimais)</span>
+<span class="n">resto</span> <span class="o">=</span> <span class="n">a</span> <span class="o">%</span> <span class="n">b</span>       <span class="c1"># 1 (10 dividido por 3 deixa resto 1)</span>
+<span class="n">potencia</span> <span class="o">=</span> <span class="n">a</span> <span class="o">**</span> <span class="n">b</span>   <span class="c1"># 1000 (10 ao cubo)</span>
+</code></pre></div>
+
+<h3 id="comparacao-resultado-e-true-ou-false">Comparação (resultado é True ou False)</h3>
+<div class="codehilite"><pre><span></span><code><span class="mi">10</span> <span class="o">&gt;</span> <span class="mi">5</span>      <span class="c1"># True</span>
+<span class="mi">10</span> <span class="o">&lt;</span> <span class="mi">5</span>      <span class="c1"># False</span>
+<span class="mi">10</span> <span class="o">==</span> <span class="mi">10</span>    <span class="c1"># True (igual)</span>
+<span class="mi">10</span> <span class="o">!=</span> <span class="mi">5</span>     <span class="c1"># True (diferente)</span>
+<span class="mi">10</span> <span class="o">&gt;=</span> <span class="mi">10</span>    <span class="c1"># True (maior ou igual)</span>
+</code></pre></div>
+
+<h3 id="logicos">Lógicos</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">temperatura</span> <span class="o">=</span> <span class="mf">22.5</span>
+<span class="n">profundidade</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="c1"># AND (e)</span>
+<span class="k">if</span> <span class="n">temperatura</span> <span class="o">&gt;</span> <span class="mi">20</span> <span class="ow">and</span> <span class="n">profundidade</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Condições ideais de coleta&quot;</span><span class="p">)</span>
+
+<span class="c1"># OR (ou)</span>
+<span class="k">if</span> <span class="n">temperatura</span> <span class="o">&lt;</span> <span class="mi">15</span> <span class="ow">or</span> <span class="n">temperatura</span> <span class="o">&gt;</span> <span class="mi">28</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;❌ Temperatura fora do ideal&quot;</span><span class="p">)</span>
+
+<span class="c1"># NOT (não)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">profundidade</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Profundidade aceitável&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="importar-bibliotecas-usar-ferramentas">📁 Importar Bibliotecas (Usar Ferramentas)</h2>
+<p>Bibliotecas são códigos prontos que outras pessoas criaram.</p>
+<h3 id="o-que-e-uma-biblioteca">O que é uma Biblioteca?</h3>
+<div class="codehilite"><pre><span></span><code>Imagine que programação é receita de bolo.
+Uma biblioteca é um livro de receitas pronto!
+</code></pre></div>
+
+<h3 id="importar-bibliotecas">Importar Bibliotecas</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Importar tudo</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+
+<span class="c1"># Usar função</span>
+<span class="n">dados</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dados</span><span class="p">))</span>  <span class="c1"># 3.0</span>
+
+<span class="c1"># Importar com apelido (mais prático)</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">dados</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dados</span><span class="p">))</span>  <span class="c1"># 3.0</span>
+
+<span class="c1"># Importar função específica</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">pi</span>
+<span class="n">resultado</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>  <span class="c1"># 4.0</span>
+</code></pre></div>
+
+<h3 id="bibliotecas-que-voce-usara">Bibliotecas Que Você Usará</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Análise de Dados</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>      <span class="c1"># Tabelas/DataFrames</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>       <span class="c1"># Matrizes/Arrays</span>
+
+<span class="c1"># Visualização</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>  <span class="c1"># Gráficos</span>
+<span class="kn">import</span> <span class="nn">folium</span>                     <span class="c1"># Mapas</span>
+
+<span class="c1"># Geoespacial</span>
+<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>  <span class="c1"># Dados com geografia</span>
+<span class="kn">from</span> <span class="nn">shapely</span> <span class="kn">import</span> <span class="n">Point</span><span class="p">,</span> <span class="n">Polygon</span>  <span class="c1"># Geometrias</span>
+
+<span class="c1"># Web</span>
+<span class="kn">import</span> <span class="nn">requests</span>  <span class="c1"># Buscar dados na internet</span>
+</code></pre></div>
+
+<hr />
+<h2 id="pensamento-algoritmico">💡 Pensamento Algorítmico</h2>
+<p>Um <strong>algoritmo</strong> é uma série de passos para resolver um problema.</p>
+<h3 id="exemplo-como-fazer-uma-coleta-de-dados">Exemplo: Como Fazer Uma Coleta de Dados?</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">ALGORITMO</span><span class="o">:</span><span class="w"> </span><span class="n">Coleta</span><span class="w"> </span><span class="n">de</span><span class="w"> </span><span class="n">Fitoplâncton</span>
+
+<span class="n">PASSO</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="w"> </span><span class="n">Chegar</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">local</span><span class="w"> </span><span class="n">de</span><span class="w"> </span><span class="n">coleta</span>
+<span class="n">PASSO</span><span class="w"> </span><span class="mi">2</span><span class="o">:</span><span class="w"> </span><span class="n">Verificar</span><span class="w"> </span><span class="n">temperatura</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="n">salinidade</span>
+<span class="n">PASSO</span><span class="w"> </span><span class="mi">3</span><span class="o">:</span><span class="w"> </span><span class="n">SE</span><span class="w"> </span><span class="n">temperatura</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">15</span><span class="w"> </span><span class="n">OU</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">30</span>
+<span class="w">           </span><span class="n">ENTÃO</span><span class="o">:</span><span class="w"> </span><span class="n">Não</span><span class="w"> </span><span class="n">coletar</span>
+<span class="w">           </span><span class="n">SENÃO</span><span class="o">:</span><span class="w"> </span><span class="n">Continuar</span>
+<span class="n">PASSO</span><span class="w"> </span><span class="mi">4</span><span class="o">:</span><span class="w"> </span><span class="n">Coletar</span><span class="w"> </span><span class="n">amostra</span><span class="w"> </span><span class="n">com</span><span class="w"> </span><span class="n">garrafa</span>
+<span class="n">PASSO</span><span class="w"> </span><span class="mi">5</span><span class="o">:</span><span class="w"> </span><span class="n">Armazenar</span><span class="w"> </span><span class="n">em</span><span class="w"> </span><span class="n">recipiente</span><span class="w"> </span><span class="n">estéril</span>
+<span class="n">PASSO</span><span class="w"> </span><span class="mi">6</span><span class="o">:</span><span class="w"> </span><span class="n">Anotar</span><span class="w"> </span><span class="n">hora</span><span class="o">,</span><span class="w"> </span><span class="n">coordenadas</span><span class="o">,</span><span class="w"> </span><span class="n">profundidade</span>
+<span class="n">PASSO</span><span class="w"> </span><span class="mi">7</span><span class="o">:</span><span class="w"> </span><span class="n">Enviar</span><span class="w"> </span><span class="n">para</span><span class="w"> </span><span class="n">laboratório</span>
+<span class="n">PASSO</span><span class="w"> </span><span class="mi">8</span><span class="o">:</span><span class="w"> </span><span class="n">FIM</span>
+</code></pre></div>
+
+<hr />
+<h2 id="exemplo-completo-sistema-de-analise">🎯 Exemplo Completo: Sistema de Análise</h2>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Bibliotecas</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Dados de coleta</span>
+<span class="n">amostras</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;2025-01-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2025-01-02&#39;</span><span class="p">,</span> <span class="s1">&#39;2025-01-03&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;especie&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Ulva&#39;</span><span class="p">,</span> <span class="s1">&#39;Gracilaria&#39;</span><span class="p">,</span> <span class="s1">&#39;Sargassum&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;profundidade_m&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">5.2</span><span class="p">,</span> <span class="mf">7.8</span><span class="p">,</span> <span class="mf">3.1</span><span class="p">],</span>
+    <span class="s1">&#39;temperatura_c&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">22.5</span><span class="p">,</span> <span class="mf">23.1</span><span class="p">,</span> <span class="mf">22.8</span><span class="p">],</span>
+    <span class="s1">&#39;densidade_cells_ml&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">150</span><span class="p">,</span> <span class="mi">230</span><span class="p">,</span> <span class="mi">180</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="c1"># Criar tabela</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">amostras</span><span class="p">)</span>
+
+<span class="c1"># Funções de análise</span>
+<span class="k">def</span> <span class="nf">validar_amostra</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">prof</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Verifica se amostra é válida&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="mi">20</span> <span class="o">&lt;=</span> <span class="n">temp</span> <span class="o">&lt;=</span> <span class="mi">25</span> <span class="ow">and</span> <span class="n">prof</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;✅ Válida&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;❌ Inválida&quot;</span>
+
+<span class="k">def</span> <span class="nf">densidade_media</span><span class="p">(</span><span class="n">densidade_list</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calcula densidade média&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">densidade_list</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">densidade_list</span><span class="p">)</span>
+
+<span class="c1"># Análises</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;📊 RELATÓRIO DE ANÁLISE DE FITOPLÂNCTON&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># Mostrar dados</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📋 Dados Coletados:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">to_string</span><span class="p">())</span>
+
+<span class="c1"># Validação</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✓ Validação:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">validacao</span> <span class="o">=</span> <span class="n">validar_amostra</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;temperatura_c&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;profundidade_m&#39;</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Amostra </span><span class="si">{</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">validacao</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Estatísticas</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📈 Estatísticas:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Temperatura média: </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;temperatura_c&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°C&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Profundidade média: </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;profundidade_m&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">m&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Densidade média: </span><span class="si">{</span><span class="n">densidade_media</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;densidade_cells_ml&#39;</span><span class="p">])</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> células/mL&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Espécie mais frequente: </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mode</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+</code></pre></div>
+
+<p><strong>Resultado:</strong></p>
+<div class="codehilite"><pre><span></span><code>============================================================
+📊 RELATÓRIO DE ANÁLISE DE FITOPLÂNCTON
+============================================================
+
+📋 Dados Coletados:
+        data       especie  profundidade_m  temperatura_c  densidade_cells_ml
+0 2025-01-01          Ulva             5.2           22.5                 150
+1 2025-01-02    Gracilaria             7.8           23.1                 230
+2 2025-01-03     Sargassum             3.1           22.8                 180
+
+✓ Validação:
+  Amostra 1: ✅ Válida
+  Amostra 2: ✅ Válida
+  Amostra 3: ✅ Válida
+
+📈 Estatísticas:
+  Temperatura média: 22.8°C
+  Profundidade média: 5.4m
+  Densidade média: 187 células/mL
+  Espécie mais frequente: Gracilaria
+
+============================================================
+</code></pre></div>
+
+<hr />
+<h2 id="ciclo-de-desenvolvimento">🔄 Ciclo de Desenvolvimento</h2>
+<div class="codehilite"><pre><span></span><code>         ┌─────────────────────┐
+         │  Problema Real      │
+         │  (Ex: Mapear algas) │
+         └──────────┬──────────┘
+                    │
+                    ↓
+         ┌─────────────────────┐
+         │  Planejar Solution  │
+         │  (Algoritmo)        │
+         └──────────┬──────────┘
+                    │
+                    ↓
+         ┌─────────────────────┐
+         │  Escrever Código    │
+         │  (Implementação)    │
+         └──────────┬──────────┘
+                    │
+                    ↓
+         ┌─────────────────────┐
+         │  Testar            │
+         │  (Debug)           │
+         └──────────┬──────────┘
+                    │
+              Funciona?
+             /       \
+           NÃO       SIM
+            │         │
+            └─────────┘
+            ↓
+         ┌─────────────────────┐
+         │  Publicar           │
+         │  (GitHub/web)       │
+         └─────────────────────┘
+</code></pre></div>
+
+<hr />
+<h2 id="checklist-de-aprendizado">📝 Checklist de Aprendizado</h2>
+<ul>
+<li>[ ] Entendo o que é programação</li>
+<li>[ ] Conheço os tipos de dados básicos</li>
+<li>[ ] Entendo condições (if/else)</li>
+<li>[ ] Entendo repetições (loops)</li>
+<li>[ ] Consegui escrever uma função</li>
+<li>[ ] Importei uma biblioteca com sucesso</li>
+<li>[ ] Rodei um programa Python</li>
+</ul>
+<p>Se marcou tudo, você está pronto para <strong>Python Essencial</strong>! 🎉</p>
+<hr />
+<h2 id="conceitos-chave-para-lembrar">🎓 Conceitos-Chave para Lembrar</h2>
+<table>
+<thead>
+<tr>
+<th>Conceito</th>
+<th>Definição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Variável</strong></td>
+<td>Contêiner que armazena dados</td>
+</tr>
+<tr>
+<td><strong>Tipo de Dado</strong></td>
+<td>Categoria do dado (int, float, string, etc)</td>
+</tr>
+<tr>
+<td><strong>Função</strong></td>
+<td>Bloco de código reutilizável</td>
+</tr>
+<tr>
+<td><strong>Algoritmo</strong></td>
+<td>Série de passos para resolver problema</td>
+</tr>
+<tr>
+<td><strong>Biblioteca</strong></td>
+<td>Código pronto para usar</td>
+</tr>
+<tr>
+<td><strong>Sequência</strong></td>
+<td>Executar linhas uma por uma</td>
+</tr>
+<tr>
+<td><strong>Condição</strong></td>
+<td>Tomar decisão (if/else)</td>
+</tr>
+<tr>
+<td><strong>Loop</strong></td>
+<td>Repetir ações</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="proximo-passo">➡️ Próximo Passo</h2>
+<p>Agora que você entende os conceitos, vamos para:</p>
+<p><strong>👉 Módulo 1: <a href="../1-Python-Essencial/">PYTHON ESSENCIAL</a></strong></p>
+<p>Lá você aprenderá na prática:
+- Sintaxe Python
+- Estruturas de dados avançadas
+- Funções profissionais
+- Processamento de arquivos</p>
+<hr />
+<h2 id="seu-progresso">🚀 Seu Progresso</h2>
+<div class="codehilite"><pre><span></span><code><span class="mf">0</span><span class="o">-</span><span class="n">FUNDAMENTOS</span>
+<span class="err">├──</span><span class="w"> </span><span class="mf">01</span><span class="o">-</span><span class="nb">Int</span><span class="n">roducao</span><span class="w"> </span><span class="err">✅</span>
+<span class="err">├──</span><span class="w"> </span><span class="mf">02</span><span class="o">-</span><span class="n">Configurar</span><span class="o">-</span><span class="n">Ambiente</span><span class="w"> </span><span class="err">✅</span>
+<span class="err">└──</span><span class="w"> </span><span class="mf">03</span><span class="o">-</span><span class="n">Conceitos</span><span class="o">-</span><span class="n">Basicos</span><span class="w"> </span><span class="err">✅</span><span class="w"> </span><span class="p">(</span><span class="n">VOCÊ</span><span class="w"> </span><span class="n">ESTÁ</span><span class="w"> </span><span class="n">AQUI</span><span class="err">!</span><span class="p">)</span>
+
+<span class="n">Pronto</span><span class="w"> </span><span class="n">para</span><span class="w"> </span><span class="n">Python</span><span class="err">!</span><span class="w"> </span><span class="err">🐍</span>
+</code></pre></div>
+
+<hr />
+<p><strong>Parabéns por completar o módulo Fundamentos!</strong> 🎊</p>
+<p>Você agora tem a base teórica. Vamos botar a mão na massa com Python? 🐍</p>
+      </article>
+    </main>
+    <footer role="contentinfo">
+      <p>Gerado automaticamente em 06/01/2026 16:10. Paleta: ColorBrewer BuGn.</p>
+    </footer>
+    <script src="..\assets/site.js"></script>
+  </body>
+</html>

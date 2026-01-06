@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>🗺️ Mapas Interativos com Folium</title>
+    <link rel="preload" href="..\assets/theme.css" as="style" />
+    <link rel="stylesheet" href="..\assets/theme.css" />
+  </head>
+  <body>
+    <a href="#conteudo" class="skip-link">Pular para conteúdo</a>
+    <header role="banner">
+      <div class="wrap">
+        <h1>🗺️ Mapas Interativos com Folium</h1>
+        <nav aria-label="Navegação">
+          <a href="..\index.html">Início</a>
+          <a href="https://github.com/caetanoronan/labficol-tutorial">Repositório</a>
+          <a href="https://caetanoronan.github.io/labficol-tutorial/">Site</a>
+        </nav>
+        <div class="controls">
+          <button id="toggleHC" aria-pressed="false" aria-label="Alternar alto contraste">Alto contraste</button>
+          <button id="toggleBT" aria-pressed="false" aria-label="Alternar texto grande">Texto grande</button>
+          <button id="toggleLM" aria-pressed="false" aria-label="Reduzir movimento">Menos movimento</button>
+        </div>
+      </div>
+    </header>
+    <main id="conteudo" role="main">
+      <article class="md-content" aria-label="Conteúdo">
+        <h1 id="mapas-interativos-com-folium">🗺️ Mapas Interativos com Folium</h1>
+<h2 id="o-que-e-folium">O que é Folium?</h2>
+<p><strong>Folium</strong> = biblioteca Python para criar mapas interativos web (Leaflet.js).</p>
+<div class="codehilite"><pre><span></span><code>GeoPandas          Folium
+├─ Análise         ├─ Visualização
+├─ Mapas estáticos ├─ Mapas interativos
+└─ PNG/PDF         └─ HTML (web)
+</code></pre></div>
+
+<p><strong>Use para:</strong> Publicar resultados, apresentações, dashboards web</p>
+<hr />
+<h2 id="instalacao">🚀 Instalação</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">pip</span> <span class="n">install</span> <span class="n">folium</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">geopandas</span>  <span class="c"># Se ainda não tem</span>
+</code></pre></div>
+
+<hr />
+<h2 id="criar-mapa-basico">🎯 Criar Mapa Básico</h2>
+<h3 id="exemplo-minimo">Exemplo Mínimo</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">folium</span>
+
+<span class="c1"># Criar mapa centrado em Florianópolis</span>
+<span class="n">mapa</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span>
+    <span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">27.5969</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.5495</span><span class="p">],</span>  <span class="c1"># [latitude, longitude]</span>
+    <span class="n">zoom_start</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+    <span class="n">tiles</span><span class="o">=</span><span class="s1">&#39;OpenStreetMap&#39;</span>
+<span class="p">)</span>
+
+<span class="c1"># Salvar como HTML</span>
+<span class="n">mapa</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;meu_primeiro_mapa.html&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Mapa criado: meu_primeiro_mapa.html&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Abra o arquivo HTML no navegador! 🌐</p>
+<h3 id="tipos-de-tiles-camadas-base">Tipos de Tiles (Camadas Base)</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">folium</span>
+
+<span class="c1"># OpenStreetMap (padrão)</span>
+<span class="n">mapa1</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">27.5969</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.5495</span><span class="p">],</span> <span class="n">zoom_start</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> 
+                   <span class="n">tiles</span><span class="o">=</span><span class="s1">&#39;OpenStreetMap&#39;</span><span class="p">)</span>
+
+<span class="c1"># Imagem de satélite</span>
+<span class="n">mapa2</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">27.5969</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.5495</span><span class="p">],</span> <span class="n">zoom_start</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+                   <span class="n">tiles</span><span class="o">=</span><span class="s1">&#39;https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/</span><span class="si">{z}</span><span class="s1">/</span><span class="si">{y}</span><span class="s1">/</span><span class="si">{x}</span><span class="s1">&#39;</span><span class="p">,</span>
+                   <span class="n">attr</span><span class="o">=</span><span class="s1">&#39;Esri&#39;</span><span class="p">)</span>
+
+<span class="c1"># CartoDB Positron (minimalista)</span>
+<span class="n">mapa3</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">27.5969</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.5495</span><span class="p">],</span> <span class="n">zoom_start</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+                   <span class="n">tiles</span><span class="o">=</span><span class="s1">&#39;CartoDB positron&#39;</span><span class="p">)</span>
+
+<span class="c1"># Stamen Terrain (topografia)</span>
+<span class="n">mapa4</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">27.5969</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.5495</span><span class="p">],</span> <span class="n">zoom_start</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+                   <span class="n">tiles</span><span class="o">=</span><span class="s1">&#39;Stamen Terrain&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="adicionar-marcadores">📍 Adicionar Marcadores</h2>
+<h3 id="marcador-simples">Marcador Simples</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">folium</span>
+
+<span class="c1"># Criar mapa</span>
+<span class="n">mapa</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">27.5969</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.5495</span><span class="p">],</span> <span class="n">zoom_start</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="c1"># Adicionar marcador</span>
+<span class="n">folium</span><span class="o">.</span><span class="n">Marker</span><span class="p">(</span>
+    <span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">27.4374</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.3923</span><span class="p">],</span>
+    <span class="n">popup</span><span class="o">=</span><span class="s2">&quot;Praia dos Ingleses&quot;</span><span class="p">,</span>
+    <span class="n">tooltip</span><span class="o">=</span><span class="s2">&quot;Clique para mais informações&quot;</span><span class="p">,</span>
+    <span class="n">icon</span><span class="o">=</span><span class="n">folium</span><span class="o">.</span><span class="n">Icon</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;info-sign&#39;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">mapa</span><span class="p">)</span>
+
+<span class="n">mapa</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;mapa_com_marcador.html&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="marcadores-com-icones-personalizados">Marcadores com Ícones Personalizados</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">folium</span>
+
+<span class="n">mapa</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">27.5969</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.5495</span><span class="p">],</span> <span class="n">zoom_start</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+
+<span class="c1"># Ícone padrão - vermelho</span>
+<span class="n">folium</span><span class="o">.</span><span class="n">Marker</span><span class="p">(</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">27.4374</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.3923</span><span class="p">],</span>
+    <span class="n">popup</span><span class="o">=</span><span class="s2">&quot;Ulva lactuca - Profundidade: 5.2m&quot;</span><span class="p">,</span>
+    <span class="n">icon</span><span class="o">=</span><span class="n">folium</span><span class="o">.</span><span class="n">Icon</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;leaf&#39;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;fa&#39;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">mapa</span><span class="p">)</span>
+
+<span class="c1"># Ícone verde</span>
+<span class="n">folium</span><span class="o">.</span><span class="n">Marker</span><span class="p">(</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">27.4450</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.3950</span><span class="p">],</span>
+    <span class="n">popup</span><span class="o">=</span><span class="s2">&quot;Gracilaria - Profundidade: 7.8m&quot;</span><span class="p">,</span>
+    <span class="n">icon</span><span class="o">=</span><span class="n">folium</span><span class="o">.</span><span class="n">Icon</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;seedling&#39;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;fa&#39;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">mapa</span><span class="p">)</span>
+
+<span class="c1"># Ícone azul</span>
+<span class="n">folium</span><span class="o">.</span><span class="n">Marker</span><span class="p">(</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">27.5750</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.4200</span><span class="p">],</span>
+    <span class="n">popup</span><span class="o">=</span><span class="s2">&quot;Sargassum - Profundidade: 3.1m&quot;</span><span class="p">,</span>
+    <span class="n">icon</span><span class="o">=</span><span class="n">folium</span><span class="o">.</span><span class="n">Icon</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;water&#39;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;fa&#39;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">mapa</span><span class="p">)</span>
+
+<span class="n">mapa</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;mapa_especies.html&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p><strong>Cores disponíveis:</strong> red, blue, green, purple, orange, darkred, lightred, beige, darkblue, darkgreen, cadetblue, darkpurple, white, pink, lightblue, lightgreen, gray, black, lightgray</p>
+<hr />
+<h2 id="popups-e-tooltips-avancados">🎨 Popups e Tooltips Avançados</h2>
+<h3 id="popup-com-html">Popup com HTML</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">folium</span>
+
+<span class="n">mapa</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">27.5969</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.5495</span><span class="p">],</span> <span class="n">zoom_start</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="c1"># HTML formatado</span>
+<span class="n">html</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">&lt;div style=&quot;font-family: Arial; width: 200px;&quot;&gt;</span>
+<span class="s2">    &lt;h4 style=&quot;color: #2E86AB;&quot;&gt;Estação 1 - Ingleses&lt;/h4&gt;</span>
+<span class="s2">    &lt;hr&gt;</span>
+<span class="s2">    &lt;b&gt;Espécie:&lt;/b&gt; &lt;i&gt;Ulva lactuca&lt;/i&gt;&lt;br&gt;</span>
+<span class="s2">    &lt;b&gt;Profundidade:&lt;/b&gt; 5.2m&lt;br&gt;</span>
+<span class="s2">    &lt;b&gt;Temperatura:&lt;/b&gt; 22.5°C&lt;br&gt;</span>
+<span class="s2">    &lt;b&gt;Salinidade:&lt;/b&gt; 35.0 PSU&lt;br&gt;</span>
+<span class="s2">    &lt;hr&gt;</span>
+<span class="s2">    &lt;small&gt;Data: 06/01/2025&lt;/small&gt;</span>
+<span class="s2">&lt;/div&gt;</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">folium</span><span class="o">.</span><span class="n">Marker</span><span class="p">(</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">27.4374</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.3923</span><span class="p">],</span>
+    <span class="n">popup</span><span class="o">=</span><span class="n">folium</span><span class="o">.</span><span class="n">Popup</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="n">max_width</span><span class="o">=</span><span class="mi">300</span><span class="p">),</span>
+    <span class="n">tooltip</span><span class="o">=</span><span class="s2">&quot;Clique para detalhes&quot;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">mapa</span><span class="p">)</span>
+
+<span class="n">mapa</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;mapa_popup_html.html&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="popup-com-grafico-avancado">Popup com Gráfico (Avançado)</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">folium</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">BytesIO</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">mapa</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">27.5969</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.5495</span><span class="p">],</span> <span class="n">zoom_start</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="c1"># Criar mini-gráfico</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">temps</span> <span class="o">=</span> <span class="p">[</span><span class="mf">22.5</span><span class="p">,</span> <span class="mf">23.1</span><span class="p">,</span> <span class="mf">22.8</span><span class="p">,</span> <span class="mf">23.4</span><span class="p">,</span> <span class="mf">22.9</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temps</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#2E86AB&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Temperatura (últimos 5 dias)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;°C&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># Salvar como PNG em memória</span>
+<span class="n">buffer</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">buffer</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">image_base64</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">buffer</span><span class="o">.</span><span class="n">read</span><span class="p">())</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="c1"># Criar HTML com imagem</span>
+<span class="n">html</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">&lt;div style=&quot;font-family: Arial;&quot;&gt;</span>
+<span class="s2">    &lt;h4&gt;Estação 1&lt;/h4&gt;</span>
+<span class="s2">    &lt;img src=&quot;data:image/png;base64,</span><span class="si">{</span><span class="n">image_base64</span><span class="si">}</span><span class="s2">&quot; width=&quot;300&quot;&gt;</span>
+<span class="s2">&lt;/div&gt;</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">folium</span><span class="o">.</span><span class="n">Marker</span><span class="p">(</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">27.4374</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.3923</span><span class="p">],</span>
+    <span class="n">popup</span><span class="o">=</span><span class="n">folium</span><span class="o">.</span><span class="n">Popup</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="n">max_width</span><span class="o">=</span><span class="mi">350</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">mapa</span><span class="p">)</span>
+
+<span class="n">mapa</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;mapa_popup_grafico.html&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="adicionar-multiplos-pontos-de-geodataframe">🌐 Adicionar Múltiplos Pontos de GeoDataFrame</h2>
+<h3 id="integracao-com-geopandas">Integração com GeoPandas</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">folium</span>
+<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">Point</span>
+
+<span class="c1"># Criar dados</span>
+<span class="n">dados</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;nome&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Ingleses N&#39;</span><span class="p">,</span> <span class="s1">&#39;Ingleses S&#39;</span><span class="p">,</span> <span class="s1">&#39;Barra Lagoa&#39;</span><span class="p">,</span> <span class="s1">&#39;Laguna&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;especie&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">,</span> <span class="s1">&#39;Gracilaria&#39;</span><span class="p">,</span> <span class="s1">&#39;Sargassum&#39;</span><span class="p">,</span> <span class="s1">&#39;Laminaria&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;profundidade_m&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">5.2</span><span class="p">,</span> <span class="mf">7.8</span><span class="p">,</span> <span class="mf">3.1</span><span class="p">,</span> <span class="mf">10.5</span><span class="p">],</span>
+    <span class="s1">&#39;temperatura_c&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">22.5</span><span class="p">,</span> <span class="mf">23.1</span><span class="p">,</span> <span class="mf">22.8</span><span class="p">,</span> <span class="mf">21.2</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">geometry</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="mf">48.3923</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.4374</span><span class="p">),</span>
+    <span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="mf">48.3950</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.4450</span><span class="p">),</span>
+    <span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="mf">48.4200</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.5750</span><span class="p">),</span>
+    <span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="mf">48.7833</span><span class="p">,</span> <span class="o">-</span><span class="mf">28.4833</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">(</span><span class="n">dados</span><span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="n">geometry</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="s2">&quot;EPSG:4326&quot;</span><span class="p">)</span>
+
+<span class="c1"># Criar mapa</span>
+<span class="n">mapa</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">27.8</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.5</span><span class="p">],</span> <span class="n">zoom_start</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+
+<span class="c1"># Adicionar cada ponto</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">gdf</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="c1"># Popup com informações</span>
+    <span class="n">popup_html</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    &lt;b&gt;</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;nome&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&lt;/b&gt;&lt;br&gt;</span>
+<span class="s2">    Espécie: &lt;i&gt;</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&lt;/i&gt;&lt;br&gt;</span>
+<span class="s2">    Profundidade: </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;profundidade_m&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">m&lt;br&gt;</span>
+<span class="s2">    Temperatura: </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;temperatura_c&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">°C</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+    <span class="n">folium</span><span class="o">.</span><span class="n">Marker</span><span class="p">(</span>
+        <span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="n">row</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">x</span><span class="p">],</span>
+        <span class="n">popup</span><span class="o">=</span><span class="n">folium</span><span class="o">.</span><span class="n">Popup</span><span class="p">(</span><span class="n">popup_html</span><span class="p">,</span> <span class="n">max_width</span><span class="o">=</span><span class="mi">200</span><span class="p">),</span>
+        <span class="n">tooltip</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;nome&#39;</span><span class="p">],</span>
+        <span class="n">icon</span><span class="o">=</span><span class="n">folium</span><span class="o">.</span><span class="n">Icon</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;leaf&#39;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;fa&#39;</span><span class="p">)</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">mapa</span><span class="p">)</span>
+
+<span class="n">mapa</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;mapa_geodataframe.html&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Mapa criado com dados GeoPandas&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="marcadores-com-cores-dinamicas">🎨 Marcadores com Cores Dinâmicas</h2>
+<h3 id="colorir-por-categoria">Colorir por Categoria</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">folium</span>
+<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">Point</span>
+
+<span class="c1"># Dados</span>
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;nome&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Local 1&#39;</span><span class="p">,</span> <span class="s1">&#39;Local 2&#39;</span><span class="p">,</span> <span class="s1">&#39;Local 3&#39;</span><span class="p">,</span> <span class="s1">&#39;Local 4&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;especie&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Ulva&#39;</span><span class="p">,</span> <span class="s1">&#39;Gracilaria&#39;</span><span class="p">,</span> <span class="s1">&#39;Ulva&#39;</span><span class="p">,</span> <span class="s1">&#39;Sargassum&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;geometry&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="mf">48.39</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.44</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="mf">48.40</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.45</span><span class="p">),</span>
+                 <span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="mf">48.42</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.58</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="mf">48.78</span><span class="p">,</span> <span class="o">-</span><span class="mf">28.48</span><span class="p">)]</span>
+<span class="p">},</span> <span class="n">crs</span><span class="o">=</span><span class="s2">&quot;EPSG:4326&quot;</span><span class="p">)</span>
+
+<span class="c1"># Mapa de cores por espécie</span>
+<span class="n">cores_especies</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Ulva&#39;</span><span class="p">:</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Gracilaria&#39;</span><span class="p">:</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Sargassum&#39;</span><span class="p">:</span> <span class="s1">&#39;blue&#39;</span>
+<span class="p">}</span>
+
+<span class="n">mapa</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">27.8</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.5</span><span class="p">],</span> <span class="n">zoom_start</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">gdf</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">cor</span> <span class="o">=</span> <span class="n">cores_especies</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">],</span> <span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+
+    <span class="n">folium</span><span class="o">.</span><span class="n">Marker</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">row</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">x</span><span class="p">],</span>
+        <span class="n">popup</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;nome&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">icon</span><span class="o">=</span><span class="n">folium</span><span class="o">.</span><span class="n">Icon</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">cor</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;leaf&#39;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;fa&#39;</span><span class="p">)</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">mapa</span><span class="p">)</span>
+
+<span class="n">mapa</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;mapa_cores_especies.html&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="circlemarkers-circulos">⭕ CircleMarkers (Círculos)</h2>
+<h3 id="tamanho-proporcional-a-valor">Tamanho Proporcional a Valor</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">folium</span>
+<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">Point</span>
+
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;nome&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Est. 1&#39;</span><span class="p">,</span> <span class="s1">&#39;Est. 2&#39;</span><span class="p">,</span> <span class="s1">&#39;Est. 3&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;profundidade_m&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">5.2</span><span class="p">,</span> <span class="mf">12.8</span><span class="p">,</span> <span class="mf">3.1</span><span class="p">],</span>
+    <span class="s1">&#39;geometry&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="mf">48.39</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.44</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="mf">48.40</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.45</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="mf">48.42</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.58</span><span class="p">)]</span>
+<span class="p">},</span> <span class="n">crs</span><span class="o">=</span><span class="s2">&quot;EPSG:4326&quot;</span><span class="p">)</span>
+
+<span class="n">mapa</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">27.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.4</span><span class="p">],</span> <span class="n">zoom_start</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">gdf</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="c1"># Raio proporcional à profundidade</span>
+    <span class="n">raio</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;profundidade_m&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span>  <span class="c1"># Multiplicar para visualizar melhor</span>
+
+    <span class="n">folium</span><span class="o">.</span><span class="n">CircleMarker</span><span class="p">(</span>
+        <span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="n">row</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">x</span><span class="p">],</span>
+        <span class="n">radius</span><span class="o">=</span><span class="n">raio</span><span class="p">,</span>
+        <span class="n">popup</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;nome&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&lt;br&gt;Prof: </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;profundidade_m&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">m&quot;</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span>
+        <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">fillColor</span><span class="o">=</span><span class="s1">&#39;cyan&#39;</span><span class="p">,</span>
+        <span class="n">fillOpacity</span><span class="o">=</span><span class="mf">0.6</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">mapa</span><span class="p">)</span>
+
+<span class="n">mapa</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;mapa_circle_markers.html&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="grupos-e-camadas">🗂️ Grupos e Camadas</h2>
+<h3 id="controle-de-camadas">Controle de Camadas</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">folium</span>
+
+<span class="n">mapa</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">27.5969</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.5495</span><span class="p">],</span> <span class="n">zoom_start</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+
+<span class="c1"># Criar grupos de camadas</span>
+<span class="n">grupo_ulva</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">FeatureGroup</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">)</span>
+<span class="n">grupo_gracilaria</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">FeatureGroup</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Gracilaria&#39;</span><span class="p">)</span>
+
+<span class="c1"># Adicionar marcadores aos grupos</span>
+<span class="n">folium</span><span class="o">.</span><span class="n">Marker</span><span class="p">(</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">27.4374</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.3923</span><span class="p">],</span>
+    <span class="n">popup</span><span class="o">=</span><span class="s2">&quot;Ulva - Local 1&quot;</span><span class="p">,</span>
+    <span class="n">icon</span><span class="o">=</span><span class="n">folium</span><span class="o">.</span><span class="n">Icon</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">grupo_ulva</span><span class="p">)</span>
+
+<span class="n">folium</span><span class="o">.</span><span class="n">Marker</span><span class="p">(</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">27.4450</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.3950</span><span class="p">],</span>
+    <span class="n">popup</span><span class="o">=</span><span class="s2">&quot;Ulva - Local 2&quot;</span><span class="p">,</span>
+    <span class="n">icon</span><span class="o">=</span><span class="n">folium</span><span class="o">.</span><span class="n">Icon</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">grupo_ulva</span><span class="p">)</span>
+
+<span class="n">folium</span><span class="o">.</span><span class="n">Marker</span><span class="p">(</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">27.5750</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.4200</span><span class="p">],</span>
+    <span class="n">popup</span><span class="o">=</span><span class="s2">&quot;Gracilaria - Local 1&quot;</span><span class="p">,</span>
+    <span class="n">icon</span><span class="o">=</span><span class="n">folium</span><span class="o">.</span><span class="n">Icon</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">grupo_gracilaria</span><span class="p">)</span>
+
+<span class="c1"># Adicionar grupos ao mapa</span>
+<span class="n">grupo_ulva</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">mapa</span><span class="p">)</span>
+<span class="n">grupo_gracilaria</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">mapa</span><span class="p">)</span>
+
+<span class="c1"># Adicionar controle de camadas</span>
+<span class="n">folium</span><span class="o">.</span><span class="n">LayerControl</span><span class="p">()</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">mapa</span><span class="p">)</span>
+
+<span class="n">mapa</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;mapa_com_camadas.html&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="heatmap-mapa-de-calor">📊 Heatmap (Mapa de Calor)</h2>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">folium</span>
+<span class="kn">from</span> <span class="nn">folium.plugins</span> <span class="kn">import</span> <span class="n">HeatMap</span>
+
+<span class="c1"># Dados: [latitude, longitude, intensidade]</span>
+<span class="n">dados_calor</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">27.4374</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.3923</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">27.4450</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.3950</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">27.5750</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.4200</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">27.4400</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.3930</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">27.4500</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.4000</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]</span>
+<span class="p">]</span>
+
+<span class="n">mapa</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">27.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.4</span><span class="p">],</span> <span class="n">zoom_start</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+
+<span class="c1"># Adicionar heatmap</span>
+<span class="n">HeatMap</span><span class="p">(</span><span class="n">dados_calor</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">blur</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">max_zoom</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">mapa</span><span class="p">)</span>
+
+<span class="n">mapa</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;mapa_heatmap.html&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="exemplo-completo-dashboard-de-coletas">🎯 Exemplo Completo: Dashboard de Coletas</h2>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">folium</span>
+<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">Point</span>
+<span class="kn">from</span> <span class="nn">folium.plugins</span> <span class="kn">import</span> <span class="n">MarkerCluster</span>
+
+<span class="c1"># 1. PREPARAR DADOS</span>
+<span class="n">dados</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>
+    <span class="s1">&#39;local&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Ingleses N&#39;</span><span class="p">,</span> <span class="s1">&#39;Ingleses S&#39;</span><span class="p">,</span> <span class="s1">&#39;Barra Lagoa&#39;</span><span class="p">,</span> <span class="s1">&#39;Laguna&#39;</span><span class="p">,</span> 
+              <span class="s1">&#39;Garopaba&#39;</span><span class="p">,</span> <span class="s1">&#39;Armação&#39;</span><span class="p">,</span> <span class="s1">&#39;Campeche&#39;</span><span class="p">,</span> <span class="s1">&#39;Pântano Sul&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;Joaquina&#39;</span><span class="p">,</span> <span class="s1">&#39;Mole&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;especie&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">,</span> <span class="s1">&#39;Gracilaria&#39;</span><span class="p">,</span> <span class="s1">&#39;Sargassum&#39;</span><span class="p">,</span> <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Gracilaria&#39;</span><span class="p">,</span> <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">,</span> <span class="s1">&#39;Sargassum&#39;</span><span class="p">,</span> <span class="s1">&#39;Laminaria&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">,</span> <span class="s1">&#39;Gracilaria&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;profundidade_m&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">5.2</span><span class="p">,</span> <span class="mf">7.8</span><span class="p">,</span> <span class="mf">3.1</span><span class="p">,</span> <span class="mf">10.5</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">8.2</span><span class="p">,</span> <span class="mf">12.0</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">],</span>
+    <span class="s1">&#39;temperatura_c&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">22.5</span><span class="p">,</span> <span class="mf">23.1</span><span class="p">,</span> <span class="mf">22.8</span><span class="p">,</span> <span class="mf">21.2</span><span class="p">,</span> <span class="mf">22.0</span><span class="p">,</span> <span class="mf">23.5</span><span class="p">,</span> <span class="mf">22.9</span><span class="p">,</span> <span class="mf">20.5</span><span class="p">,</span> <span class="mf">23.0</span><span class="p">,</span> <span class="mf">22.7</span><span class="p">],</span>
+    <span class="s1">&#39;longitude&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">48.39</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.40</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.42</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.78</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.62</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.51</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.48</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.50</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.44</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.43</span><span class="p">],</span>
+    <span class="s1">&#39;latitude&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">27.44</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.45</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.58</span><span class="p">,</span> <span class="o">-</span><span class="mf">28.48</span><span class="p">,</span> <span class="o">-</span><span class="mf">28.02</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.75</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.67</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.78</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.63</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.58</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span>
+<span class="n">geometry</span> <span class="o">=</span> <span class="p">[</span><span class="n">Point</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">)</span> <span class="k">for</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">])]</span>
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="n">geometry</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="s2">&quot;EPSG:4326&quot;</span><span class="p">)</span>
+
+<span class="c1"># 2. CONFIGURAR MAPA</span>
+<span class="n">mapa</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span>
+    <span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">27.8</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.5</span><span class="p">],</span>
+    <span class="n">zoom_start</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span>
+    <span class="n">tiles</span><span class="o">=</span><span class="s1">&#39;OpenStreetMap&#39;</span>
+<span class="p">)</span>
+
+<span class="c1"># 3. DEFINIR CORES POR ESPÉCIE</span>
+<span class="n">cores_especies</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">:</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Gracilaria&#39;</span><span class="p">:</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Sargassum&#39;</span><span class="p">:</span> <span class="s1">&#39;blue&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Laminaria&#39;</span><span class="p">:</span> <span class="s1">&#39;purple&#39;</span>
+<span class="p">}</span>
+
+<span class="c1"># 4. CRIAR GRUPOS DE CAMADAS</span>
+<span class="n">grupos</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">especie</span> <span class="ow">in</span> <span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+    <span class="n">grupos</span><span class="p">[</span><span class="n">especie</span><span class="p">]</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">FeatureGroup</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">especie</span><span class="p">)</span>
+
+<span class="c1"># 5. ADICIONAR MARCADORES</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">gdf</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="c1"># Determinar status de validação</span>
+    <span class="n">valida</span> <span class="o">=</span> <span class="p">(</span><span class="mi">20</span> <span class="o">&lt;=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;temperatura_c&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">25</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;profundidade_m&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;✅ VÁLIDA&quot;</span> <span class="k">if</span> <span class="n">valida</span> <span class="k">else</span> <span class="s2">&quot;⚠️ ATENÇÃO&quot;</span>
+
+    <span class="c1"># HTML do popup</span>
+    <span class="n">popup_html</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    &lt;div style=&quot;font-family: Arial; width: 220px;&quot;&gt;</span>
+<span class="s2">        &lt;h4 style=&quot;color: #2E86AB; margin-bottom: 8px;&quot;&gt;</span>
+<span class="s2">            📍 </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;local&#39;</span><span class="p">]</span><span class="si">}</span>
+<span class="s2">        &lt;/h4&gt;</span>
+<span class="s2">        &lt;hr style=&quot;margin: 5px 0;&quot;&gt;</span>
+<span class="s2">        &lt;table style=&quot;width: 100%; font-size: 12px;&quot;&gt;</span>
+<span class="s2">            &lt;tr&gt;</span>
+<span class="s2">                &lt;td&gt;&lt;b&gt;ID:&lt;/b&gt;&lt;/td&gt;</span>
+<span class="s2">                &lt;td&gt;</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&lt;/td&gt;</span>
+<span class="s2">            &lt;/tr&gt;</span>
+<span class="s2">            &lt;tr&gt;</span>
+<span class="s2">                &lt;td&gt;&lt;b&gt;Espécie:&lt;/b&gt;&lt;/td&gt;</span>
+<span class="s2">                &lt;td&gt;&lt;i&gt;</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&lt;/i&gt;&lt;/td&gt;</span>
+<span class="s2">            &lt;/tr&gt;</span>
+<span class="s2">            &lt;tr&gt;</span>
+<span class="s2">                &lt;td&gt;&lt;b&gt;Profundidade:&lt;/b&gt;&lt;/td&gt;</span>
+<span class="s2">                &lt;td&gt;</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;profundidade_m&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">m&lt;/td&gt;</span>
+<span class="s2">            &lt;/tr&gt;</span>
+<span class="s2">            &lt;tr&gt;</span>
+<span class="s2">                &lt;td&gt;&lt;b&gt;Temperatura:&lt;/b&gt;&lt;/td&gt;</span>
+<span class="s2">                &lt;td&gt;</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;temperatura_c&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">°C&lt;/td&gt;</span>
+<span class="s2">            &lt;/tr&gt;</span>
+<span class="s2">            &lt;tr&gt;</span>
+<span class="s2">                &lt;td&gt;&lt;b&gt;Coordenadas:&lt;/b&gt;&lt;/td&gt;</span>
+<span class="s2">                &lt;td&gt;</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">°, </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">°&lt;/td&gt;</span>
+<span class="s2">            &lt;/tr&gt;</span>
+<span class="s2">        &lt;/table&gt;</span>
+<span class="s2">        &lt;hr style=&quot;margin: 5px 0;&quot;&gt;</span>
+<span class="s2">        &lt;div style=&quot;text-align: center; padding: 5px; background-color: </span><span class="si">{</span><span class="s1">&#39;#d4edda&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">valida</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;#fff3cd&#39;</span><span class="si">}</span><span class="s2">; border-radius: 3px;&quot;&gt;</span>
+<span class="s2">            &lt;b&gt;</span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2">&lt;/b&gt;</span>
+<span class="s2">        &lt;/div&gt;</span>
+<span class="s2">    &lt;/div&gt;</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Criar marcador</span>
+    <span class="n">cor</span> <span class="o">=</span> <span class="n">cores_especies</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">],</span> <span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="n">marcador</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Marker</span><span class="p">(</span>
+        <span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">]],</span>
+        <span class="n">popup</span><span class="o">=</span><span class="n">folium</span><span class="o">.</span><span class="n">Popup</span><span class="p">(</span><span class="n">popup_html</span><span class="p">,</span> <span class="n">max_width</span><span class="o">=</span><span class="mi">300</span><span class="p">),</span>
+        <span class="n">tooltip</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;local&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">icon</span><span class="o">=</span><span class="n">folium</span><span class="o">.</span><span class="n">Icon</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">cor</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;leaf&#39;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;fa&#39;</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Adicionar ao grupo correspondente</span>
+    <span class="n">marcador</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">grupos</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]])</span>
+
+<span class="c1"># 6. ADICIONAR GRUPOS AO MAPA</span>
+<span class="k">for</span> <span class="n">grupo</span> <span class="ow">in</span> <span class="n">grupos</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+    <span class="n">grupo</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">mapa</span><span class="p">)</span>
+
+<span class="c1"># 7. ADICIONAR CONTROLE DE CAMADAS</span>
+<span class="n">folium</span><span class="o">.</span><span class="n">LayerControl</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s1">&#39;topright&#39;</span><span class="p">,</span> <span class="n">collapsed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">mapa</span><span class="p">)</span>
+
+<span class="c1"># 8. ADICIONAR TÍTULO</span>
+<span class="n">titulo_html</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">&lt;div style=&quot;position: fixed; </span>
+<span class="s1">            top: 10px; </span>
+<span class="s1">            left: 50px; </span>
+<span class="s1">            width: 400px; </span>
+<span class="s1">            height: auto; </span>
+<span class="s1">            background-color: white; </span>
+<span class="s1">            border: 2px solid #2E86AB;</span>
+<span class="s1">            border-radius: 5px;</span>
+<span class="s1">            z-index: 9999; </span>
+<span class="s1">            padding: 10px;</span>
+<span class="s1">            font-family: Arial;&quot;&gt;</span>
+<span class="s1">    &lt;h3 style=&quot;margin: 0; color: #2E86AB;&quot;&gt;</span>
+<span class="s1">        🌊 Distribuição de Macroalgas - LABFICOL/UFSC</span>
+<span class="s1">    &lt;/h3&gt;</span>
+<span class="s1">    &lt;p style=&quot;margin: 5px 0; font-size: 12px;&quot;&gt;</span>
+<span class="s1">        Total de coletas: &lt;b&gt;</span><span class="si">{}</span><span class="s1">&lt;/b&gt; | Espécies: &lt;b&gt;</span><span class="si">{}</span><span class="s1">&lt;/b&gt;</span>
+<span class="s1">    &lt;/p&gt;</span>
+<span class="s1">&lt;/div&gt;</span>
+<span class="s1">&#39;&#39;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">gdf</span><span class="p">),</span> <span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">())</span>
+
+<span class="n">mapa</span><span class="o">.</span><span class="n">get_root</span><span class="p">()</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">folium</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="n">titulo_html</span><span class="p">))</span>
+
+<span class="c1"># 9. SALVAR</span>
+<span class="n">mapa</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;dashboard_coletas_labficol.html&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Dashboard criado: dashboard_coletas_labficol.html&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📊 </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">gdf</span><span class="p">)</span><span class="si">}</span><span class="s2"> coletas mapeadas&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🌿 </span><span class="si">{</span><span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span><span class="si">}</span><span class="s2"> espécies diferentes&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Execute e abra o arquivo HTML! 🚀</p>
+<hr />
+<h2 id="checklist-desta-licao">🎓 Checklist desta Lição</h2>
+<ul>
+<li>[ ] Criei mapa básico com Folium</li>
+<li>[ ] Adicionei marcadores com popups</li>
+<li>[ ] Integrei GeoPandas com Folium</li>
+<li>[ ] Usei cores e ícones personalizados</li>
+<li>[ ] Criei camadas controláveis</li>
+<li>[ ] Desenvolvi dashboard completo</li>
+</ul>
+<p>Se marcou tudo, você completou <strong>Análise Geoespacial</strong>! 🎉</p>
+<hr />
+<h2 id="proximos-passos">➡️ Próximos Passos</h2>
+<p>Parabéns! Você domina análise geoespacial com Python! 🗺️</p>
+<p><strong>Próximos módulos:</strong>
+1. <strong>Visualização Web</strong> (HTML, JavaScript avançado)
+2. <strong>Casos Práticos</strong> (Aplicações reais em Oceanografia)</p>
+<hr />
+<h2 id="resumo-de-funcoes-folium">📝 Resumo de Funções Folium</h2>
+<table>
+<thead>
+<tr>
+<th>Função</th>
+<th>Uso</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>folium.Map()</code></td>
+<td>Criar mapa base</td>
+</tr>
+<tr>
+<td><code>folium.Marker()</code></td>
+<td>Adicionar marcador</td>
+</tr>
+<tr>
+<td><code>folium.CircleMarker()</code></td>
+<td>Círculo proporcional</td>
+</tr>
+<tr>
+<td><code>folium.Popup()</code></td>
+<td>Popup HTML</td>
+</tr>
+<tr>
+<td><code>folium.FeatureGroup()</code></td>
+<td>Grupo de camadas</td>
+</tr>
+<tr>
+<td><code>folium.LayerControl()</code></td>
+<td>Controle de camadas</td>
+</tr>
+<tr>
+<td><code>HeatMap()</code></td>
+<td>Mapa de calor</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>Você é um expert em mapas interativos!</strong> 🗺️✨</p>
+<p>Abra seus mapas HTML no navegador e compartilhe com sua equipe do LABFICOL! 🌊</p>
+      </article>
+    </main>
+    <footer role="contentinfo">
+      <p>Gerado automaticamente em 06/01/2026 16:10. Paleta: ColorBrewer BuGn.</p>
+    </footer>
+    <script src="..\assets/site.js"></script>
+  </body>
+</html>

@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>🐼 GeoPandas - Análise Geoespacial com Python</title>
+    <link rel="preload" href="..\assets/theme.css" as="style" />
+    <link rel="stylesheet" href="..\assets/theme.css" />
+  </head>
+  <body>
+    <a href="#conteudo" class="skip-link">Pular para conteúdo</a>
+    <header role="banner">
+      <div class="wrap">
+        <h1>🐼 GeoPandas - Análise Geoespacial com Python</h1>
+        <nav aria-label="Navegação">
+          <a href="..\index.html">Início</a>
+          <a href="https://github.com/caetanoronan/labficol-tutorial">Repositório</a>
+          <a href="https://caetanoronan.github.io/labficol-tutorial/">Site</a>
+        </nav>
+        <div class="controls">
+          <button id="toggleHC" aria-pressed="false" aria-label="Alternar alto contraste">Alto contraste</button>
+          <button id="toggleBT" aria-pressed="false" aria-label="Alternar texto grande">Texto grande</button>
+          <button id="toggleLM" aria-pressed="false" aria-label="Reduzir movimento">Menos movimento</button>
+        </div>
+      </div>
+    </header>
+    <main id="conteudo" role="main">
+      <article class="md-content" aria-label="Conteúdo">
+        <h1 id="geopandas-analise-geoespacial-com-python">🐼 GeoPandas - Análise Geoespacial com Python</h1>
+<h2 id="o-que-e-geopandas">O que é GeoPandas?</h2>
+<p><strong>GeoPandas</strong> = Pandas + Geografia</p>
+<div class="codehilite"><pre><span></span><code>Pandas              GeoPandas
+├─ DataFrames       ├─ GeoDataFrames (DataFrames + geometria)
+├─ Tabelas          ├─ Tabelas + mapas
+└─ Análise dados    └─ Análise espacial
+</code></pre></div>
+
+<p><strong>Por que usar:</strong> Análise geoespacial com sintaxe familiar de Pandas!</p>
+<hr />
+<h2 id="instalacao">🚀 Instalação</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">pip</span> <span class="n">install</span> <span class="n">geopandas</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">matplotlib</span>  <span class="c"># Para gráficos</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">folium</span>      <span class="c"># Para mapas interativos (próxima lição)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="geodataframe-a-base">📊 GeoDataFrame - A Base</h2>
+<h3 id="criar-geodataframe-simples">Criar GeoDataFrame Simples</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">Point</span>
+
+<span class="c1"># Dados de coleta</span>
+<span class="n">dados</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;nome&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Ingleses Norte&#39;</span><span class="p">,</span> <span class="s1">&#39;Ingleses Sul&#39;</span><span class="p">,</span> <span class="s1">&#39;Barra da Lagoa&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;especie&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">,</span> <span class="s1">&#39;Gracilaria&#39;</span><span class="p">,</span> <span class="s1">&#39;Sargassum&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;profundidade_m&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">5.2</span><span class="p">,</span> <span class="mf">7.8</span><span class="p">,</span> <span class="mf">3.1</span><span class="p">],</span>
+    <span class="s1">&#39;temperatura_c&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">22.5</span><span class="p">,</span> <span class="mf">23.1</span><span class="p">,</span> <span class="mf">22.8</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="c1"># Criar pontos (geometria)</span>
+<span class="n">geometrias</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="mf">48.3923</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.4374</span><span class="p">),</span>  <span class="c1"># Ingleses Norte</span>
+    <span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="mf">48.3950</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.4450</span><span class="p">),</span>  <span class="c1"># Ingleses Sul</span>
+    <span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="mf">48.4200</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.5750</span><span class="p">)</span>   <span class="c1"># Barra da Lagoa</span>
+<span class="p">]</span>
+
+<span class="c1"># Criar GeoDataFrame</span>
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">(</span><span class="n">dados</span><span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="n">geometrias</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="s2">&quot;EPSG:4326&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">gdf</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Resultado:</p>
+<div class="codehilite"><pre><span></span><code>              nome       especie  profundidade_m  temperatura_c                    geometry
+0   Ingleses Norte  Ulva lactuca             5.2           22.5  POINT (-48.3923 -27.4374)
+1    Ingleses Sul    Gracilaria             7.8           23.1  POINT (-48.3950 -27.4450)
+2  Barra da Lagoa     Sargassum             3.1           22.8  POINT (-48.4200 -27.5750)
+</code></pre></div>
+
+<h3 id="o-que-e-crs">O que é CRS?</h3>
+<p><strong>CRS (Coordinate Reference System)</strong> = sistema de coordenadas.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">EPSG</span><span class="o">:</span><span class="mi">4326</span><span class="w">  </span><span class="err">→</span><span class="w"> </span><span class="n">WGS84</span><span class="w"> </span><span class="o">(</span><span class="n">GPS</span><span class="w"> </span><span class="n">padrão</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">graus</span><span class="w"> </span><span class="n">decimais</span><span class="o">)</span>
+<span class="n">EPSG</span><span class="o">:</span><span class="mi">3857</span><span class="w">  </span><span class="err">→</span><span class="w"> </span><span class="n">Web</span><span class="w"> </span><span class="n">Mercator</span><span class="w"> </span><span class="o">(</span><span class="n">Google</span><span class="w"> </span><span class="n">Maps</span><span class="o">,</span><span class="w"> </span><span class="n">Leaflet</span><span class="o">)</span>
+<span class="n">EPSG</span><span class="o">:</span><span class="mi">31982</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">SIRGAS</span><span class="w"> </span><span class="mi">2000</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">UTM</span><span class="w"> </span><span class="mi">22</span><span class="n">S</span><span class="w"> </span><span class="o">(</span><span class="n">Brasil</span><span class="w"> </span><span class="n">Sul</span><span class="o">)</span>
+</code></pre></div>
+
+<p><strong>Sempre use EPSG:4326</strong> para dados geográficos básicos!</p>
+<hr />
+<h2 id="carregar-dados-geoespaciais">📥 Carregar Dados Geoespaciais</h2>
+<h3 id="de-geojson">De GeoJSON</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+
+<span class="c1"># Carregar GeoJSON</span>
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s2">&quot;coletas_labficol.geojson&quot;</span><span class="p">)</span>
+
+<span class="c1"># Informações</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gdf</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gdf</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="c1"># Ver CRS</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gdf</span><span class="o">.</span><span class="n">crs</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="de-shapefile">De Shapefile</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Shapefile (formato antigo mas comum)</span>
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s2">&quot;municipios_sc.shp&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="de-csv-com-coordenadas">De CSV com Coordenadas</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">Point</span>
+
+<span class="c1"># Carregar CSV</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;coletas.csv&quot;</span><span class="p">)</span>
+<span class="c1"># Colunas: nome, latitude, longitude, especie</span>
+
+<span class="c1"># Converter para GeoDataFrame</span>
+<span class="n">geometry</span> <span class="o">=</span> <span class="p">[</span><span class="n">Point</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">)</span> <span class="k">for</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">])]</span>
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="n">geometry</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="s2">&quot;EPSG:4326&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="visualizar-dados">🗺️ Visualizar Dados</h2>
+<h3 id="plot-simples">Plot Simples</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Criar dados</span>
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s2">&quot;coletas_labficol.geojson&quot;</span><span class="p">)</span>
+
+<span class="c1"># Plot básico</span>
+<span class="n">gdf</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Estações de Coleta - LABFICOL&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Longitude&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Latitude&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+
+<h3 id="plot-com-cores-por-categoria">Plot com Cores por Categoria</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Colorir por espécie</span>
+<span class="n">gdf</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s1">&#39;especie&#39;</span><span class="p">,</span> 
+         <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> 
+         <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+         <span class="n">markersize</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+         <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Set1&#39;</span><span class="p">)</span>  <span class="c1"># Esquema de cores</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribuição de Espécies&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+
+<h3 id="plot-com-tamanho-variavel">Plot com Tamanho Variável</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Tamanho proporcional à profundidade</span>
+<span class="n">gdf</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s1">&#39;profundidade_m&#39;</span><span class="p">,</span>
+         <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+         <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+         <span class="n">markersize</span><span class="o">=</span><span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;profundidade_m&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">20</span><span class="p">,</span>  <span class="c1"># Multiplicar para visualizar</span>
+         <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;YlOrRd&#39;</span><span class="p">)</span>  <span class="c1"># Amarelo a Vermelho</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Profundidade das Coletas&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+
+<hr />
+<h2 id="operacoes-basicas">🔧 Operações Básicas</h2>
+<h3 id="filtrar-dados">Filtrar Dados</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Filtrar por espécie</span>
+<span class="n">ulvas</span> <span class="o">=</span> <span class="n">gdf</span><span class="p">[</span><span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total de Ulva lactuca: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">ulvas</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Filtrar por profundidade</span>
+<span class="n">rasas</span> <span class="o">=</span> <span class="n">gdf</span><span class="p">[</span><span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;profundidade_m&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Coletas rasas (&lt;5m): </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">rasas</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Múltiplas condições</span>
+<span class="n">validas</span> <span class="o">=</span> <span class="n">gdf</span><span class="p">[(</span><span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;temperatura_c&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">20</span><span class="p">)</span> <span class="o">&amp;</span> 
+              <span class="p">(</span><span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;temperatura_c&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">25</span><span class="p">)</span> <span class="o">&amp;</span> 
+              <span class="p">(</span><span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;profundidade_m&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">)]</span>
+</code></pre></div>
+
+<h3 id="adicionar-coluna">Adicionar Coluna</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Classificar profundidade</span>
+<span class="k">def</span> <span class="nf">classificar_profundidade</span><span class="p">(</span><span class="n">prof</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">prof</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Rasa&quot;</span>
+    <span class="k">elif</span> <span class="n">prof</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Intermediária&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Profunda&quot;</span>
+
+<span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;classificacao&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;profundidade_m&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">classificar_profundidade</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="operacoes-geometricas">📐 Operações Geométricas</h2>
+<h3 id="calcular-distancias">Calcular Distâncias</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">Point</span>
+
+<span class="c1"># Ponto de referência (LABFICOL - UFSC)</span>
+<span class="n">labficol</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="mf">48.5495</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.5969</span><span class="p">)</span>
+
+<span class="c1"># Calcular distância de cada coleta ao LABFICOL</span>
+<span class="c1"># Nota: distância em graus (aproximação!)</span>
+<span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;distancia_graus&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">labficol</span><span class="p">)</span>
+
+<span class="c1"># Converter para km (1 grau ≈ 111 km)</span>
+<span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;distancia_km&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;distancia_graus&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">111</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">gdf</span><span class="p">[[</span><span class="s1">&#39;nome&#39;</span><span class="p">,</span> <span class="s1">&#39;distancia_km&#39;</span><span class="p">]])</span>
+</code></pre></div>
+
+<h3 id="criar-buffer-area-ao-redor">Criar Buffer (Área ao Redor)</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Criar buffer de 5km ao redor de cada ponto</span>
+<span class="c1"># Primeiro converter para sistema métrico</span>
+<span class="n">gdf_utm</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="s2">&quot;EPSG:31982&quot;</span><span class="p">)</span>  <span class="c1"># UTM para Santa Catarina</span>
+
+<span class="c1"># Buffer de 5000 metros (5km)</span>
+<span class="n">gdf_utm</span><span class="p">[</span><span class="s1">&#39;buffer_5km&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf_utm</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">buffer</span><span class="p">(</span><span class="mi">5000</span><span class="p">)</span>
+
+<span class="c1"># Plotar</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">gdf_utm</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">gdf_utm</span><span class="p">[</span><span class="s1">&#39;buffer_5km&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Áreas de Influência (5km)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+
+<h3 id="verificar-se-ponto-esta-dentro-de-poligono">Verificar se Ponto está Dentro de Polígono</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">Polygon</span>
+
+<span class="c1"># Criar área de estudo (polígono)</span>
+<span class="n">area_estudo</span> <span class="o">=</span> <span class="n">Polygon</span><span class="p">([</span>
+    <span class="p">(</span><span class="o">-</span><span class="mf">48.6</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.4</span><span class="p">),</span>
+    <span class="p">(</span><span class="o">-</span><span class="mf">48.3</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.4</span><span class="p">),</span>
+    <span class="p">(</span><span class="o">-</span><span class="mf">48.3</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.7</span><span class="p">),</span>
+    <span class="p">(</span><span class="o">-</span><span class="mf">48.6</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.7</span><span class="p">)</span>
+<span class="p">])</span>
+
+<span class="c1"># Verificar quais pontos estão dentro</span>
+<span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;dentro_area&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">within</span><span class="p">(</span><span class="n">area_estudo</span><span class="p">)</span>
+
+<span class="c1"># Filtrar</span>
+<span class="n">dentro</span> <span class="o">=</span> <span class="n">gdf</span><span class="p">[</span><span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;dentro_area&#39;</span><span class="p">]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Coletas dentro da área: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">dentro</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="analise-espacial">🎯 Análise Espacial</h2>
+<h3 id="encontrar-vizinhos-mais-proximos">Encontrar Vizinhos Mais Próximos</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">encontrar_mais_proximo</span><span class="p">(</span><span class="n">gdf</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Encontra ponto mais próximo a um dado índice&quot;&quot;&quot;</span>
+    <span class="n">ponto</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;geometry&#39;</span><span class="p">]</span>
+
+    <span class="c1"># Calcular distâncias</span>
+    <span class="n">distancias</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">ponto</span><span class="p">)</span>
+
+    <span class="c1"># Remover próprio ponto</span>
+    <span class="n">distancias</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+
+    <span class="c1"># Encontrar mínimo</span>
+    <span class="n">idx_proximo</span> <span class="o">=</span> <span class="n">distancias</span><span class="o">.</span><span class="n">idxmin</span><span class="p">()</span>
+    <span class="n">dist_km</span> <span class="o">=</span> <span class="n">distancias</span><span class="p">[</span><span class="n">idx_proximo</span><span class="p">]</span> <span class="o">*</span> <span class="mi">111</span>
+
+    <span class="k">return</span> <span class="n">gdf</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx_proximo</span><span class="p">,</span> <span class="s1">&#39;nome&#39;</span><span class="p">],</span> <span class="n">dist_km</span>
+
+<span class="c1"># Testar</span>
+<span class="n">nome</span><span class="p">,</span> <span class="n">dist</span> <span class="o">=</span> <span class="n">encontrar_mais_proximo</span><span class="p">(</span><span class="n">gdf</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ponto mais próximo: </span><span class="si">{</span><span class="n">nome</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">dist</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> km)&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="agrupar-por-regiao">Agrupar por Região</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Dividir em regiões por latitude</span>
+<span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;regiao&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">gdf</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> 
+                       <span class="n">bins</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> 
+                       <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Norte&#39;</span><span class="p">,</span> <span class="s1">&#39;Centro&#39;</span><span class="p">,</span> <span class="s1">&#39;Sul&#39;</span><span class="p">])</span>
+
+<span class="c1"># Estatísticas por região</span>
+<span class="n">resumo</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;regiao&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span>
+    <span class="s1">&#39;profundidade_m&#39;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;temperatura_c&#39;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;especie&#39;</span><span class="p">:</span> <span class="s1">&#39;count&#39;</span>
+<span class="p">})</span>
+<span class="n">resumo</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Prof. Média (m)&#39;</span><span class="p">,</span> <span class="s1">&#39;Temp. Média (°C)&#39;</span><span class="p">,</span> <span class="s1">&#39;Num. Coletas&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">resumo</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="salvar-dados">💾 Salvar Dados</h2>
+<h3 id="para-geojson">Para GeoJSON</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Salvar como GeoJSON</span>
+<span class="n">gdf</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="s2">&quot;resultado_analise.geojson&quot;</span><span class="p">,</span> <span class="n">driver</span><span class="o">=</span><span class="s2">&quot;GeoJSON&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="para-shapefile">Para Shapefile</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Salvar como Shapefile</span>
+<span class="n">gdf</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="s2">&quot;resultado_analise.shp&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="para-csv-sem-geometria">Para CSV (sem geometria)</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Adicionar colunas de coordenadas</span>
+<span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">x</span>
+<span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">y</span>
+
+<span class="c1"># Salvar só os dados</span>
+<span class="n">gdf</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;resultado.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="exemplo-completo-analise-de-distribuicao-de-especies">🌍 Exemplo Completo: Análise de Distribuição de Espécies</h2>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">Point</span>
+
+<span class="c1"># 1. CRIAR DADOS DE EXEMPLO (LABFICOL)</span>
+<span class="n">dados</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>
+    <span class="s1">&#39;local&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s1">&#39;Ingleses N&#39;</span><span class="p">,</span> <span class="s1">&#39;Ingleses S&#39;</span><span class="p">,</span> <span class="s1">&#39;Barra Lagoa&#39;</span><span class="p">,</span> <span class="s1">&#39;Laguna&#39;</span><span class="p">,</span> 
+        <span class="s1">&#39;Garopaba&#39;</span><span class="p">,</span> <span class="s1">&#39;Armação&#39;</span><span class="p">,</span> <span class="s1">&#39;Campeche&#39;</span><span class="p">,</span> <span class="s1">&#39;Pântano Sul&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Joaquina&#39;</span><span class="p">,</span> <span class="s1">&#39;Mole&#39;</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;especie&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">,</span> <span class="s1">&#39;Gracilaria&#39;</span><span class="p">,</span> <span class="s1">&#39;Sargassum&#39;</span><span class="p">,</span> <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Gracilaria&#39;</span><span class="p">,</span> <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">,</span> <span class="s1">&#39;Sargassum&#39;</span><span class="p">,</span> <span class="s1">&#39;Laminaria&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">,</span> <span class="s1">&#39;Gracilaria&#39;</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;profundidade_m&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">5.2</span><span class="p">,</span> <span class="mf">7.8</span><span class="p">,</span> <span class="mf">3.1</span><span class="p">,</span> <span class="mf">10.5</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">8.2</span><span class="p">,</span> <span class="mf">12.0</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">],</span>
+    <span class="s1">&#39;temperatura_c&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">22.5</span><span class="p">,</span> <span class="mf">23.1</span><span class="p">,</span> <span class="mf">22.8</span><span class="p">,</span> <span class="mf">21.2</span><span class="p">,</span> <span class="mf">22.0</span><span class="p">,</span> <span class="mf">23.5</span><span class="p">,</span> <span class="mf">22.9</span><span class="p">,</span> <span class="mf">20.5</span><span class="p">,</span> <span class="mf">23.0</span><span class="p">,</span> <span class="mf">22.7</span><span class="p">],</span>
+    <span class="s1">&#39;longitude&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">48.39</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.40</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.42</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.78</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.62</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.51</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.48</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.50</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.44</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.43</span><span class="p">],</span>
+    <span class="s1">&#39;latitude&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">27.44</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.45</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.58</span><span class="p">,</span> <span class="o">-</span><span class="mf">28.48</span><span class="p">,</span> <span class="o">-</span><span class="mf">28.02</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.75</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.67</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.78</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.63</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.58</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span>
+
+<span class="c1"># 2. CRIAR GEODATAFRAME</span>
+<span class="n">geometry</span> <span class="o">=</span> <span class="p">[</span><span class="n">Point</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">)</span> <span class="k">for</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">])]</span>
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="n">geometry</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="s2">&quot;EPSG:4326&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🌊 ANÁLISE DE DISTRIBUIÇÃO DE MACROALGAS - LABFICOL/UFSC&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
+
+<span class="c1"># 3. ESTATÍSTICAS GERAIS</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 Dados Gerais:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Total de coletas: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">gdf</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Espécies únicas: </span><span class="si">{</span><span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Profundidade média: </span><span class="si">{</span><span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;profundidade_m&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">m&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Temperatura média: </span><span class="si">{</span><span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;temperatura_c&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°C&quot;</span><span class="p">)</span>
+
+<span class="c1"># 4. ANÁLISE POR ESPÉCIE</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🌿 Distribuição por Espécie:&quot;</span><span class="p">)</span>
+<span class="n">especies_count</span> <span class="o">=</span> <span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">especie</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">especies_count</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   </span><span class="si">{</span><span class="n">especie</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2"> coletas&quot;</span><span class="p">)</span>
+
+<span class="c1"># 5. CALCULAR CENTROIDE (centro geográfico)</span>
+<span class="n">centroide</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">unary_union</span><span class="o">.</span><span class="n">centroid</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📍 Centro Geográfico das Coletas:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Latitude: </span><span class="si">{</span><span class="n">centroide</span><span class="o">.</span><span class="n">y</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">°&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Longitude: </span><span class="si">{</span><span class="n">centroide</span><span class="o">.</span><span class="n">x</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">°&quot;</span><span class="p">)</span>
+
+<span class="c1"># 6. FILTRAR E ANALISAR</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✓ Coletas Validadas (20-25°C, &lt;10m):&quot;</span><span class="p">)</span>
+<span class="n">validas</span> <span class="o">=</span> <span class="n">gdf</span><span class="p">[(</span><span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;temperatura_c&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">20</span><span class="p">)</span> <span class="o">&amp;</span> 
+              <span class="p">(</span><span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;temperatura_c&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">25</span><span class="p">)</span> <span class="o">&amp;</span> 
+              <span class="p">(</span><span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;profundidade_m&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">)]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">validas</span><span class="p">)</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">gdf</span><span class="p">)</span><span class="si">}</span><span class="s2"> coletas válidas (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">validas</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">gdf</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+
+<span class="c1"># 7. VISUALIZAÇÃO</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="c1"># Subplot 1: Todas as coletas</span>
+<span class="n">gdf</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Todas as Estações de Coleta&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Longitude&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Latitude&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># Subplot 2: Por espécie</span>
+<span class="n">gdf</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">column</span><span class="o">=</span><span class="s1">&#39;especie&#39;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+         <span class="n">markersize</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Set1&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Distribuição por Espécie&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Longitude&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># Subplot 3: Por profundidade</span>
+<span class="n">gdf</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">column</span><span class="o">=</span><span class="s1">&#39;profundidade_m&#39;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+         <span class="n">markersize</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;YlOrRd&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Profundidade das Coletas&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Longitude&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;analise_distribuicao.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">💾 Gráfico salvo: analise_distribuicao.png&quot;</span><span class="p">)</span>
+
+<span class="c1"># 8. SALVAR RESULTADOS</span>
+<span class="n">gdf</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="s2">&quot;coletas_analisadas.geojson&quot;</span><span class="p">,</span> <span class="n">driver</span><span class="o">=</span><span class="s2">&quot;GeoJSON&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;💾 GeoJSON salvo: coletas_analisadas.geojson&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Análise concluída com sucesso!&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="checklist-desta-licao">🎓 Checklist desta Lição</h2>
+<ul>
+<li>[ ] Entendo o que é GeoDataFrame</li>
+<li>[ ] Consigo criar GeoDataFrame de dados</li>
+<li>[ ] Sei carregar e salvar GeoJSON</li>
+<li>[ ] Posso fazer operações geométricas (buffer, distância)</li>
+<li>[ ] Consigo visualizar dados em mapas</li>
+<li>[ ] Realizei análise espacial completa</li>
+</ul>
+<p>Se marcou tudo, você está pronto para <strong>Mapas Interativos</strong>! 🎉</p>
+<hr />
+<h2 id="proximo-topico">➡️ Próximo Tópico</h2>
+<p><strong>👉 <a href="03-Mapas-Folium.md">03-Mapas-Folium.md</a></strong></p>
+<p>Lá você aprenderá:
+- Criar mapas interativos com Folium
+- Adicionar marcadores e popups
+- Camadas e clusters
+- Publicar mapas online</p>
+<hr />
+<h2 id="resumo-de-funcoes">📝 Resumo de Funções</h2>
+<table>
+<thead>
+<tr>
+<th>Função</th>
+<th>Uso</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gpd.read_file()</code></td>
+<td>Carregar GeoJSON/Shapefile</td>
+</tr>
+<tr>
+<td><code>gdf.plot()</code></td>
+<td>Visualizar mapa</td>
+</tr>
+<tr>
+<td><code>gdf.to_file()</code></td>
+<td>Salvar arquivo geoespacial</td>
+</tr>
+<tr>
+<td><code>geometry.distance()</code></td>
+<td>Calcular distância</td>
+</tr>
+<tr>
+<td><code>geometry.buffer()</code></td>
+<td>Criar área ao redor</td>
+</tr>
+<tr>
+<td><code>geometry.within()</code></td>
+<td>Verificar se está dentro</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>Você domina GeoPandas básico!</strong> 🐼 Próximo: Mapas interativos com Folium! 🗺️</p>
+      </article>
+    </main>
+    <footer role="contentinfo">
+      <p>Gerado automaticamente em 06/01/2026 16:10. Paleta: ColorBrewer BuGn.</p>
+    </footer>
+    <script src="..\assets/site.js"></script>
+  </body>
+</html>

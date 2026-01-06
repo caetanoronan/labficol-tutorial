@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>🤖 Introdução ao Machine Learning para Biologia</title>
+    <link rel="preload" href="..\assets/theme.css" as="style" />
+    <link rel="stylesheet" href="..\assets/theme.css" />
+  </head>
+  <body>
+    <a href="#conteudo" class="skip-link">Pular para conteúdo</a>
+    <header role="banner">
+      <div class="wrap">
+        <h1>🤖 Introdução ao Machine Learning para Biologia</h1>
+        <nav aria-label="Navegação">
+          <a href="..\index.html">Início</a>
+          <a href="https://github.com/caetanoronan/labficol-tutorial">Repositório</a>
+          <a href="https://caetanoronan.github.io/labficol-tutorial/">Site</a>
+        </nav>
+        <div class="controls">
+          <button id="toggleHC" aria-pressed="false" aria-label="Alternar alto contraste">Alto contraste</button>
+          <button id="toggleBT" aria-pressed="false" aria-label="Alternar texto grande">Texto grande</button>
+          <button id="toggleLM" aria-pressed="false" aria-label="Reduzir movimento">Menos movimento</button>
+        </div>
+      </div>
+    </header>
+    <main id="conteudo" role="main">
+      <article class="md-content" aria-label="Conteúdo">
+        <h1 id="introducao-ao-machine-learning-para-biologia">🤖 Introdução ao Machine Learning para Biologia</h1>
+<h2 id="objetivo-da-licao">🎯 Objetivo da Lição</h2>
+<p>Aprender os <strong>conceitos fundamentais de Machine Learning</strong> e como aplicá-los em problemas de biologia e oceanografia.</p>
+<p><strong>O que é Machine Learning?</strong>
+- Algoritmos que <strong>aprendem padrões</strong> a partir de dados
+- Fazem <strong>previsões</strong> sem programação explícita
+- Melhoram com <strong>mais dados</strong> e experiência</p>
+<hr />
+<h2 id="tipos-de-machine-learning">🧠 Tipos de Machine Learning</h2>
+<h3 id="1-aprendizado-supervisionado">1. Aprendizado Supervisionado</h3>
+<p><strong>Definição:</strong> Aprende a partir de exemplos rotulados.</p>
+<div class="codehilite"><pre><span></span><code>Entrada (X) → Modelo → Saída (y)
+</code></pre></div>
+
+<p><strong>Exemplos em Biologia:</strong>
+- Classificar espécies a partir de características morfológicas
+- Prever biomassa com base em temperatura e salinidade
+- Identificar imagens de macroalgas</p>
+<p><strong>Tipos:</strong>
+- <strong>Classificação:</strong> Saída categórica (espécie A, B ou C)
+- <strong>Regressão:</strong> Saída numérica (biomassa em gramas)</p>
+<hr />
+<h3 id="2-aprendizado-nao-supervisionado">2. Aprendizado Não-Supervisionado</h3>
+<p><strong>Definição:</strong> Encontra padrões em dados sem rótulos.</p>
+<p><strong>Exemplos:</strong>
+- Agrupar estações de coleta por similaridade (clustering)
+- Reduzir dimensionalidade de dados genômicos (PCA)
+- Detectar anomalias em séries temporais</p>
+<hr />
+<h3 id="3-aprendizado-por-reforco">3. Aprendizado por Reforço</h3>
+<p><strong>Definição:</strong> Aprende por tentativa e erro com recompensas.</p>
+<p><strong>Exemplo:</strong> Otimizar estratégias de coleta para maximizar biodiversidade.</p>
+<hr />
+<h2 id="workflow-de-machine-learning">📊 Workflow de Machine Learning</h2>
+<div class="codehilite"><pre><span></span><code><span class="mf">1.</span><span class="w"> </span><span class="n">COLETAR</span><span class="w"> </span><span class="n">DADOS</span>
+<span class="w">   </span><span class="err">↓</span>
+<span class="mf">2.</span><span class="w"> </span><span class="nb">EXP</span><span class="n">LORAR</span><span class="w"> </span><span class="n">E</span><span class="w"> </span><span class="n">LIMPAR</span>
+<span class="w">   </span><span class="err">↓</span>
+<span class="mf">3.</span><span class="w"> </span><span class="n">PREPARAR</span><span class="w"> </span><span class="n">FEATURES</span><span class="w"> </span><span class="p">(</span><span class="n">características</span><span class="p">)</span>
+<span class="w">   </span><span class="err">↓</span>
+<span class="mf">4.</span><span class="w"> </span><span class="n">DIVIDIR</span><span class="p">:</span><span class="w"> </span><span class="n">Treino</span><span class="w"> </span><span class="p">(</span><span class="mf">80</span><span class="err">%</span><span class="p">)</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="n">Teste</span><span class="w"> </span><span class="p">(</span><span class="mf">20</span><span class="err">%</span><span class="p">)</span>
+<span class="w">   </span><span class="err">↓</span>
+<span class="mf">5.</span><span class="w"> </span><span class="n">ESCOLHER</span><span class="w"> </span><span class="n">MODELO</span>
+<span class="w">   </span><span class="err">↓</span>
+<span class="mf">6.</span><span class="w"> </span><span class="n">TREINAR</span><span class="w"> </span><span class="n">MODELO</span>
+<span class="w">   </span><span class="err">↓</span>
+<span class="mf">7.</span><span class="w"> </span><span class="n">AVALIAR</span><span class="w"> </span><span class="n">DESEMPENHO</span>
+<span class="w">   </span><span class="err">↓</span>
+<span class="mf">8.</span><span class="w"> </span><span class="n">AJUSTAR</span><span class="w"> </span><span class="n">E</span><span class="w"> </span><span class="n">MELHORAR</span>
+<span class="w">   </span><span class="err">↓</span>
+<span class="mf">9.</span><span class="w"> </span><span class="n">USAR</span><span class="w"> </span><span class="n">EM</span><span class="w"> </span><span class="n">PRODUÇÃO</span>
+</code></pre></div>
+
+<hr />
+<h2 id="bibliotecas-python-para-ml">🔧 Bibliotecas Python para ML</h2>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Instalar</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">scikit</span><span class="o">-</span><span class="n">learn</span> <span class="n">pandas</span> <span class="n">numpy</span> <span class="n">matplotlib</span> <span class="n">seaborn</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="c1"># Importar</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="c1"># Machine Learning</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span><span class="p">,</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">confusion_matrix</span><span class="p">,</span> <span class="n">classification_report</span>
+</code></pre></div>
+
+<hr />
+<h2 id="exemplo-1-classificacao-de-especies">🎯 Exemplo 1: Classificação de Espécies</h2>
+<h3 id="problema">Problema</h3>
+<p>Dado comprimento, largura e espessura de macroalgas, <strong>prever a espécie</strong>.</p>
+<h3 id="dataset">Dataset</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">classification_report</span>
+
+<span class="c1"># Dados sintéticos de 3 espécies</span>
+<span class="n">dados</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;comprimento_cm&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">12.5</span><span class="p">,</span> <span class="mf">15.2</span><span class="p">,</span> <span class="mf">18.7</span><span class="p">,</span> <span class="mf">20.3</span><span class="p">,</span> <span class="mf">25.1</span><span class="p">,</span>  <span class="c1"># Ulva</span>
+                       <span class="mf">8.3</span><span class="p">,</span> <span class="mf">9.5</span><span class="p">,</span> <span class="mf">10.2</span><span class="p">,</span> <span class="mf">11.8</span><span class="p">,</span> <span class="mf">12.1</span><span class="p">,</span>    <span class="c1"># Gracilaria</span>
+                       <span class="mf">30.5</span><span class="p">,</span> <span class="mf">35.8</span><span class="p">,</span> <span class="mf">40.2</span><span class="p">,</span> <span class="mf">38.5</span><span class="p">,</span> <span class="mf">42.1</span><span class="p">],</span> <span class="c1"># Sargassum</span>
+    <span class="s1">&#39;largura_cm&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">8.2</span><span class="p">,</span> <span class="mf">9.5</span><span class="p">,</span> <span class="mf">11.3</span><span class="p">,</span> <span class="mf">12.8</span><span class="p">,</span> <span class="mf">15.2</span><span class="p">,</span>
+                   <span class="mf">3.5</span><span class="p">,</span> <span class="mf">4.1</span><span class="p">,</span> <span class="mf">4.8</span><span class="p">,</span> <span class="mf">5.2</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">,</span>
+                   <span class="mf">10.5</span><span class="p">,</span> <span class="mf">12.3</span><span class="p">,</span> <span class="mf">15.8</span><span class="p">,</span> <span class="mf">14.2</span><span class="p">,</span> <span class="mf">16.5</span><span class="p">],</span>
+    <span class="s1">&#39;espessura_mm&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span>
+                     <span class="mf">1.2</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.6</span><span class="p">,</span> <span class="mf">1.7</span><span class="p">,</span>
+                     <span class="mf">2.5</span><span class="p">,</span> <span class="mf">2.8</span><span class="p">,</span> <span class="mf">3.2</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">],</span>
+    <span class="s1">&#39;especie&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Ulva&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">5</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;Gracilaria&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">5</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;Sargassum&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">5</span>
+<span class="p">}</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🌿 CLASSIFICAÇÃO DE ESPÉCIES DE MACROALGAS&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 Dataset:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+
+<span class="c1"># ====================</span>
+<span class="c1"># PREPARAR DADOS</span>
+<span class="c1"># ====================</span>
+
+<span class="c1"># Features (X) e Target (y)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;comprimento_cm&#39;</span><span class="p">,</span> <span class="s1">&#39;largura_cm&#39;</span><span class="p">,</span> <span class="s1">&#39;espessura_mm&#39;</span><span class="p">]]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📏 Features (X): </span><span class="si">{</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🎯 Target (y): </span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Dividir em treino e teste (80/20)</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📚 Dados de treino: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span><span class="si">}</span><span class="s2"> amostras&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🧪 Dados de teste: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span><span class="si">}</span><span class="s2"> amostras&quot;</span><span class="p">)</span>
+
+<span class="c1"># ====================</span>
+<span class="c1"># TREINAR MODELO</span>
+<span class="c1"># ====================</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🤖 TREINANDO MODELO (DECISION TREE)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># Criar e treinar modelo</span>
+<span class="n">modelo</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">modelo</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Modelo treinado!&quot;</span><span class="p">)</span>
+
+<span class="c1"># ====================</span>
+<span class="c1"># FAZER PREVISÕES</span>
+<span class="c1"># ====================</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🔮 FAZENDO PREVISÕES&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># Prever no conjunto de teste</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">modelo</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Previsões vs Real:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">real</span><span class="p">,</span> <span class="n">pred</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)):</span>
+    <span class="n">correto</span> <span class="o">=</span> <span class="s2">&quot;✅&quot;</span> <span class="k">if</span> <span class="n">real</span> <span class="o">==</span> <span class="n">pred</span> <span class="k">else</span> <span class="s2">&quot;❌&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Amostra </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">: Real=</span><span class="si">{</span><span class="n">real</span><span class="si">:</span><span class="s2">12s</span><span class="si">}</span><span class="s2"> | Previsto=</span><span class="si">{</span><span class="n">pred</span><span class="si">:</span><span class="s2">12s</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">correto</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># ====================</span>
+<span class="c1"># AVALIAR DESEMPENHO</span>
+<span class="c1"># ====================</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;📊 AVALIAÇÃO DO MODELO&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># Acurácia</span>
+<span class="n">acuracia</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🎯 Acurácia: </span><span class="si">{</span><span class="n">acuracia</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+
+<span class="c1"># Relatório detalhado</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📋 Relatório de Classificação:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+
+<span class="c1"># ====================</span>
+<span class="c1"># TESTAR COM NOVA AMOSTRA</span>
+<span class="c1"># ====================</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🆕 PREVER ESPÉCIE DE NOVA AMOSTRA&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># Nova amostra desconhecida</span>
+<span class="n">nova_amostra</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;comprimento_cm&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">22.5</span><span class="p">],</span>
+    <span class="s1">&#39;largura_cm&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">13.8</span><span class="p">],</span>
+    <span class="s1">&#39;espessura_mm&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.75</span><span class="p">]</span>
+<span class="p">})</span>
+
+<span class="n">predicao</span> <span class="o">=</span> <span class="n">modelo</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">nova_amostra</span><span class="p">)</span>
+<span class="n">probabilidades</span> <span class="o">=</span> <span class="n">modelo</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">nova_amostra</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📏 Características:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Comprimento: </span><span class="si">{</span><span class="n">nova_amostra</span><span class="p">[</span><span class="s1">&#39;comprimento_cm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> cm&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Largura: </span><span class="si">{</span><span class="n">nova_amostra</span><span class="p">[</span><span class="s1">&#39;largura_cm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> cm&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Espessura: </span><span class="si">{</span><span class="n">nova_amostra</span><span class="p">[</span><span class="s1">&#39;espessura_mm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> mm&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🔮 Previsão: </span><span class="si">{</span><span class="n">predicao</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 Probabilidades:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">especie</span><span class="p">,</span> <span class="n">prob</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">modelo</span><span class="o">.</span><span class="n">classes_</span><span class="p">,</span> <span class="n">probabilidades</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   </span><span class="si">{</span><span class="n">especie</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">prob</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ CLASSIFICAÇÃO CONCLUÍDA!&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="exemplo-2-regressao-prever-biomassa">📈 Exemplo 2: Regressão - Prever Biomassa</h2>
+<h3 id="problema_1">Problema</h3>
+<p>Prever <strong>biomassa</strong> com base em temperatura, salinidade e profundidade.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">r2_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+
+<span class="c1"># Dataset</span>
+<span class="n">dados</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;temperatura_c&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">24.5</span><span class="p">,</span> <span class="mf">26.1</span><span class="p">,</span> <span class="mf">22.3</span><span class="p">,</span> <span class="mf">21.5</span><span class="p">,</span> <span class="mf">19.8</span><span class="p">,</span> <span class="mf">18.2</span><span class="p">,</span> <span class="mf">17.5</span><span class="p">,</span> <span class="mf">18.0</span><span class="p">,</span> <span class="mf">19.5</span><span class="p">,</span> <span class="mf">21.0</span><span class="p">],</span>
+    <span class="s1">&#39;salinidade_psu&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">35.0</span><span class="p">,</span> <span class="mf">34.5</span><span class="p">,</span> <span class="mf">35.2</span><span class="p">,</span> <span class="mf">35.3</span><span class="p">,</span> <span class="mf">35.4</span><span class="p">,</span> <span class="mf">35.5</span><span class="p">,</span> <span class="mf">35.6</span><span class="p">,</span> <span class="mf">35.4</span><span class="p">,</span> <span class="mf">35.2</span><span class="p">,</span> <span class="mf">35.0</span><span class="p">],</span>
+    <span class="s1">&#39;profundidade_m&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">3.2</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">,</span> <span class="mf">3.6</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">,</span> <span class="mf">3.9</span><span class="p">,</span> <span class="mf">3.7</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">],</span>
+    <span class="s1">&#39;biomassa_g&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">245.3</span><span class="p">,</span> <span class="mf">198.5</span><span class="p">,</span> <span class="mf">302.1</span><span class="p">,</span> <span class="mf">275.4</span><span class="p">,</span> <span class="mf">310.8</span><span class="p">,</span> <span class="mf">285.2</span><span class="p">,</span> <span class="mf">320.5</span><span class="p">,</span> <span class="mf">295.7</span><span class="p">,</span> <span class="mf">260.8</span><span class="p">,</span> <span class="mf">280.3</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;📊 REGRESSÃO: PREVER BIOMASSA&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># Preparar dados</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;temperatura_c&#39;</span><span class="p">,</span> <span class="s1">&#39;salinidade_psu&#39;</span><span class="p">,</span> <span class="s1">&#39;profundidade_m&#39;</span><span class="p">]]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;biomassa_g&#39;</span><span class="p">]</span>
+
+<span class="c1"># Normalizar features</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">X_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="c1"># Dividir dados</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X_scaled</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+
+<span class="c1"># Treinar modelo</span>
+<span class="n">modelo</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">modelo</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># Prever</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">modelo</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="c1"># Avaliar</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 Desempenho do Modelo:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   R² Score: </span><span class="si">{</span><span class="n">r2</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   RMSE: </span><span class="si">{</span><span class="n">rmse</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">g&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🎯 Coeficientes:&quot;</span><span class="p">)</span>
+<span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;temperatura_c&#39;</span><span class="p">,</span> <span class="s1">&#39;salinidade_psu&#39;</span><span class="p">,</span> <span class="s1">&#39;profundidade_m&#39;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">feature</span><span class="p">,</span> <span class="n">coef</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">modelo</span><span class="o">.</span><span class="n">coef_</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   </span><span class="si">{</span><span class="n">feature</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">coef</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Prever nova amostra</span>
+<span class="n">nova_amostra</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">([[</span><span class="mf">20.5</span><span class="p">,</span> <span class="mf">35.1</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">]])</span>
+<span class="n">predicao</span> <span class="o">=</span> <span class="n">modelo</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">nova_amostra</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🔮 Previsão para nova amostra: </span><span class="si">{</span><span class="n">predicao</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">g&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ REGRESSÃO CONCLUÍDA!&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="visualizacao-de-modelos">🎨 Visualização de Modelos</h2>
+<h3 id="arvore-de-decisao">Árvore de Decisão</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">tree</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Visualizar árvore</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">plot_tree</span><span class="p">(</span><span class="n">modelo</span><span class="p">,</span> 
+               <span class="n">feature_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;comprimento&#39;</span><span class="p">,</span> <span class="s1">&#39;largura&#39;</span><span class="p">,</span> <span class="s1">&#39;espessura&#39;</span><span class="p">],</span>
+               <span class="n">class_names</span><span class="o">=</span><span class="n">modelo</span><span class="o">.</span><span class="n">classes_</span><span class="p">,</span>
+               <span class="n">filled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+               <span class="n">rounded</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+               <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Árvore de Decisão - Classificação de Espécies&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;arvore_decisao.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+
+<h3 id="matriz-de-confusao">Matriz de Confusão</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">confusion_matrix</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="c1"># Calcular matriz de confusão</span>
+<span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+
+<span class="c1"># Plotar</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span>
+            <span class="n">xticklabels</span><span class="o">=</span><span class="n">modelo</span><span class="o">.</span><span class="n">classes_</span><span class="p">,</span>
+            <span class="n">yticklabels</span><span class="o">=</span><span class="n">modelo</span><span class="o">.</span><span class="n">classes_</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Previsto&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Real&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Matriz de Confusão&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;matriz_confusao.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+
+<hr />
+<h2 id="conceitos-chave">🎓 Conceitos-Chave</h2>
+<h3 id="overfitting-vs-underfitting">Overfitting vs Underfitting</h3>
+<div class="codehilite"><pre><span></span><code><span class="nx">UNDERFITTING</span><span class="w"> </span><span class="p">(</span><span class="nx">modelo</span><span class="w"> </span><span class="nx">simples</span><span class="w"> </span><span class="nx">demais</span><span class="p">)</span>
+<span class="w">   </span><span class="nx">Treino</span><span class="p">:</span><span class="w"> </span><span class="mi">60</span><span class="o">%</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nx">Teste</span><span class="p">:</span><span class="w"> </span><span class="mi">62</span><span class="o">%</span>
+<span class="w">   </span><span class="err">→</span><span class="w"> </span><span class="nx">Adicionar</span><span class="w"> </span><span class="nx">complexidade</span>
+
+<span class="nx">BONS</span><span class="w"> </span><span class="nx">RESULTADOS</span>
+<span class="w">   </span><span class="nx">Treino</span><span class="p">:</span><span class="w"> </span><span class="mi">95</span><span class="o">%</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nx">Teste</span><span class="p">:</span><span class="w"> </span><span class="mi">92</span><span class="o">%</span>
+<span class="w">   </span><span class="err">→</span><span class="w"> </span><span class="nx">Modelo</span><span class="w"> </span><span class="nx">equilibrado</span><span class="w"> </span><span class="err">✅</span>
+
+<span class="nx">OVERFITTING</span><span class="w"> </span><span class="p">(</span><span class="nx">modelo</span><span class="w"> </span><span class="nx">complexo</span><span class="w"> </span><span class="nx">demais</span><span class="p">)</span>
+<span class="w">   </span><span class="nx">Treino</span><span class="p">:</span><span class="w"> </span><span class="mi">99</span><span class="o">%</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nx">Teste</span><span class="p">:</span><span class="w"> </span><span class="mi">75</span><span class="o">%</span>
+<span class="w">   </span><span class="err">→</span><span class="w"> </span><span class="nx">Simplificar</span><span class="w"> </span><span class="nx">modelo</span><span class="w"> </span><span class="nx">ou</span><span class="w"> </span><span class="nx">mais</span><span class="w"> </span><span class="nx">dados</span>
+</code></pre></div>
+
+<h3 id="cross-validation">Cross-Validation</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
+
+<span class="c1"># Validação cruzada (k-fold)</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">modelo</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Acurácia média: </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="checklist-desta-licao">🎓 Checklist desta Lição</h2>
+<ul>
+<li>[ ] Entendi os tipos de ML (supervisionado/não-supervisionado)</li>
+<li>[ ] Criei modelo de classificação</li>
+<li>[ ] Treinei modelo de regressão</li>
+<li>[ ] Avaliei desempenho com métricas</li>
+<li>[ ] Fiz previsões em novos dados</li>
+</ul>
+<hr />
+<h2 id="proxima-licao">➡️ Próxima Lição</h2>
+<ul>
+<li><strong>02-Classificacao-Avancada.md</strong> (Random Forest, SVM, Neural Networks)</li>
+</ul>
+<hr />
+<p><strong>Você entrou no mundo do Machine Learning!</strong> 🤖✨</p>
+      </article>
+    </main>
+    <footer role="contentinfo">
+      <p>Gerado automaticamente em 06/01/2026 16:10. Paleta: ColorBrewer BuGn.</p>
+    </footer>
+    <script src="..\assets/site.js"></script>
+  </body>
+</html>

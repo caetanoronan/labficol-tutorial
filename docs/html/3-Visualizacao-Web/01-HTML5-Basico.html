@@ -1,0 +1,571 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>🌐 HTML5 Básico - Criar Páginas Web</title>
+    <link rel="preload" href="..\assets/theme.css" as="style" />
+    <link rel="stylesheet" href="..\assets/theme.css" />
+  </head>
+  <body>
+    <a href="#conteudo" class="skip-link">Pular para conteúdo</a>
+    <header role="banner">
+      <div class="wrap">
+        <h1>🌐 HTML5 Básico - Criar Páginas Web</h1>
+        <nav aria-label="Navegação">
+          <a href="..\index.html">Início</a>
+          <a href="https://github.com/caetanoronan/labficol-tutorial">Repositório</a>
+          <a href="https://caetanoronan.github.io/labficol-tutorial/">Site</a>
+        </nav>
+        <div class="controls">
+          <button id="toggleHC" aria-pressed="false" aria-label="Alternar alto contraste">Alto contraste</button>
+          <button id="toggleBT" aria-pressed="false" aria-label="Alternar texto grande">Texto grande</button>
+          <button id="toggleLM" aria-pressed="false" aria-label="Reduzir movimento">Menos movimento</button>
+        </div>
+      </div>
+    </header>
+    <main id="conteudo" role="main">
+      <article class="md-content" aria-label="Conteúdo">
+        <h1 id="html5-basico-criar-paginas-web">🌐 HTML5 Básico - Criar Páginas Web</h1>
+<h2 id="o-que-e-html">O que é HTML?</h2>
+<p><strong>HTML (HyperText Markup Language)</strong> = linguagem de marcação para criar páginas web.</p>
+<div class="codehilite"><pre><span></span><code>HTML        → Estrutura (conteúdo)
+CSS         → Aparência (estilo)
+JavaScript  → Comportamento (interação)
+</code></pre></div>
+
+<p><strong>Analogia:</strong>
+- HTML = Esqueleto de uma casa
+- CSS = Pintura e decoração
+- JavaScript = Eletricidade e encanamento</p>
+<hr />
+<h2 id="estrutura-basica-de-html">📝 Estrutura Básica de HTML</h2>
+<h3 id="documento-minimo">Documento Mínimo</h3>
+<p>Crie arquivo <code>pagina.html</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;pt-BR&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;width=device-width, initial-scale=1.0&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Minha Primeira Página<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Olá, Mundo!<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Esta é minha primeira página web.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<p>Abra no navegador (duplo clique ou arrastar para o navegador)!</p>
+<h3 id="anatomia-de-uma-tag">Anatomia de uma Tag</h3>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">tagname</span> <span class="na">atributo</span><span class="o">=</span><span class="s">&quot;valor&quot;</span><span class="p">&gt;</span>Conteúdo<span class="p">&lt;/</span><span class="nt">tagname</span><span class="p">&gt;</span>
+   ↑        ↑        ↑         ↑           ↑
+ abertura  atrib   valor   conteúdo    fechamento
+</code></pre></div>
+
+<hr />
+<h2 id="tags-essenciais">📋 Tags Essenciais</h2>
+<h3 id="cabecalhos-titulos">Cabeçalhos (Títulos)</h3>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Título Principal<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>Subtítulo<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Seção<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">h4</span><span class="p">&gt;</span>Subseção<span class="p">&lt;/</span><span class="nt">h4</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">h5</span><span class="p">&gt;</span>Menor<span class="p">&lt;/</span><span class="nt">h5</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">h6</span><span class="p">&gt;</span>Mínimo<span class="p">&lt;/</span><span class="nt">h6</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<h3 id="paragrafos-e-texto">Parágrafos e Texto</h3>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Este é um parágrafo.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Este é outro parágrafo.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;</span>Texto em negrito<span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">em</span><span class="p">&gt;</span>Texto em itálico<span class="p">&lt;/</span><span class="nt">em</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">u</span><span class="p">&gt;</span>Texto sublinhado<span class="p">&lt;/</span><span class="nt">u</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>  <span class="cm">&lt;!-- Quebra de linha --&gt;</span>
+<span class="p">&lt;</span><span class="nt">hr</span><span class="p">&gt;</span>  <span class="cm">&lt;!-- Linha horizontal --&gt;</span>
+</code></pre></div>
+
+<h3 id="listas">Listas</h3>
+<div class="codehilite"><pre><span></span><code><span class="cm">&lt;!-- Lista não ordenada (bullet points) --&gt;</span>
+<span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Ulva lactuca<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Gracilaria<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Sargassum<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+
+<span class="cm">&lt;!-- Lista ordenada (numerada) --&gt;</span>
+<span class="p">&lt;</span><span class="nt">ol</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Coletar amostra<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Identificar espécie<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Registrar dados<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">ol</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<h3 id="links">Links</h3>
+<div class="codehilite"><pre><span></span><code><span class="cm">&lt;!-- Link externo --&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://www.ufsc.br&quot;</span><span class="p">&gt;</span>Visite a UFSC<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+
+<span class="cm">&lt;!-- Link em nova aba --&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://www.ufsc.br&quot;</span> <span class="na">target</span><span class="o">=</span><span class="s">&quot;_blank&quot;</span><span class="p">&gt;</span>UFSC (nova aba)<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+
+<span class="cm">&lt;!-- Link para email --&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;mailto:contato@labficol.ufsc.br&quot;</span><span class="p">&gt;</span>Enviar email<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<h3 id="imagens">Imagens</h3>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;macroalga.jpg&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;Ulva lactuca&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;400&quot;</span><span class="p">&gt;</span>
+
+<span class="cm">&lt;!-- Com legenda --&gt;</span>
+<span class="p">&lt;</span><span class="nt">figure</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;macroalga.jpg&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;Ulva lactuca&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;400&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">figcaption</span><span class="p">&gt;</span>Figura 1: Ulva lactuca coletada em Ingleses<span class="p">&lt;/</span><span class="nt">figcaption</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">figure</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<hr />
+<h2 id="tabelas">📊 Tabelas</h2>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">table</span> <span class="na">border</span><span class="o">=</span><span class="s">&quot;1&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">thead</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Espécie<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Profundidade (m)<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Temperatura (°C)<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">thead</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">tbody</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Ulva lactuca<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>5.2<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>22.5<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Gracilaria<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>7.8<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>23.1<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Sargassum<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>3.1<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>22.8<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">tbody</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<hr />
+<h2 id="css-basico-estilo">🎨 CSS Básico (Estilo)</h2>
+<h3 id="css-inline-dentro-da-tag">CSS Inline (dentro da tag)</h3>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">p</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;color: blue; font-size: 20px;&quot;</span><span class="p">&gt;</span>Texto azul e grande<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<h3 id="css-no-head-interno">CSS no <code>&lt;head&gt;</code> (interno)</h3>
+<div class="codehilite"><pre><span></span><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="w">        </span><span class="nt">body</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">font-family</span><span class="p">:</span><span class="w"> </span><span class="n">Arial</span><span class="p">,</span><span class="w"> </span><span class="kc">sans-serif</span><span class="p">;</span>
+<span class="w">            </span><span class="k">margin</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">            </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="mh">#f0f8ff</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="nt">h1</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="mh">#2E86AB</span><span class="p">;</span>
+<span class="w">            </span><span class="k">text-align</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="p">.</span><span class="nc">destaque</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="kc">yellow</span><span class="p">;</span>
+<span class="w">            </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>LABFICOL - UFSC<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;destaque&quot;</span><span class="p">&gt;</span>Texto destacado<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<h3 id="css-externo-arquivo-separado">CSS Externo (arquivo separado)</h3>
+<p>Crie <code>estilos.css</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">body</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">font-family</span><span class="p">:</span><span class="w"> </span><span class="n">Arial</span><span class="p">,</span><span class="w"> </span><span class="kc">sans-serif</span><span class="p">;</span>
+<span class="w">    </span><span class="k">margin</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">h1</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="mh">#2E86AB</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">tabela-dados</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">border-collapse</span><span class="p">:</span><span class="w"> </span><span class="kc">collapse</span><span class="p">;</span>
+<span class="w">    </span><span class="k">width</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">tabela-dados</span><span class="w"> </span><span class="nt">th</span><span class="o">,</span><span class="w"> </span><span class="p">.</span><span class="nc">tabela-dados</span><span class="w"> </span><span class="nt">td</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">border</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="kt">px</span><span class="w"> </span><span class="kc">solid</span><span class="w"> </span><span class="mh">#ddd</span><span class="p">;</span>
+<span class="w">    </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">    </span><span class="k">text-align</span><span class="p">:</span><span class="w"> </span><span class="kc">left</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">tabela-dados</span><span class="w"> </span><span class="nt">th</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="mh">#2E86AB</span><span class="p">;</span>
+<span class="w">    </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="kc">white</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>No HTML:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;estilos.css&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<hr />
+<h2 id="exemplo-pratico-relatorio-de-coleta">🎯 Exemplo Prático: Relatório de Coleta</h2>
+<p>Crie <code>relatorio_coleta.html</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;pt-BR&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;width=device-width, initial-scale=1.0&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Relatório de Coleta - LABFICOL<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="w">        </span><span class="nt">body</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">font-family</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;Segoe UI&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">Tahoma</span><span class="p">,</span><span class="w"> </span><span class="n">Geneva</span><span class="p">,</span><span class="w"> </span><span class="n">Verdana</span><span class="p">,</span><span class="w"> </span><span class="kc">sans-serif</span><span class="p">;</span>
+<span class="w">            </span><span class="k">max-width</span><span class="p">:</span><span class="w"> </span><span class="mi">900</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">            </span><span class="k">margin</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="kc">auto</span><span class="p">;</span>
+<span class="w">            </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">            </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="mh">#f5f5f5</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="nt">header</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="mh">#2E86AB</span><span class="p">;</span>
+<span class="w">            </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="kc">white</span><span class="p">;</span>
+<span class="w">            </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">            </span><span class="k">text-align</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
+<span class="w">            </span><span class="k">border-radius</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">            </span><span class="k">margin-bottom</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="p">.</span><span class="nc">secao</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="kc">white</span><span class="p">;</span>
+<span class="w">            </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">            </span><span class="k">margin-bottom</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">            </span><span class="k">border-radius</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">            </span><span class="k">box-shadow</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">2</span><span class="kt">px</span><span class="w"> </span><span class="mi">4</span><span class="kt">px</span><span class="w"> </span><span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.1</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="nt">h2</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="mh">#2E86AB</span><span class="p">;</span>
+<span class="w">            </span><span class="k">border-bottom</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="kt">px</span><span class="w"> </span><span class="kc">solid</span><span class="w"> </span><span class="mh">#2E86AB</span><span class="p">;</span>
+<span class="w">            </span><span class="k">padding-bottom</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="nt">table</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">width</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+<span class="w">            </span><span class="k">border-collapse</span><span class="p">:</span><span class="w"> </span><span class="kc">collapse</span><span class="p">;</span>
+<span class="w">            </span><span class="k">margin-top</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="nt">th</span><span class="o">,</span><span class="w"> </span><span class="nt">td</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">            </span><span class="k">text-align</span><span class="p">:</span><span class="w"> </span><span class="kc">left</span><span class="p">;</span>
+<span class="w">            </span><span class="k">border-bottom</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="kt">px</span><span class="w"> </span><span class="kc">solid</span><span class="w"> </span><span class="mh">#ddd</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="nt">th</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="mh">#2E86AB</span><span class="p">;</span>
+<span class="w">            </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="kc">white</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="nt">tr</span><span class="p">:</span><span class="nd">hover</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="mh">#f5f5f5</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="p">.</span><span class="nc">badge</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">inline-block</span><span class="p">;</span>
+<span class="w">            </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="kt">px</span><span class="w"> </span><span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">            </span><span class="k">border-radius</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">            </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">            </span><span class="k">font-weight</span><span class="p">:</span><span class="w"> </span><span class="kc">bold</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="p">.</span><span class="nc">badge-valida</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="mh">#28a745</span><span class="p">;</span>
+<span class="w">            </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="kc">white</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="p">.</span><span class="nc">badge-invalida</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="mh">#dc3545</span><span class="p">;</span>
+<span class="w">            </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="kc">white</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="p">.</span><span class="nc">estatisticas</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">flex</span><span class="p">;</span>
+<span class="w">            </span><span class="k">justify-content</span><span class="p">:</span><span class="w"> </span><span class="kc">space-around</span><span class="p">;</span>
+<span class="w">            </span><span class="k">margin-top</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="p">.</span><span class="nc">stat-box</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">text-align</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
+<span class="w">            </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">            </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="mh">#e7f3f8</span><span class="p">;</span>
+<span class="w">            </span><span class="k">border-radius</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">            </span><span class="k">flex</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">            </span><span class="k">margin</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="p">.</span><span class="nc">stat-numero</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mi">36</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">            </span><span class="k">font-weight</span><span class="p">:</span><span class="w"> </span><span class="kc">bold</span><span class="p">;</span>
+<span class="w">            </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="mh">#2E86AB</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="p">.</span><span class="nc">stat-label</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mi">14</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">            </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="mh">#666</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">header</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>🌊 Relatório de Coleta de Macroalgas<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>LABFICOL - Laboratório de Ficologia / UFSC<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Data: 06 de Janeiro de 2025<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">header</span><span class="p">&gt;</span>
+
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;secao&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>📊 Estatísticas Gerais<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;estatisticas&quot;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;stat-box&quot;</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;stat-numero&quot;</span><span class="p">&gt;</span>10<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;stat-label&quot;</span><span class="p">&gt;</span>Total de Coletas<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;stat-box&quot;</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;stat-numero&quot;</span><span class="p">&gt;</span>4<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;stat-label&quot;</span><span class="p">&gt;</span>Espécies Identificadas<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;stat-box&quot;</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;stat-numero&quot;</span><span class="p">&gt;</span>22.7°C<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;stat-label&quot;</span><span class="p">&gt;</span>Temperatura Média<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;stat-box&quot;</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;stat-numero&quot;</span><span class="p">&gt;</span>6.8m<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;stat-label&quot;</span><span class="p">&gt;</span>Profundidade Média<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;secao&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>🗺️ Locais de Coleta<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">table</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">thead</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">th</span><span class="p">&gt;</span>ID<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Local<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Espécie<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Profundidade<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Temperatura<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Status<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+                <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">thead</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">tbody</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>1<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Ingleses Norte<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">em</span><span class="p">&gt;</span>Ulva lactuca<span class="p">&lt;/</span><span class="nt">em</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>5.2m<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>22.5°C<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;badge badge-valida&quot;</span><span class="p">&gt;</span>✓ VÁLIDA<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>2<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Ingleses Sul<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">em</span><span class="p">&gt;</span>Gracilaria<span class="p">&lt;/</span><span class="nt">em</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>7.8m<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>23.1°C<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;badge badge-valida&quot;</span><span class="p">&gt;</span>✓ VÁLIDA<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>3<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Barra da Lagoa<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">em</span><span class="p">&gt;</span>Sargassum<span class="p">&lt;/</span><span class="nt">em</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>3.1m<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>22.8°C<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;badge badge-valida&quot;</span><span class="p">&gt;</span>✓ VÁLIDA<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>4<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Laguna<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">em</span><span class="p">&gt;</span>Laminaria<span class="p">&lt;/</span><span class="nt">em</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>10.5m<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>21.2°C<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;badge badge-invalida&quot;</span><span class="p">&gt;</span>✗ ATENÇÃO<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">tbody</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;secao&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>🌿 Espécies Coletadas<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">strong</span><span class="p">&gt;</span>Ulva lactuca<span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span> - 4 amostras (40%)<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">strong</span><span class="p">&gt;</span>Gracilaria<span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span> - 3 amostras (30%)<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">strong</span><span class="p">&gt;</span>Sargassum<span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span> - 2 amostras (20%)<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">strong</span><span class="p">&gt;</span>Laminaria<span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span> - 1 amostra (10%)<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;secao&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>📝 Observações<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+            As coletas foram realizadas em condições favoráveis, com mar calmo e 
+            visibilidade adequada. A maioria das amostras (90%) foi validada de acordo 
+            com os parâmetros estabelecidos (temperatura entre 20-25°C, profundidade 
+            menor que 10m).
+        <span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+            A espécie <span class="p">&lt;</span><span class="nt">em</span><span class="p">&gt;</span>Ulva lactuca<span class="p">&lt;/</span><span class="nt">em</span><span class="p">&gt;</span> foi predominante na região de Ingleses, 
+            corroborando estudos anteriores sobre sua distribuição na costa catarinense.
+        <span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+    <span class="p">&lt;</span><span class="nt">footer</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;text-align: center; padding: 20px; color: #666;&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;</span>LABFICOL - Laboratório de Ficologia<span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+            Departamento de Botânica - UFSC<span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+            Florianópolis, Santa Catarina, Brasil
+        <span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">footer</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<p>Abra no navegador! Você verá um relatório profissional! 📊</p>
+<hr />
+<h2 id="design-responsivo">📱 Design Responsivo</h2>
+<p>Fazer a página se adaptar a diferentes tamanhos de tela:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;width=device-width, initial-scale=1.0&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="w">        </span><span class="c">/* Desktop */</span>
+<span class="w">        </span><span class="p">.</span><span class="nc">container</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">flex</span><span class="p">;</span>
+<span class="w">            </span><span class="k">gap</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="p">.</span><span class="nc">coluna</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">flex</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c">/* Mobile (telas menores que 768px) */</span>
+<span class="w">        </span><span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="o">(</span><span class="nt">max-width</span><span class="o">:</span><span class="w"> </span><span class="nt">768px</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="p">.</span><span class="nc">container</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">flex-direction</span><span class="p">:</span><span class="w"> </span><span class="kc">column</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<hr />
+<h2 id="formularios">🎓 Formulários</h2>
+<p>Coletar dados do usuário:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">form</span> <span class="na">action</span><span class="o">=</span><span class="s">&quot;/processar&quot;</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;POST&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;especie&quot;</span><span class="p">&gt;</span>Espécie:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;especie&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;especie&quot;</span> <span class="na">required</span><span class="p">&gt;</span>
+
+    <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;profundidade&quot;</span><span class="p">&gt;</span>Profundidade (m):<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;number&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;profundidade&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;profundidade&quot;</span> <span class="na">step</span><span class="o">=</span><span class="s">&quot;0.1&quot;</span> <span class="na">required</span><span class="p">&gt;</span>
+
+    <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;temperatura&quot;</span><span class="p">&gt;</span>Temperatura (°C):<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;number&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;temperatura&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;temperatura&quot;</span> <span class="na">step</span><span class="o">=</span><span class="s">&quot;0.1&quot;</span> <span class="na">required</span><span class="p">&gt;</span>
+
+    <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;local&quot;</span><span class="p">&gt;</span>Local:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">select</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;local&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;local&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;ingleses&quot;</span><span class="p">&gt;</span>Praia dos Ingleses<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;laguna&quot;</span><span class="p">&gt;</span>Laguna<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;garopaba&quot;</span><span class="p">&gt;</span>Garopaba<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">select</span><span class="p">&gt;</span>
+
+    <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;observacoes&quot;</span><span class="p">&gt;</span>Observações:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">textarea</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;observacoes&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;observacoes&quot;</span> <span class="na">rows</span><span class="o">=</span><span class="s">&quot;4&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">textarea</span><span class="p">&gt;</span>
+
+    <span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span><span class="p">&gt;</span>Enviar<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<hr />
+<h2 id="checklist-desta-licao">🎓 Checklist desta Lição</h2>
+<ul>
+<li>[ ] Entendo a estrutura básica de HTML</li>
+<li>[ ] Conheço as principais tags</li>
+<li>[ ] Criei uma tabela HTML</li>
+<li>[ ] Apliquei CSS básico</li>
+<li>[ ] Criei um relatório formatado</li>
+<li>[ ] Testei no navegador</li>
+</ul>
+<p>Se marcou tudo, você está pronto para <strong>JavaScript</strong>! 🎉</p>
+<hr />
+<h2 id="proximo-topico">➡️ Próximo Tópico</h2>
+<p><strong>👉 <a href="02-JavaScript-Essencial.md">02-JavaScript-Essencial.md</a></strong></p>
+<p>Lá você aprenderá:
+- Sintaxe JavaScript
+- Manipular elementos HTML
+- Interatividade
+- Processar dados</p>
+<hr />
+<h2 id="resumo-de-tags">📝 Resumo de Tags</h2>
+<table>
+<thead>
+<tr>
+<th>Tag</th>
+<th>Uso</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;h1&gt;-&lt;h6&gt;</code></td>
+<td>Títulos</td>
+</tr>
+<tr>
+<td><code>&lt;p&gt;</code></td>
+<td>Parágrafo</td>
+</tr>
+<tr>
+<td><code>&lt;a&gt;</code></td>
+<td>Link</td>
+</tr>
+<tr>
+<td><code>&lt;img&gt;</code></td>
+<td>Imagem</td>
+</tr>
+<tr>
+<td><code>&lt;table&gt;</code></td>
+<td>Tabela</td>
+</tr>
+<tr>
+<td><code>&lt;ul&gt;/&lt;ol&gt;</code></td>
+<td>Listas</td>
+</tr>
+<tr>
+<td><code>&lt;div&gt;</code></td>
+<td>Container genérico</td>
+</tr>
+<tr>
+<td><code>&lt;span&gt;</code></td>
+<td>Texto inline</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>Você criou sua primeira página web!</strong> 🌐 Próximo: JavaScript para interatividade! ⚡</p>
+      </article>
+    </main>
+    <footer role="contentinfo">
+      <p>Gerado automaticamente em 06/01/2026 16:10. Paleta: ColorBrewer BuGn.</p>
+    </footer>
+    <script src="..\assets/site.js"></script>
+  </body>
+</html>

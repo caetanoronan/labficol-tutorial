@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>🗺️ Caso Prático 2: Distribuição Espacial de Macroalgas</title>
+    <link rel="preload" href="..\assets/theme.css" as="style" />
+    <link rel="stylesheet" href="..\assets/theme.css" />
+  </head>
+  <body>
+    <a href="#conteudo" class="skip-link">Pular para conteúdo</a>
+    <header role="banner">
+      <div class="wrap">
+        <h1>🗺️ Caso Prático 2: Distribuição Espacial de Macroalgas</h1>
+        <nav aria-label="Navegação">
+          <a href="..\index.html">Início</a>
+          <a href="https://github.com/caetanoronan/labficol-tutorial">Repositório</a>
+          <a href="https://caetanoronan.github.io/labficol-tutorial/">Site</a>
+        </nav>
+        <div class="controls">
+          <button id="toggleHC" aria-pressed="false" aria-label="Alternar alto contraste">Alto contraste</button>
+          <button id="toggleBT" aria-pressed="false" aria-label="Alternar texto grande">Texto grande</button>
+          <button id="toggleLM" aria-pressed="false" aria-label="Reduzir movimento">Menos movimento</button>
+        </div>
+      </div>
+    </header>
+    <main id="conteudo" role="main">
+      <article class="md-content" aria-label="Conteúdo">
+        <h1 id="caso-pratico-2-distribuicao-espacial-de-macroalgas">🗺️ Caso Prático 2: Distribuição Espacial de Macroalgas</h1>
+<h2 id="objetivo-do-projeto">🎯 Objetivo do Projeto</h2>
+<p>Criar um sistema de análise geoespacial para mapear e analisar a distribuição de macroalgas ao longo da costa, usando <strong>GeoPandas + Folium + Shapely</strong>.</p>
+<p><strong>O que faremos:</strong>
+- Carregar dados com coordenadas geográficas
+- Calcular densidade de ocorrências
+- Identificar hotspots de biodiversidade
+- Criar mapas interativos profissionais</p>
+<hr />
+<h2 id="contexto-da-pesquisa">🌍 Contexto da Pesquisa</h2>
+<p>Queremos mapear a distribuição de 4 espécies de macroalgas ao longo de 50km de costa:</p>
+<ul>
+<li><em>Ulva lactuca</em> (alface-do-mar)</li>
+<li><em>Gracilaria</em> (ágar-ágar)</li>
+<li><em>Sargassum</em> (bodelha)</li>
+<li><em>Laminaria</em> (kombu)</li>
+</ul>
+<p><strong>Objetivo científico:</strong> Identificar áreas prioritárias para conservação baseadas em densidade de espécies.</p>
+<hr />
+<h2 id="estrutura-dos-dados-geoespaciais">📍 Estrutura dos Dados Geoespaciais</h2>
+<p>Arquivo <code>coletas_geo.csv</code>:</p>
+<div class="codehilite"><pre><span></span><code>id,data,lat,lon,especie,biomassa_g,prof_m
+1,2025-01-15,-27.4374,-48.3923,Ulva lactuca,245.3,3.2
+2,2025-01-15,-27.4450,-48.3950,Gracilaria,180.7,5.1
+3,2025-01-20,-27.5750,-48.4200,Sargassum,310.2,4.5
+4,2025-02-10,-28.4833,-48.7833,Laminaria,425.8,10.5
+</code></pre></div>
+
+<hr />
+<h2 id="codigo-completo-parte-1-preparacao-geoespacial">💻 Código Completo - Parte 1: Preparação Geoespacial</h2>
+<p>Crie <code>analise_distribuicao.py</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">Point</span><span class="p">,</span> <span class="n">Polygon</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># ==========================</span>
+<span class="c1"># 1. CRIAR DATASET GEOESPACIAL</span>
+<span class="c1"># ==========================</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🗺️  ANÁLISE DE DISTRIBUIÇÃO ESPACIAL - LABFICOL&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># Dados de coleta (coordenadas reais de SC)</span>
+<span class="n">dados</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">31</span><span class="p">)),</span>
+    <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;2025-01-15&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;2025-02-20&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;2025-03-18&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="o">-</span><span class="mf">27.4374</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.4450</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.4520</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.4600</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.5750</span><span class="p">,</span>
+        <span class="o">-</span><span class="mf">27.5850</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.5950</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.7500</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.7600</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.7700</span><span class="p">,</span>
+        <span class="o">-</span><span class="mf">28.0200</span><span class="p">,</span> <span class="o">-</span><span class="mf">28.0300</span><span class="p">,</span> <span class="o">-</span><span class="mf">28.0400</span><span class="p">,</span> <span class="o">-</span><span class="mf">28.4833</span><span class="p">,</span> <span class="o">-</span><span class="mf">28.5000</span><span class="p">,</span>
+        <span class="o">-</span><span class="mf">28.5200</span><span class="p">,</span> <span class="o">-</span><span class="mf">26.2500</span><span class="p">,</span> <span class="o">-</span><span class="mf">26.2600</span><span class="p">,</span> <span class="o">-</span><span class="mf">26.2700</span><span class="p">,</span> <span class="o">-</span><span class="mf">26.9500</span><span class="p">,</span>
+        <span class="o">-</span><span class="mf">27.4380</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.4470</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.4550</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.5800</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.5900</span><span class="p">,</span>
+        <span class="o">-</span><span class="mf">27.6000</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.7550</span><span class="p">,</span> <span class="o">-</span><span class="mf">28.0250</span><span class="p">,</span> <span class="o">-</span><span class="mf">28.4900</span><span class="p">,</span> <span class="o">-</span><span class="mf">26.9600</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;lon&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="o">-</span><span class="mf">48.3923</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.3950</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.4000</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.4050</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.4200</span><span class="p">,</span>
+        <span class="o">-</span><span class="mf">48.4250</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.4300</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.5100</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.5150</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.5200</span><span class="p">,</span>
+        <span class="o">-</span><span class="mf">48.6200</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.6250</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.6300</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.7833</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.7900</span><span class="p">,</span>
+        <span class="o">-</span><span class="mf">48.8000</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.6300</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.6350</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.6400</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.8100</span><span class="p">,</span>
+        <span class="o">-</span><span class="mf">48.3930</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.3960</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.4010</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.4210</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.4260</span><span class="p">,</span>
+        <span class="o">-</span><span class="mf">48.4310</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.5110</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.6210</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.7850</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.8110</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;especie&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">,</span> <span class="s1">&#39;Gracilaria&#39;</span><span class="p">,</span> <span class="s1">&#39;Sargassum&#39;</span><span class="p">,</span> <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">,</span> <span class="s1">&#39;Gracilaria&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Sargassum&#39;</span><span class="p">,</span> <span class="s1">&#39;Laminaria&#39;</span><span class="p">,</span> <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">,</span> <span class="s1">&#39;Gracilaria&#39;</span><span class="p">,</span> <span class="s1">&#39;Sargassum&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">,</span> <span class="s1">&#39;Gracilaria&#39;</span><span class="p">,</span> <span class="s1">&#39;Laminaria&#39;</span><span class="p">,</span> <span class="s1">&#39;Sargassum&#39;</span><span class="p">,</span> <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Gracilaria&#39;</span><span class="p">,</span> <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">,</span> <span class="s1">&#39;Sargassum&#39;</span><span class="p">,</span> <span class="s1">&#39;Gracilaria&#39;</span><span class="p">,</span> <span class="s1">&#39;Laminaria&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">,</span> <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">,</span> <span class="s1">&#39;Gracilaria&#39;</span><span class="p">,</span> <span class="s1">&#39;Sargassum&#39;</span><span class="p">,</span> <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Gracilaria&#39;</span><span class="p">,</span> <span class="s1">&#39;Sargassum&#39;</span><span class="p">,</span> <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">,</span> <span class="s1">&#39;Gracilaria&#39;</span><span class="p">,</span> <span class="s1">&#39;Laminaria&#39;</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;biomassa_g&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">150</span><span class="p">,</span> <span class="mi">450</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;prof_m&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span>
+
+<span class="c1"># Converter para GeoDataFrame</span>
+<span class="n">geometry</span> <span class="o">=</span> <span class="p">[</span><span class="n">Point</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">)</span> <span class="k">for</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">])]</span>
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="n">geometry</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="s1">&#39;EPSG:4326&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✅ Dataset carregado: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">gdf</span><span class="p">)</span><span class="si">}</span><span class="s2"> pontos de coleta&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📍 Extensão geográfica:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Latitude: </span><span class="si">{</span><span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> até </span><span class="si">{</span><span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Longitude: </span><span class="si">{</span><span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> até </span><span class="si">{</span><span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🌿 Espécies: </span><span class="si">{</span><span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># ==========================</span>
+<span class="c1"># 2. ANÁLISE ESPACIAL</span>
+<span class="c1"># ==========================</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;📊 ANÁLISE DE DENSIDADE ESPACIAL&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># Contar ocorrências por espécie</span>
+<span class="n">contagem_especies</span> <span class="o">=</span> <span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Distribuição de espécies:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">especie</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">contagem_especies</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">porcentagem</span> <span class="o">=</span> <span class="p">(</span><span class="n">count</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">gdf</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">especie</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">porcentagem</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+
+<span class="c1"># ==========================</span>
+<span class="c1"># 3. IDENTIFICAR HOTSPOTS</span>
+<span class="c1"># ==========================</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🔥 IDENTIFICAÇÃO DE HOTSPOTS&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># Criar grid para análise de densidade</span>
+<span class="c1"># Dividir área em células de 0.1° x 0.1° (~11km x 11km)</span>
+
+<span class="n">lat_min</span><span class="p">,</span> <span class="n">lat_max</span> <span class="o">=</span> <span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+<span class="n">lon_min</span><span class="p">,</span> <span class="n">lon_max</span> <span class="o">=</span> <span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+<span class="c1"># Criar células do grid</span>
+<span class="n">resolucao</span> <span class="o">=</span> <span class="mf">0.5</span>  <span class="c1"># graus</span>
+<span class="n">lat_bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">lat_min</span><span class="p">,</span> <span class="n">lat_max</span> <span class="o">+</span> <span class="n">resolucao</span><span class="p">,</span> <span class="n">resolucao</span><span class="p">)</span>
+<span class="n">lon_bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">lon_min</span><span class="p">,</span> <span class="n">lon_max</span> <span class="o">+</span> <span class="n">resolucao</span><span class="p">,</span> <span class="n">resolucao</span><span class="p">)</span>
+
+<span class="c1"># Adicionar célula do grid a cada ponto</span>
+<span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;lat_bin&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="n">lat_bins</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;lon_bin&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="n">lon_bins</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;celula&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;lat_bin&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;lon_bin&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+
+<span class="c1"># Contar pontos por célula</span>
+<span class="n">densidade_celulas</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;celula&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span>
+    <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;count&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;especie&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">nunique</span><span class="p">(),</span>
+    <span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;lon&#39;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span>
+<span class="p">})</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;n_coletas&#39;</span><span class="p">,</span> <span class="s1">&#39;especie&#39;</span><span class="p">:</span> <span class="s1">&#39;n_especies&#39;</span><span class="p">})</span>
+
+<span class="c1"># Identificar hotspots (células com &gt;3 espécies)</span>
+<span class="n">hotspots</span> <span class="o">=</span> <span class="n">densidade_celulas</span><span class="p">[</span><span class="n">densidade_celulas</span><span class="p">[</span><span class="s1">&#39;n_especies&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;n_especies&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🔥 </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">hotspots</span><span class="p">)</span><span class="si">}</span><span class="s2"> hotspots identificados!&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Top 3 áreas de maior biodiversidade:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">celula</span><span class="p">,</span> <span class="n">dados</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">hotspots</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">iterrows</span><span class="p">(),</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">  </span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">. Célula </span><span class="si">{</span><span class="n">celula</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;     📍 Centro: (</span><span class="si">{</span><span class="n">dados</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">dados</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;     🌿 </span><span class="si">{</span><span class="n">dados</span><span class="p">[</span><span class="s1">&#39;n_especies&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> espécies diferentes&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;     📊 </span><span class="si">{</span><span class="n">dados</span><span class="p">[</span><span class="s1">&#39;n_coletas&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> coletas realizadas&quot;</span><span class="p">)</span>
+
+<span class="c1"># ==========================</span>
+<span class="c1"># 4. ANÁLISE POR ESPÉCIE</span>
+<span class="c1"># ==========================</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🌿 ANÁLISE GEOGRÁFICA POR ESPÉCIE&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">especie</span> <span class="ow">in</span> <span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+    <span class="n">dados_especie</span> <span class="o">=</span> <span class="n">gdf</span><span class="p">[</span><span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">especie</span><span class="p">]</span>
+
+    <span class="c1"># Calcular centro geográfico</span>
+    <span class="n">centro_lat</span> <span class="o">=</span> <span class="n">dados_especie</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">centro_lon</span> <span class="o">=</span> <span class="n">dados_especie</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+    <span class="c1"># Calcular dispersão geográfica</span>
+    <span class="n">dispersao_lat</span> <span class="o">=</span> <span class="n">dados_especie</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+    <span class="n">dispersao_lon</span> <span class="o">=</span> <span class="n">dados_especie</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📍 </span><span class="si">{</span><span class="n">especie</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Ocorrências: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">dados_especie</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Centro: (</span><span class="si">{</span><span class="n">centro_lat</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">centro_lon</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Dispersão: Lat=</span><span class="si">{</span><span class="n">dispersao_lat</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">°, Lon=</span><span class="si">{</span><span class="n">dispersao_lon</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">°&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Profundidade preferencial</span>
+    <span class="n">prof_media</span> <span class="o">=</span> <span class="n">dados_especie</span><span class="p">[</span><span class="s1">&#39;prof_m&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Profundidade média: </span><span class="si">{</span><span class="n">prof_media</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">m&quot;</span><span class="p">)</span>
+
+<span class="c1"># ==========================</span>
+<span class="c1"># 5. DISTÂNCIAS E PROXIMIDADE</span>
+<span class="c1"># ==========================</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;📏 ANÁLISE DE PROXIMIDADE&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># Calcular distância entre pontos consecutivos</span>
+<span class="n">gdf_sorted</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span>
+<span class="n">distancias</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">gdf_sorted</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="n">gdf_sorted</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">geometry</span>
+    <span class="n">p2</span> <span class="o">=</span> <span class="n">gdf_sorted</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">geometry</span>
+    <span class="c1"># Distância em graus (aproximação)</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">p1</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">p2</span><span class="p">)</span>
+    <span class="c1"># Converter para km (1° ≈ 111km)</span>
+    <span class="n">dist_km</span> <span class="o">=</span> <span class="n">dist</span> <span class="o">*</span> <span class="mi">111</span>
+    <span class="n">distancias</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dist_km</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Distância média entre pontos: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">distancias</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> km&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Distância mínima: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">distancias</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> km&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Distância máxima: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">distancias</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> km&quot;</span><span class="p">)</span>
+
+<span class="c1"># ==========================</span>
+<span class="c1"># 6. BUFFER ZONES</span>
+<span class="c1"># ==========================</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🛡️ CRIAÇÃO DE ZONAS DE PROTEÇÃO&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># Criar buffer de 5km (≈0.045°) ao redor dos hotspots</span>
+<span class="n">buffer_raio</span> <span class="o">=</span> <span class="mf">0.045</span>  <span class="c1"># ~5km</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Criando buffers de ~5km ao redor dos </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">hotspots</span><span class="p">)</span><span class="si">}</span><span class="s2"> hotspots...&quot;</span><span class="p">)</span>
+
+<span class="c1"># Área total de proteção sugerida</span>
+<span class="n">area_protegida_total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">hotspots</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="mi">5</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>  <span class="c1"># km²</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📊 Área total sugerida para proteção: </span><span class="si">{</span><span class="n">area_protegida_total</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> km²&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ ANÁLISE ESPACIAL CONCLUÍDA&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="codigo-completo-parte-2-mapa-interativo">🗺️ Código Completo - Parte 2: Mapa Interativo</h2>
+<p>Adicione ao mesmo arquivo:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># ==========================</span>
+<span class="c1"># 7. CRIAR MAPA INTERATIVO</span>
+<span class="c1"># ==========================</span>
+
+<span class="kn">import</span> <span class="nn">folium</span>
+<span class="kn">from</span> <span class="nn">folium.plugins</span> <span class="kn">import</span> <span class="n">HeatMap</span><span class="p">,</span> <span class="n">MarkerCluster</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🗺️  Gerando mapa interativo...&quot;</span><span class="p">)</span>
+
+<span class="c1"># Criar mapa base centrado em SC</span>
+<span class="n">centro_lat</span> <span class="o">=</span> <span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">centro_lon</span> <span class="o">=</span> <span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">mapa</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="n">centro_lat</span><span class="p">,</span> <span class="n">centro_lon</span><span class="p">],</span> <span class="n">zoom_start</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">tiles</span><span class="o">=</span><span class="s1">&#39;OpenStreetMap&#39;</span><span class="p">)</span>
+
+<span class="c1"># Cores por espécie</span>
+<span class="n">cores_especies</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">:</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Gracilaria&#39;</span><span class="p">:</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Sargassum&#39;</span><span class="p">:</span> <span class="s1">&#39;blue&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Laminaria&#39;</span><span class="p">:</span> <span class="s1">&#39;purple&#39;</span>
+<span class="p">}</span>
+
+<span class="c1"># Ícones por espécie</span>
+<span class="n">icones_especies</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">:</span> <span class="s1">&#39;🥬&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Gracilaria&#39;</span><span class="p">:</span> <span class="s1">&#39;🌺&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Sargassum&#39;</span><span class="p">:</span> <span class="s1">&#39;🌊&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Laminaria&#39;</span><span class="p">:</span> <span class="s1">&#39;🍃&#39;</span>
+<span class="p">}</span>
+
+<span class="c1"># Criar grupos de camadas por espécie</span>
+<span class="n">grupos_especies</span> <span class="o">=</span> <span class="p">{</span><span class="n">especie</span><span class="p">:</span> <span class="n">folium</span><span class="o">.</span><span class="n">FeatureGroup</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">especie</span><span class="p">)</span> <span class="k">for</span> <span class="n">especie</span> <span class="ow">in</span> <span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()}</span>
+
+<span class="c1"># Adicionar marcadores</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">gdf</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">popup_html</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    &lt;div style=&quot;font-family: Arial; min-width: 220px;&quot;&gt;</span>
+<span class="s2">        &lt;h3 style=&quot;color: </span><span class="si">{</span><span class="n">cores_especies</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]]</span><span class="si">}</span><span class="s2">; margin: 0 0 10px 0;&quot;&gt;</span>
+<span class="s2">            </span><span class="si">{</span><span class="n">icones_especies</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]]</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span><span class="si">}</span>
+<span class="s2">        &lt;/h3&gt;</span>
+<span class="s2">        &lt;hr style=&quot;margin: 10px 0; border: none; border-top: 2px solid #ddd;&quot;&gt;</span>
+<span class="s2">        &lt;table style=&quot;width: 100%; font-size: 13px;&quot;&gt;</span>
+<span class="s2">            &lt;tr&gt;&lt;td&gt;&lt;strong&gt;ID:&lt;/strong&gt;&lt;/td&gt;&lt;td&gt;#</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="s2">            &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Data:&lt;/strong&gt;&lt;/td&gt;&lt;td&gt;</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="s2">            &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Latitude:&lt;/strong&gt;&lt;/td&gt;&lt;td&gt;</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="s2">            &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Longitude:&lt;/strong&gt;&lt;/td&gt;&lt;td&gt;</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="s2">            &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Biomassa:&lt;/strong&gt;&lt;/td&gt;&lt;td&gt;</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;biomassa_g&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">g&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="s2">            &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Profundidade:&lt;/strong&gt;&lt;/td&gt;&lt;td&gt;</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;prof_m&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">m&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="s2">        &lt;/table&gt;</span>
+<span class="s2">    &lt;/div&gt;</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+    <span class="n">folium</span><span class="o">.</span><span class="n">CircleMarker</span><span class="p">(</span>
+        <span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]],</span>
+        <span class="n">radius</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+        <span class="n">popup</span><span class="o">=</span><span class="n">folium</span><span class="o">.</span><span class="n">Popup</span><span class="p">(</span><span class="n">popup_html</span><span class="p">,</span> <span class="n">max_width</span><span class="o">=</span><span class="mi">300</span><span class="p">),</span>
+        <span class="n">color</span><span class="o">=</span><span class="n">cores_especies</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]],</span>
+        <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">fillColor</span><span class="o">=</span><span class="n">cores_especies</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]],</span>
+        <span class="n">fillOpacity</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+        <span class="n">weight</span><span class="o">=</span><span class="mi">2</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">grupos_especies</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]])</span>
+
+<span class="c1"># Adicionar grupos ao mapa</span>
+<span class="k">for</span> <span class="n">grupo</span> <span class="ow">in</span> <span class="n">grupos_especies</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+    <span class="n">grupo</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">mapa</span><span class="p">)</span>
+
+<span class="c1"># Adicionar hotspots</span>
+<span class="n">grupo_hotspots</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">FeatureGroup</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;🔥 Hotspots de Biodiversidade&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">celula</span><span class="p">,</span> <span class="n">dados</span> <span class="ow">in</span> <span class="n">hotspots</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="c1"># Círculo de raio ~5km</span>
+    <span class="n">folium</span><span class="o">.</span><span class="n">Circle</span><span class="p">(</span>
+        <span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="n">dados</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">],</span> <span class="n">dados</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]],</span>
+        <span class="n">radius</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span>  <span class="c1"># metros</span>
+        <span class="n">popup</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;&lt;b&gt;Hotspot&lt;/b&gt;&lt;br&gt;</span><span class="si">{</span><span class="n">dados</span><span class="p">[</span><span class="s1">&#39;n_especies&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> espécies&lt;br&gt;</span><span class="si">{</span><span class="n">dados</span><span class="p">[</span><span class="s1">&#39;n_coletas&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> coletas&quot;</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span>
+        <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">fillColor</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span>
+        <span class="n">fillOpacity</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+        <span class="n">weight</span><span class="o">=</span><span class="mi">3</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">grupo_hotspots</span><span class="p">)</span>
+
+    <span class="c1"># Marcador central</span>
+    <span class="n">folium</span><span class="o">.</span><span class="n">Marker</span><span class="p">(</span>
+        <span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="n">dados</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">],</span> <span class="n">dados</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]],</span>
+        <span class="n">popup</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;&lt;b&gt;🔥 HOTSPOT&lt;/b&gt;&lt;br&gt;</span><span class="si">{</span><span class="n">dados</span><span class="p">[</span><span class="s1">&#39;n_especies&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> espécies&quot;</span><span class="p">,</span>
+        <span class="n">icon</span><span class="o">=</span><span class="n">folium</span><span class="o">.</span><span class="n">Icon</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;fire&#39;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;fa&#39;</span><span class="p">)</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">grupo_hotspots</span><span class="p">)</span>
+
+<span class="n">grupo_hotspots</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">mapa</span><span class="p">)</span>
+
+<span class="c1"># Adicionar mapa de calor (densidade)</span>
+<span class="n">dados_heatmap</span> <span class="o">=</span> <span class="p">[[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]]</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">gdf</span><span class="o">.</span><span class="n">iterrows</span><span class="p">()]</span>
+<span class="n">HeatMap</span><span class="p">(</span><span class="n">dados_heatmap</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;🌡️ Mapa de Calor&#39;</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">blur</span><span class="o">=</span><span class="mi">35</span><span class="p">,</span> <span class="n">max_zoom</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">mapa</span><span class="p">)</span>
+
+<span class="c1"># Adicionar controle de camadas</span>
+<span class="n">folium</span><span class="o">.</span><span class="n">LayerControl</span><span class="p">(</span><span class="n">collapsed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">mapa</span><span class="p">)</span>
+
+<span class="c1"># Adicionar legenda</span>
+<span class="n">legenda_html</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">&lt;div style=&quot;position: fixed; bottom: 50px; right: 50px; width: 250px; background-color: white; </span>
+<span class="s1">            border:2px solid grey; z-index:9999; padding: 15px; border-radius: 10px;</span>
+<span class="s1">            box-shadow: 0 4px 6px rgba(0,0,0,0.1);&quot;&gt;</span>
+<span class="s1">    &lt;h4 style=&quot;margin-top: 0; color: #2E86AB;&quot;&gt;🗺️ Legenda&lt;/h4&gt;</span>
+<span class="s1">    &lt;hr style=&quot;margin: 10px 0;&quot;&gt;</span>
+<span class="s1">    &lt;p&gt;&lt;span style=&quot;color: green;&quot;&gt;⬤&lt;/span&gt; Ulva lactuca&lt;/p&gt;</span>
+<span class="s1">    &lt;p&gt;&lt;span style=&quot;color: red;&quot;&gt;⬤&lt;/span&gt; Gracilaria&lt;/p&gt;</span>
+<span class="s1">    &lt;p&gt;&lt;span style=&quot;color: blue;&quot;&gt;⬤&lt;/span&gt; Sargassum&lt;/p&gt;</span>
+<span class="s1">    &lt;p&gt;&lt;span style=&quot;color: purple;&quot;&gt;⬤&lt;/span&gt; Laminaria&lt;/p&gt;</span>
+<span class="s1">    &lt;hr style=&quot;margin: 10px 0;&quot;&gt;</span>
+<span class="s1">    &lt;p&gt;&lt;span style=&quot;color: orange;&quot;&gt;🔥&lt;/span&gt; Hotspot (≥3 espécies)&lt;/p&gt;</span>
+<span class="s1">    &lt;p style=&quot;font-size: 11px; color: #666; margin-top: 15px;&quot;&gt;</span>
+<span class="s1">        &lt;strong&gt;Total:&lt;/strong&gt; &#39;&#39;&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">gdf</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39;&#39;&#39; coletas&lt;br&gt;</span>
+<span class="s1">        &lt;strong&gt;Hotspots:&lt;/strong&gt; &#39;&#39;&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">hotspots</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39;&#39;&#39; áreas</span>
+<span class="s1">    &lt;/p&gt;</span>
+<span class="s1">&lt;/div&gt;</span>
+<span class="s1">&#39;&#39;&#39;</span>
+<span class="n">mapa</span><span class="o">.</span><span class="n">get_root</span><span class="p">()</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">folium</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="n">legenda_html</span><span class="p">))</span>
+
+<span class="c1"># Salvar mapa</span>
+<span class="n">mapa</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;distribuicao_espacial.html&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Mapa interativo salvo: distribuicao_espacial.html&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🎉 PROJETO CONCLUÍDO COM SUCESSO!&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📂 Arquivos gerados:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   - distribuicao_espacial.html (abra no navegador)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">💡 Insights principais:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   - </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">hotspots</span><span class="p">)</span><span class="si">}</span><span class="s2"> hotspots de biodiversidade identificados&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   - Área sugerida para proteção: </span><span class="si">{</span><span class="n">area_protegida_total</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> km²&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   - Espécie mais comum: </span><span class="si">{</span><span class="n">contagem_especies</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">contagem_especies</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> ocorrências)&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="execute-o-projeto">🎯 Execute o Projeto</h2>
+<div class="codehilite"><pre><span></span><code>python<span class="w"> </span>analise_distribuicao.py
+</code></pre></div>
+
+<p>Depois, abra no navegador:</p>
+<div class="codehilite"><pre><span></span><code>distribuicao_espacial.html
+</code></pre></div>
+
+<hr />
+<h2 id="resultados-esperados">📊 Resultados Esperados</h2>
+<h3 id="console">Console:</h3>
+<div class="codehilite"><pre><span></span><code><span class="err">🗺️</span><span class="w">  </span><span class="n">ANÁLISE</span><span class="w"> </span><span class="n">DE</span><span class="w"> </span><span class="n">DISTRIBUIÇÃO</span><span class="w"> </span><span class="n">ESPACIAL</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">LABFICOL</span>
+<span class="err">✅</span><span class="w"> </span><span class="n">Dataset</span><span class="w"> </span><span class="nl">carregado:</span><span class="w"> </span><span class="mh">30</span><span class="w"> </span><span class="n">pontos</span><span class="w"> </span><span class="n">de</span><span class="w"> </span><span class="n">coleta</span>
+<span class="err">📍</span><span class="w"> </span><span class="n">Extensão</span><span class="w"> </span><span class="nl">geográfica:</span>
+<span class="w">   </span><span class="nl">Latitude:</span><span class="w"> </span><span class="o">-</span><span class="mf">28.5200</span><span class="w"> </span><span class="n">até</span><span class="w"> </span><span class="o">-</span><span class="mf">26.2500</span>
+<span class="w">   </span><span class="nl">Longitude:</span><span class="w"> </span><span class="o">-</span><span class="mf">48.8110</span><span class="w"> </span><span class="n">até</span><span class="w"> </span><span class="o">-</span><span class="mf">48.3923</span>
+
+<span class="err">🔥</span><span class="w"> </span><span class="mh">3</span><span class="w"> </span><span class="n">hotspots</span><span class="w"> </span><span class="n">identificados</span><span class="o">!</span>
+</code></pre></div>
+
+<h3 id="mapa-interativo">Mapa Interativo:</h3>
+<ul>
+<li>✅ Marcadores coloridos por espécie</li>
+<li>✅ Hotspots destacados com círculos</li>
+<li>✅ Mapa de calor de densidade</li>
+<li>✅ Controle de camadas</li>
+<li>✅ Popups informativos</li>
+</ul>
+<hr />
+<h2 id="interpretacao-cientifica">🔬 Interpretação Científica</h2>
+<h3 id="hotspots-identificados">Hotspots Identificados</h3>
+<div class="codehilite"><pre><span></span><code>📍 Área 1: Florianópolis Norte (-27.44, -48.39)
+   → 4 espécies | Alta diversidade
+   → PRIORIDADE ALTA para conservação
+
+📍 Área 2: Garopaba (-28.02, -48.62)
+   → 3 espécies | Diversidade moderada
+   → PRIORIDADE MÉDIA
+
+📍 Área 3: Laguna (-28.48, -48.78)
+   → 3 espécies | Zona produtiva
+   → Potencial para aquicultura
+</code></pre></div>
+
+<h3 id="recomendacoes-de-gestao">Recomendações de Gestão</h3>
+<ol>
+<li><strong>Criar Unidades de Conservação</strong> nos 3 hotspots</li>
+<li><strong>Buffers de 5km</strong> = ~235 km² protegidos</li>
+<li><strong>Monitoramento intensivo</strong> nas zonas intermediárias</li>
+</ol>
+<hr />
+<h2 id="o-que-voce-aprendeu">🎓 O que você aprendeu</h2>
+<ul>
+<li>✅ Análise espacial com GeoPandas</li>
+<li>✅ Identificação de hotspots de biodiversidade</li>
+<li>✅ Cálculo de densidades em grid</li>
+<li>✅ Criação de buffers de proteção</li>
+<li>✅ Mapas interativos com Folium</li>
+<li>✅ Interpretação geográfica de dados biológicos</li>
+</ul>
+<hr />
+<h2 id="desafio-extra">🚀 Desafio Extra</h2>
+<ol>
+<li><strong>Conectividade:</strong> Calcule corredores ecológicos entre hotspots</li>
+<li><strong>Interpolação:</strong> Use Kriging para prever distribuição em áreas não amostradas</li>
+<li><strong>Análise temporal:</strong> Compare distribuição entre anos</li>
+<li><strong>Exportar para QGIS:</strong> Salve como Shapefile</li>
+</ol>
+<hr />
+<h2 id="proximo-caso-pratico">➡️ Próximo Caso Prático</h2>
+<ul>
+<li><strong>03-Dashboard-Web-Completo.md</strong> (Sistema web integrado)</li>
+</ul>
+<hr />
+<p><strong>Parabéns!</strong> Você domina análise geoespacial aplicada! 🗺️🌿</p>
+      </article>
+    </main>
+    <footer role="contentinfo">
+      <p>Gerado automaticamente em 06/01/2026 16:10. Paleta: ColorBrewer BuGn.</p>
+    </footer>
+    <script src="..\assets/site.js"></script>
+  </body>
+</html>

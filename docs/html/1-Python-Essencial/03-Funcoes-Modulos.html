@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>🔧 Funções e Módulos</title>
+    <link rel="preload" href="..\assets/theme.css" as="style" />
+    <link rel="stylesheet" href="..\assets/theme.css" />
+  </head>
+  <body>
+    <a href="#conteudo" class="skip-link">Pular para conteúdo</a>
+    <header role="banner">
+      <div class="wrap">
+        <h1>🔧 Funções e Módulos</h1>
+        <nav aria-label="Navegação">
+          <a href="..\index.html">Início</a>
+          <a href="https://github.com/caetanoronan/labficol-tutorial">Repositório</a>
+          <a href="https://caetanoronan.github.io/labficol-tutorial/">Site</a>
+        </nav>
+        <div class="controls">
+          <button id="toggleHC" aria-pressed="false" aria-label="Alternar alto contraste">Alto contraste</button>
+          <button id="toggleBT" aria-pressed="false" aria-label="Alternar texto grande">Texto grande</button>
+          <button id="toggleLM" aria-pressed="false" aria-label="Reduzir movimento">Menos movimento</button>
+        </div>
+      </div>
+    </header>
+    <main id="conteudo" role="main">
+      <article class="md-content" aria-label="Conteúdo">
+        <h1 id="funcoes-e-modulos">🔧 Funções e Módulos</h1>
+<h2 id="o-que-sao-funcoes">O que são Funções?</h2>
+<p><strong>Função</strong> = bloco de código reutilizável.</p>
+<h3 id="analogia">Analogia</h3>
+<div class="codehilite"><pre><span></span><code>Sem funções: Copiar e colar o mesmo código 100 vezes
+Com funções: Escrever uma vez, usar 100 vezes
+</code></pre></div>
+
+<hr />
+<h2 id="definir-uma-funcao">📝 Definir uma Função</h2>
+<h3 id="sintaxe-basica">Sintaxe Básica</h3>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">nome_funcao</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Descrição da função (docstring)&quot;&quot;&quot;</span>
+    <span class="c1"># código aqui</span>
+    <span class="k">pass</span>
+
+<span class="c1"># Chamar função</span>
+<span class="n">nome_funcao</span><span class="p">()</span>
+</code></pre></div>
+
+<h3 id="exemplo-simples">Exemplo Simples</h3>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">saudar</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Sauda o usuário&quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Olá, bem-vindo ao LABFICOL!&quot;</span><span class="p">)</span>
+
+<span class="c1"># Chamar</span>
+<span class="n">saudar</span><span class="p">()</span>  <span class="c1"># Printa: &quot;Olá, bem-vindo ao LABFICOL!&quot;</span>
+</code></pre></div>
+
+<hr />
+<h2 id="parametros-receber-dados">📥 Parâmetros (Receber Dados)</h2>
+<p>Funções podem receber dados para processar.</p>
+<h3 id="parametros-simples">Parâmetros Simples</h3>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">saudar</span><span class="p">(</span><span class="n">nome</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Sauda uma pessoa específica&quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Olá, </span><span class="si">{</span><span class="n">nome</span><span class="si">}</span><span class="s2">!&quot;</span><span class="p">)</span>
+
+<span class="c1"># Chamar com argumento</span>
+<span class="n">saudar</span><span class="p">(</span><span class="s2">&quot;Caetano&quot;</span><span class="p">)</span>      <span class="c1"># Printa: &quot;Olá, Caetano!&quot;</span>
+<span class="n">saudar</span><span class="p">(</span><span class="s2">&quot;Mariana&quot;</span><span class="p">)</span>      <span class="c1"># Printa: &quot;Olá, Mariana!&quot;</span>
+
+<span class="c1"># Múltiplos parâmetros</span>
+<span class="k">def</span> <span class="nf">calcular_imc</span><span class="p">(</span><span class="n">peso</span><span class="p">,</span> <span class="n">altura</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calcula IMC&quot;&quot;&quot;</span>
+    <span class="n">imc</span> <span class="o">=</span> <span class="n">peso</span> <span class="o">/</span> <span class="p">(</span><span class="n">altura</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">imc</span>
+
+<span class="n">resultado</span> <span class="o">=</span> <span class="n">calcular_imc</span><span class="p">(</span><span class="mi">70</span><span class="p">,</span> <span class="mf">1.75</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;IMC: </span><span class="si">{</span><span class="n">resultado</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="parametros-com-valores-padrao">Parâmetros com Valores Padrão</h3>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">saudar</span><span class="p">(</span><span class="n">nome</span><span class="p">,</span> <span class="n">idioma</span><span class="o">=</span><span class="s2">&quot;português&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Sauda em um idioma&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">idioma</span> <span class="o">==</span> <span class="s2">&quot;português&quot;</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Olá, </span><span class="si">{</span><span class="n">nome</span><span class="si">}</span><span class="s2">!&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">idioma</span> <span class="o">==</span> <span class="s2">&quot;inglês&quot;</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Hello, </span><span class="si">{</span><span class="n">nome</span><span class="si">}</span><span class="s2">!&quot;</span><span class="p">)</span>
+
+<span class="c1"># Chamar</span>
+<span class="n">saudar</span><span class="p">(</span><span class="s2">&quot;Caetano&quot;</span><span class="p">)</span>                    <span class="c1"># Usa padrão português</span>
+<span class="n">saudar</span><span class="p">(</span><span class="s2">&quot;Caetano&quot;</span><span class="p">,</span> <span class="n">idioma</span><span class="o">=</span><span class="s2">&quot;inglês&quot;</span><span class="p">)</span>   <span class="c1"># Especifica inglês</span>
+</code></pre></div>
+
+<hr />
+<h2 id="return-retornar-valores">📤 Return (Retornar Valores)</h2>
+<p>Funções podem retornar resultados.</p>
+<h3 id="return-simples">Return Simples</h3>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">celsius_para_fahrenheit</span><span class="p">(</span><span class="n">celsius</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Converte Celsius para Fahrenheit&quot;&quot;&quot;</span>
+    <span class="n">fahrenheit</span> <span class="o">=</span> <span class="p">(</span><span class="n">celsius</span> <span class="o">*</span> <span class="mi">9</span><span class="o">/</span><span class="mi">5</span><span class="p">)</span> <span class="o">+</span> <span class="mi">32</span>
+    <span class="k">return</span> <span class="n">fahrenheit</span>
+
+<span class="c1"># Usar retorno</span>
+<span class="n">temp_f</span> <span class="o">=</span> <span class="n">celsius_para_fahrenheit</span><span class="p">(</span><span class="mf">22.5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;22.5°C = </span><span class="si">{</span><span class="n">temp_f</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°F&quot;</span><span class="p">)</span>  <span class="c1"># 72.5°F</span>
+
+<span class="c1"># Sem salvar</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">celsius_para_fahrenheit</span><span class="p">(</span><span class="mi">25</span><span class="p">))</span>  <span class="c1"># 77.0</span>
+</code></pre></div>
+
+<h3 id="multiplos-retornos">Múltiplos Retornos</h3>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">calcular_estatisticas</span><span class="p">(</span><span class="n">numeros</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calcula média, mín e máx&quot;&quot;&quot;</span>
+    <span class="n">media</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">numeros</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">numeros</span><span class="p">)</span>
+    <span class="n">minimo</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">numeros</span><span class="p">)</span>
+    <span class="n">maximo</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">numeros</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">media</span><span class="p">,</span> <span class="n">minimo</span><span class="p">,</span> <span class="n">maximo</span>
+
+<span class="c1"># Desempacotar retorno</span>
+<span class="n">temps</span> <span class="o">=</span> <span class="p">[</span><span class="mf">22.5</span><span class="p">,</span> <span class="mf">23.1</span><span class="p">,</span> <span class="mf">22.8</span><span class="p">,</span> <span class="mf">23.4</span><span class="p">]</span>
+<span class="n">media</span><span class="p">,</span> <span class="n">minima</span><span class="p">,</span> <span class="n">maxima</span> <span class="o">=</span> <span class="n">calcular_estatisticas</span><span class="p">(</span><span class="n">temps</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Média: </span><span class="si">{</span><span class="n">media</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">, Min: </span><span class="si">{</span><span class="n">minima</span><span class="si">}</span><span class="s2">, Max: </span><span class="si">{</span><span class="n">maxima</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># Média: 23.0, Min: 22.5, Max: 23.4</span>
+</code></pre></div>
+
+<h3 id="retornar-dicionario">Retornar Dicionário</h3>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">analisar_amostra</span><span class="p">(</span><span class="n">especie</span><span class="p">,</span> <span class="n">prof_m</span><span class="p">,</span> <span class="n">temp_c</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Analisa uma amostra e retorna resultado&quot;&quot;&quot;</span>
+
+    <span class="n">valida</span> <span class="o">=</span> <span class="mi">20</span> <span class="o">&lt;=</span> <span class="n">temp_c</span> <span class="o">&lt;=</span> <span class="mi">25</span> <span class="ow">and</span> <span class="n">prof_m</span> <span class="o">&lt;</span> <span class="mi">10</span>
+
+    <span class="n">resultado</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;especie&quot;</span><span class="p">:</span> <span class="n">especie</span><span class="p">,</span>
+        <span class="s2">&quot;profundidade_m&quot;</span><span class="p">:</span> <span class="n">prof_m</span><span class="p">,</span>
+        <span class="s2">&quot;temperatura_c&quot;</span><span class="p">:</span> <span class="n">temp_c</span><span class="p">,</span>
+        <span class="s2">&quot;valida&quot;</span><span class="p">:</span> <span class="n">valida</span><span class="p">,</span>
+        <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;✅ VÁLIDA&quot;</span> <span class="k">if</span> <span class="n">valida</span> <span class="k">else</span> <span class="s2">&quot;❌ INVÁLIDA&quot;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">resultado</span>
+
+<span class="c1"># Usar</span>
+<span class="n">analise</span> <span class="o">=</span> <span class="n">analisar_amostra</span><span class="p">(</span><span class="s2">&quot;Ulva lactuca&quot;</span><span class="p">,</span> <span class="mf">5.2</span><span class="p">,</span> <span class="mf">22.5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">analise</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">])</span>  <span class="c1"># ✅ VÁLIDA</span>
+</code></pre></div>
+
+<hr />
+<h2 id="documentacao-docstrings">🔍 Documentação (Docstrings)</h2>
+<p>Docstrings explicam o que a função faz.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">processar_temperatura</span><span class="p">(</span><span class="n">celsius</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Converte temperatura de Celsius para Fahrenheit.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        celsius (float): Temperatura em Celsius</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: Temperatura em Fahrenheit</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; processar_temperatura(0)</span>
+<span class="sd">        32.0</span>
+<span class="sd">        &gt;&gt;&gt; processar_temperatura(100)</span>
+<span class="sd">        212.0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">celsius</span> <span class="o">*</span> <span class="mi">9</span><span class="o">/</span><span class="mi">5</span><span class="p">)</span> <span class="o">+</span> <span class="mi">32</span>
+
+<span class="c1"># Ver documentação</span>
+<span class="n">help</span><span class="p">(</span><span class="n">processar_temperatura</span><span class="p">)</span>
+<span class="c1"># ou</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">processar_temperatura</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="exemplo-sistema-de-validacao">⚙️ Exemplo: Sistema de Validação</h2>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">validar_amostra</span><span class="p">(</span><span class="n">especie</span><span class="p">,</span> <span class="n">profundidade</span><span class="p">,</span> <span class="n">temperatura</span><span class="p">,</span> <span class="n">salinidade</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Valida uma amostra de coleta.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: Resultado da validação com status e mensagens</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">erros</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">avisos</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Validação de espécie</span>
+    <span class="n">especies_validas</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Ulva&quot;</span><span class="p">,</span> <span class="s2">&quot;Gracilaria&quot;</span><span class="p">,</span> <span class="s2">&quot;Sargassum&quot;</span><span class="p">,</span> <span class="s2">&quot;Laminaria&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">especie</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">especies_validas</span><span class="p">:</span>
+        <span class="n">erros</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Espécie &#39;</span><span class="si">{</span><span class="n">especie</span><span class="si">}</span><span class="s2">&#39; não reconhecida&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Validação de profundidade</span>
+    <span class="k">if</span> <span class="n">profundidade</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">erros</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Profundidade não pode ser negativa&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">profundidade</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
+        <span class="n">avisos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Profundidade muito grande (&gt;100m)&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Validação de temperatura</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">15</span> <span class="o">&lt;=</span> <span class="n">temperatura</span> <span class="o">&lt;=</span> <span class="mi">30</span><span class="p">):</span>
+        <span class="n">erros</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Temperatura </span><span class="si">{</span><span class="n">temperatura</span><span class="si">}</span><span class="s2">°C fora do intervalo (15-30°C)&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">temperatura</span> <span class="o">&lt;</span> <span class="mi">20</span> <span class="ow">or</span> <span class="n">temperatura</span> <span class="o">&gt;</span> <span class="mi">25</span><span class="p">:</span>
+        <span class="n">avisos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Temperatura não ideal (ideal: 20-25°C)&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Validação de salinidade</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">30</span> <span class="o">&lt;=</span> <span class="n">salinidade</span> <span class="o">&lt;=</span> <span class="mi">40</span><span class="p">):</span>
+        <span class="n">erros</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Salinidade </span><span class="si">{</span><span class="n">salinidade</span><span class="si">}</span><span class="s2"> PSU fora do intervalo (30-40)&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Resultado</span>
+    <span class="n">valida</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">erros</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;valida&quot;</span><span class="p">:</span> <span class="n">valida</span><span class="p">,</span>
+        <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;✅ VÁLIDA&quot;</span> <span class="k">if</span> <span class="n">valida</span> <span class="k">else</span> <span class="s2">&quot;❌ INVÁLIDA&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;erros&quot;</span><span class="p">:</span> <span class="n">erros</span><span class="p">,</span>
+        <span class="s2">&quot;avisos&quot;</span><span class="p">:</span> <span class="n">avisos</span>
+    <span class="p">}</span>
+
+<span class="c1"># Teste</span>
+<span class="n">resultado</span> <span class="o">=</span> <span class="n">validar_amostra</span><span class="p">(</span><span class="s2">&quot;Ulva&quot;</span><span class="p">,</span> <span class="mf">5.2</span><span class="p">,</span> <span class="mf">22.5</span><span class="p">,</span> <span class="mf">35.0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">resultado</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">])</span>      <span class="c1"># ✅ VÁLIDA</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">resultado</span><span class="p">[</span><span class="s2">&quot;erros&quot;</span><span class="p">])</span>       <span class="c1"># []</span>
+
+<span class="n">resultado2</span> <span class="o">=</span> <span class="n">validar_amostra</span><span class="p">(</span><span class="s2">&quot;Alga desconhecida&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">resultado2</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">])</span>     <span class="c1"># ❌ INVÁLIDA</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">resultado2</span><span class="p">[</span><span class="s2">&quot;erros&quot;</span><span class="p">])</span>      <span class="c1"># Lista de erros</span>
+</code></pre></div>
+
+<hr />
+<h2 id="escopo-de-variaveis">🔄 Escopo de Variáveis</h2>
+<p>Onde uma variável pode ser usada.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Variável global</span>
+<span class="n">mensagem_global</span> <span class="o">=</span> <span class="s2">&quot;LABFICOL&quot;</span>
+
+<span class="k">def</span> <span class="nf">mostrar_mensagem</span><span class="p">():</span>
+    <span class="c1"># Pode acessar global</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">mensagem_global</span><span class="p">)</span>
+
+    <span class="c1"># Variável local</span>
+    <span class="n">mensagem_local</span> <span class="o">=</span> <span class="s2">&quot;Oceanografia&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">mensagem_local</span><span class="p">)</span>
+
+<span class="n">mostrar_mensagem</span><span class="p">()</span>
+<span class="c1"># Printa:</span>
+<span class="c1"># LABFICOL</span>
+<span class="c1"># Oceanografia</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">mensagem_global</span><span class="p">)</span>  <span class="c1"># ✅ Funciona</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mensagem_local</span><span class="p">)</span>   <span class="c1"># ❌ ERRO - não existe fora da função</span>
+</code></pre></div>
+
+<h3 id="modificar-global">Modificar Global</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">contador</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">def</span> <span class="nf">incrementar</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">contador</span>  <span class="c1"># Autorizar modificação</span>
+    <span class="n">contador</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="n">incrementar</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">contador</span><span class="p">)</span>  <span class="c1"># 1</span>
+</code></pre></div>
+
+<hr />
+<h2 id="modulos-reutilizar-codigo">📚 Módulos (Reutilizar Código)</h2>
+<p>Módulos são arquivos Python com código reutilizável.</p>
+<h3 id="criar-um-modulo">Criar um Módulo</h3>
+<p>Crie arquivo <code>oceanografia.py</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Módulo com funções oceanográficas</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">celsius_para_fahrenheit</span><span class="p">(</span><span class="n">celsius</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Converte Celsius para Fahrenheit&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">celsius</span> <span class="o">*</span> <span class="mi">9</span><span class="o">/</span><span class="mi">5</span><span class="p">)</span> <span class="o">+</span> <span class="mi">32</span>
+
+<span class="k">def</span> <span class="nf">calcular_densidade_agua</span><span class="p">(</span><span class="n">salinidade</span><span class="p">,</span> <span class="n">temperatura</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calcula densidade aproximada da água&quot;&quot;&quot;</span>
+    <span class="c1"># Fórmula simplificada</span>
+    <span class="n">densidade</span> <span class="o">=</span> <span class="mi">1000</span> <span class="o">+</span> <span class="p">(</span><span class="n">salinidade</span> <span class="o">-</span> <span class="mi">35</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.78</span> <span class="o">-</span> <span class="p">(</span><span class="n">temperatura</span> <span class="o">-</span> <span class="mi">15</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.2</span>
+    <span class="k">return</span> <span class="n">densidade</span>
+
+<span class="k">def</span> <span class="nf">validar_coleta</span><span class="p">(</span><span class="n">temperatura</span><span class="p">,</span> <span class="n">profundidade</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Verifica se coleta foi válida&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mi">20</span> <span class="o">&lt;=</span> <span class="n">temperatura</span> <span class="o">&lt;=</span> <span class="mi">25</span> <span class="ow">and</span> <span class="n">profundidade</span> <span class="o">&lt;</span> <span class="mi">50</span>
+</code></pre></div>
+
+<h3 id="usar-o-modulo">Usar o Módulo</h3>
+<p>Crie arquivo <code>usar_modulo.py</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Importar tudo</span>
+<span class="kn">import</span> <span class="nn">oceanografia</span>
+
+<span class="c1"># Usar funções</span>
+<span class="n">temp_f</span> <span class="o">=</span> <span class="n">oceanografia</span><span class="o">.</span><span class="n">celsius_para_fahrenheit</span><span class="p">(</span><span class="mf">22.5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;22.5°C = </span><span class="si">{</span><span class="n">temp_f</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°F&quot;</span><span class="p">)</span>
+
+<span class="c1"># Importar funções específicas</span>
+<span class="kn">from</span> <span class="nn">oceanografia</span> <span class="kn">import</span> <span class="n">celsius_para_fahrenheit</span><span class="p">,</span> <span class="n">calcular_densidade_agua</span>
+
+<span class="n">temp_f</span> <span class="o">=</span> <span class="n">celsius_para_fahrenheit</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
+<span class="n">densidade</span> <span class="o">=</span> <span class="n">calcular_densidade_agua</span><span class="p">(</span><span class="mf">35.0</span><span class="p">,</span> <span class="mf">22.5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Densidade: </span><span class="si">{</span><span class="n">densidade</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> kg/m³&quot;</span><span class="p">)</span>
+
+<span class="c1"># Importar com apelido</span>
+<span class="kn">from</span> <span class="nn">oceanografia</span> <span class="kn">import</span> <span class="n">validar_coleta</span> <span class="k">as</span> <span class="n">validar</span>
+
+<span class="k">if</span> <span class="n">validar</span><span class="p">(</span><span class="mf">22.5</span><span class="p">,</span> <span class="mf">5.2</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Coleta válida!&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="bibliotecas-padrao-uteis">📦 Bibliotecas Padrão Úteis</h2>
+<h3 id="math-matematica">math (Matemática)</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>              <span class="c1"># 3.14159...</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">16</span><span class="p">))</span>        <span class="c1"># 4.0</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="mf">5.2</span><span class="p">))</span>       <span class="c1"># 6 (arredonda para cima)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="mf">5.8</span><span class="p">))</span>      <span class="c1"># 5 (arredonda para baixo)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span>  <span class="c1"># 1.0</span>
+</code></pre></div>
+
+<h3 id="datetime-data-e-hora">datetime (Data e Hora)</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+
+<span class="n">agora</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">agora</span><span class="p">)</span>  <span class="c1"># 2025-01-06 14:30:45.123456</span>
+
+<span class="c1"># Formatar</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">agora</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%m/%Y&quot;</span><span class="p">))</span>  <span class="c1"># 06/01/2025</span>
+
+<span class="c1"># Adicionar dias</span>
+<span class="n">amanha</span> <span class="o">=</span> <span class="n">agora</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">amanha</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="random-numeros-aleatorios">random (Números Aleatórios)</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">random</span>
+
+<span class="c1"># Número aleatório</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">())</span>  <span class="c1"># 0.123456... (0 a 1)</span>
+
+<span class="c1"># Inteiro aleatório</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>  <span class="c1"># Número de 1 a 10</span>
+
+<span class="c1"># Escolher da lista</span>
+<span class="n">especies</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Ulva&quot;</span><span class="p">,</span> <span class="s2">&quot;Gracilaria&quot;</span><span class="p">,</span> <span class="s2">&quot;Sargassum&quot;</span><span class="p">]</span>
+<span class="n">escolhida</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">especies</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">escolhida</span><span class="p">)</span>  <span class="c1"># Aleatória</span>
+
+<span class="c1"># Embaralhar</span>
+<span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">especies</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">especies</span><span class="p">)</span>  <span class="c1"># Embaralhada</span>
+</code></pre></div>
+
+<hr />
+<h2 id="exemplo-completo-processador-de-dados">🎯 Exemplo Completo: Processador de Dados</h2>
+<div class="codehilite"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Processador de dados de coleta oceanográfica</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">carregar_dados</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Simula carregamento de dados&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="p">{</span><span class="s2">&quot;especie&quot;</span><span class="p">:</span> <span class="s2">&quot;Ulva&quot;</span><span class="p">,</span> <span class="s2">&quot;prof_m&quot;</span><span class="p">:</span> <span class="mf">5.2</span><span class="p">,</span> <span class="s2">&quot;temp_c&quot;</span><span class="p">:</span> <span class="mf">22.5</span><span class="p">,</span> <span class="s2">&quot;sal_psu&quot;</span><span class="p">:</span> <span class="mf">35.0</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">&quot;especie&quot;</span><span class="p">:</span> <span class="s2">&quot;Gracilaria&quot;</span><span class="p">,</span> <span class="s2">&quot;prof_m&quot;</span><span class="p">:</span> <span class="mf">7.8</span><span class="p">,</span> <span class="s2">&quot;temp_c&quot;</span><span class="p">:</span> <span class="mf">23.1</span><span class="p">,</span> <span class="s2">&quot;sal_psu&quot;</span><span class="p">:</span> <span class="mf">34.8</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">&quot;especie&quot;</span><span class="p">:</span> <span class="s2">&quot;Sargassum&quot;</span><span class="p">,</span> <span class="s2">&quot;prof_m&quot;</span><span class="p">:</span> <span class="mf">3.1</span><span class="p">,</span> <span class="s2">&quot;temp_c&quot;</span><span class="p">:</span> <span class="mf">22.8</span><span class="p">,</span> <span class="s2">&quot;sal_psu&quot;</span><span class="p">:</span> <span class="mf">35.1</span><span class="p">},</span>
+    <span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">validar_dados</span><span class="p">(</span><span class="n">amostras</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Valida todas as amostras&quot;&quot;&quot;</span>
+    <span class="n">validas</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">invalidas</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">amostra</span> <span class="ow">in</span> <span class="n">amostras</span><span class="p">:</span>
+        <span class="k">if</span> <span class="mi">20</span> <span class="o">&lt;=</span> <span class="n">amostra</span><span class="p">[</span><span class="s2">&quot;temp_c&quot;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">25</span> <span class="ow">and</span> <span class="n">amostra</span><span class="p">[</span><span class="s2">&quot;prof_m&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="n">validas</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">invalidas</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">validas</span><span class="p">,</span> <span class="n">invalidas</span>
+
+<span class="k">def</span> <span class="nf">calcular_medias</span><span class="p">(</span><span class="n">amostras</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calcula médias dos parâmetros&quot;&quot;&quot;</span>
+    <span class="n">temps</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="s2">&quot;temp_c&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">amostras</span><span class="p">]</span>
+    <span class="n">profs</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="s2">&quot;prof_m&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">amostras</span><span class="p">]</span>
+    <span class="n">sals</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="s2">&quot;sal_psu&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">amostras</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;temp_media_c&quot;</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">temps</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">temps</span><span class="p">),</span>
+        <span class="s2">&quot;prof_media_m&quot;</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">profs</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">profs</span><span class="p">),</span>
+        <span class="s2">&quot;sal_media_psu&quot;</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">sals</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">sals</span><span class="p">)</span>
+    <span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">gerar_relatorio</span><span class="p">(</span><span class="n">amostras</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Gera relatório completo&quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🌊 RELATÓRIO DE COLETA - LABFICOL&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+
+    <span class="c1"># Total de amostras</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 Total de amostras: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">amostras</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Validação</span>
+    <span class="n">validas</span><span class="p">,</span> <span class="n">invalidas</span> <span class="o">=</span> <span class="n">validar_dados</span><span class="p">(</span><span class="n">amostras</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Válidas: </span><span class="si">{</span><span class="n">validas</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ Inválidas: </span><span class="si">{</span><span class="n">invalidas</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Médias</span>
+    <span class="n">medias</span> <span class="o">=</span> <span class="n">calcular_medias</span><span class="p">(</span><span class="n">amostras</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📈 Médias:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Temperatura: </span><span class="si">{</span><span class="n">medias</span><span class="p">[</span><span class="s1">&#39;temp_media_c&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°C&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Profundidade: </span><span class="si">{</span><span class="n">medias</span><span class="p">[</span><span class="s1">&#39;prof_media_m&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">m&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Salinidade: </span><span class="si">{</span><span class="n">medias</span><span class="p">[</span><span class="s1">&#39;sal_media_psu&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> PSU&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Espécies</span>
+    <span class="n">especies</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="s2">&quot;especie&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">amostras</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🌿 Espécies coletadas: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">especies</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># Executar</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">dados</span> <span class="o">=</span> <span class="n">carregar_dados</span><span class="p">()</span>
+    <span class="n">gerar_relatorio</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Execute:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">python</span> <span class="n">processador_dados</span><span class="p">.</span><span class="n">py</span>
+</code></pre></div>
+
+<hr />
+<h2 id="boas-praticas">🎓 Boas Práticas</h2>
+<p>✅ <strong>Faça:</strong>
+- Use nomes descritivos para funções
+- Escreva docstrings
+- Mantenha funções simples (uma coisa por função)
+- Use parâmetros em vez de variáveis globais</p>
+<p>❌ <strong>Evite:</strong>
+- Funções muito longas (&gt;20 linhas)
+- Variáveis globais
+- Funções sem documentação
+- Modificar parâmetros sem aviso</p>
+<hr />
+<h2 id="checklist-desta-licao">🎓 Checklist desta Lição</h2>
+<ul>
+<li>[ ] Consigo definir uma função</li>
+<li>[ ] Entendo parâmetros e retornos</li>
+<li>[ ] Sei usar docstrings</li>
+<li>[ ] Consigo criar módulos</li>
+<li>[ ] Entendo escopo de variáveis</li>
+<li>[ ] Testei pelo menos 3 exemplos completos</li>
+</ul>
+<p>Se marcou tudo, você completou <strong>Python Essencial</strong>! 🎉</p>
+<hr />
+<h2 id="resumo-de-conceitos">📝 Resumo de Conceitos</h2>
+<table>
+<thead>
+<tr>
+<th>Conceito</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Função</strong></td>
+<td>Bloco de código reutilizável</td>
+</tr>
+<tr>
+<td><strong>Parâmetro</strong></td>
+<td>Dados que função recebe</td>
+</tr>
+<tr>
+<td><strong>Return</strong></td>
+<td>Valor que função retorna</td>
+</tr>
+<tr>
+<td><strong>Docstring</strong></td>
+<td>Documentação da função</td>
+</tr>
+<tr>
+<td><strong>Escopo</strong></td>
+<td>Onde uma variável existe</td>
+</tr>
+<tr>
+<td><strong>Módulo</strong></td>
+<td>Arquivo com funções reutilizáveis</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="proximos-passos">➡️ Próximos Passos</h2>
+<p>Parabéns! Você completou <strong>Python Essencial</strong>! 🚀</p>
+<p><strong>Próximos módulos:</strong>
+1. 📚 <strong>Análise Geoespacial</strong> (GeoPandas, Folium)
+2. 🗺️ <strong>Visualização Web</strong> (JavaScript, HTML)
+3. 📊 <strong>Casos Práticos</strong> (Oceanografia real)</p>
+<hr />
+<p><strong>Você agora é um programador Python iniciante!</strong> 🐍 Vamos para análises geoespaciais? 🗺️</p>
+      </article>
+    </main>
+    <footer role="contentinfo">
+      <p>Gerado automaticamente em 06/01/2026 16:10. Paleta: ColorBrewer BuGn.</p>
+    </footer>
+    <script src="..\assets/site.js"></script>
+  </body>
+</html>

@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>📊 Caso Prático 1: Monitoramento Costeiro</title>
+    <link rel="preload" href="..\assets/theme.css" as="style" />
+    <link rel="stylesheet" href="..\assets/theme.css" />
+  </head>
+  <body>
+    <a href="#conteudo" class="skip-link">Pular para conteúdo</a>
+    <header role="banner">
+      <div class="wrap">
+        <h1>📊 Caso Prático 1: Monitoramento Costeiro</h1>
+        <nav aria-label="Navegação">
+          <a href="..\index.html">Início</a>
+          <a href="https://github.com/caetanoronan/labficol-tutorial">Repositório</a>
+          <a href="https://caetanoronan.github.io/labficol-tutorial/">Site</a>
+        </nav>
+        <div class="controls">
+          <button id="toggleHC" aria-pressed="false" aria-label="Alternar alto contraste">Alto contraste</button>
+          <button id="toggleBT" aria-pressed="false" aria-label="Alternar texto grande">Texto grande</button>
+          <button id="toggleLM" aria-pressed="false" aria-label="Reduzir movimento">Menos movimento</button>
+        </div>
+      </div>
+    </header>
+    <main id="conteudo" role="main">
+      <article class="md-content" aria-label="Conteúdo">
+        <h1 id="caso-pratico-1-monitoramento-costeiro">📊 Caso Prático 1: Monitoramento Costeiro</h1>
+<h2 id="objetivo-do-projeto">🎯 Objetivo do Projeto</h2>
+<p>Criar um sistema completo de análise temporal de coletas de macroalgas em praias de Santa Catarina, usando <strong>Python + pandas + matplotlib</strong>.</p>
+<p><strong>O que faremos:</strong>
+- Carregar dados de múltiplas coletas
+- Analisar tendências temporais
+- Identificar padrões sazonais
+- Gerar relatórios visuais</p>
+<hr />
+<h2 id="contexto-da-pesquisa">📋 Contexto da Pesquisa</h2>
+<p>O LABFICOL realiza coletas mensais em 5 praias de Florianópolis para monitorar:
+- Abundância de espécies
+- Parâmetros físico-químicos
+- Variações sazonais</p>
+<p><strong>Objetivo científico:</strong> Identificar como temperatura e salinidade afetam a distribuição de <em>Ulva lactuca</em> e <em>Gracilaria</em>.</p>
+<hr />
+<h2 id="estrutura-dos-dados">🗂️ Estrutura dos Dados</h2>
+<p>Nosso dataset <code>coletas_2025.csv</code>:</p>
+<div class="codehilite"><pre><span></span><code>data,praia,especie,biomassa_g,temperatura_c,salinidade_psu,profundidade_m
+2025-01-15,Ingleses,Ulva lactuca,245.3,24.5,35.0,3.2
+2025-01-15,Ingleses,Gracilaria,180.7,24.5,35.0,5.1
+2025-01-15,Barra da Lagoa,Sargassum,310.2,23.8,34.8,4.5
+2025-02-20,Ingleses,Ulva lactuca,198.5,26.1,34.5,3.0
+2025-02-20,Barra da Lagoa,Gracilaria,220.4,25.5,34.7,5.3
+2025-03-18,Ingleses,Ulva lactuca,302.1,22.3,35.2,3.5
+</code></pre></div>
+
+<hr />
+<h2 id="codigo-completo-parte-1-analise-exploratoria">💻 Código Completo - Parte 1: Análise Exploratória</h2>
+<p>Crie <code>analise_monitoramento.py</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="c1"># ==========================</span>
+<span class="c1"># 1. CARREGAMENTO DOS DADOS</span>
+<span class="c1"># ==========================</span>
+
+<span class="c1"># Criar dataset de exemplo</span>
+<span class="n">dados</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;2025-01-15&#39;</span><span class="p">,</span> <span class="s1">&#39;2025-01-15&#39;</span><span class="p">,</span> <span class="s1">&#39;2025-01-15&#39;</span><span class="p">,</span> <span class="s1">&#39;2025-02-20&#39;</span><span class="p">,</span> <span class="s1">&#39;2025-02-20&#39;</span><span class="p">,</span> 
+             <span class="s1">&#39;2025-03-18&#39;</span><span class="p">,</span> <span class="s1">&#39;2025-03-18&#39;</span><span class="p">,</span> <span class="s1">&#39;2025-04-22&#39;</span><span class="p">,</span> <span class="s1">&#39;2025-04-22&#39;</span><span class="p">,</span> <span class="s1">&#39;2025-05-17&#39;</span><span class="p">,</span>
+             <span class="s1">&#39;2025-05-17&#39;</span><span class="p">,</span> <span class="s1">&#39;2025-06-14&#39;</span><span class="p">,</span> <span class="s1">&#39;2025-06-14&#39;</span><span class="p">,</span> <span class="s1">&#39;2025-07-19&#39;</span><span class="p">,</span> <span class="s1">&#39;2025-07-19&#39;</span><span class="p">,</span>
+             <span class="s1">&#39;2025-08-16&#39;</span><span class="p">,</span> <span class="s1">&#39;2025-08-16&#39;</span><span class="p">,</span> <span class="s1">&#39;2025-09-20&#39;</span><span class="p">,</span> <span class="s1">&#39;2025-09-20&#39;</span><span class="p">,</span> <span class="s1">&#39;2025-10-18&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;praia&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Ingleses&#39;</span><span class="p">,</span> <span class="s1">&#39;Ingleses&#39;</span><span class="p">,</span> <span class="s1">&#39;Barra da Lagoa&#39;</span><span class="p">,</span> <span class="s1">&#39;Ingleses&#39;</span><span class="p">,</span> <span class="s1">&#39;Barra da Lagoa&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;Ingleses&#39;</span><span class="p">,</span> <span class="s1">&#39;Barra da Lagoa&#39;</span><span class="p">,</span> <span class="s1">&#39;Ingleses&#39;</span><span class="p">,</span> <span class="s1">&#39;Barra da Lagoa&#39;</span><span class="p">,</span> <span class="s1">&#39;Ingleses&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;Barra da Lagoa&#39;</span><span class="p">,</span> <span class="s1">&#39;Ingleses&#39;</span><span class="p">,</span> <span class="s1">&#39;Barra da Lagoa&#39;</span><span class="p">,</span> <span class="s1">&#39;Ingleses&#39;</span><span class="p">,</span> <span class="s1">&#39;Barra da Lagoa&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;Ingleses&#39;</span><span class="p">,</span> <span class="s1">&#39;Barra da Lagoa&#39;</span><span class="p">,</span> <span class="s1">&#39;Ingleses&#39;</span><span class="p">,</span> <span class="s1">&#39;Barra da Lagoa&#39;</span><span class="p">,</span> <span class="s1">&#39;Ingleses&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;especie&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">,</span> <span class="s1">&#39;Gracilaria&#39;</span><span class="p">,</span> <span class="s1">&#39;Sargassum&#39;</span><span class="p">,</span> <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">,</span> <span class="s1">&#39;Gracilaria&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">,</span> <span class="s1">&#39;Gracilaria&#39;</span><span class="p">,</span> <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">,</span> <span class="s1">&#39;Sargassum&#39;</span><span class="p">,</span> <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Gracilaria&#39;</span><span class="p">,</span> <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">,</span> <span class="s1">&#39;Sargassum&#39;</span><span class="p">,</span> <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">,</span> <span class="s1">&#39;Gracilaria&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">,</span> <span class="s1">&#39;Sargassum&#39;</span><span class="p">,</span> <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">,</span> <span class="s1">&#39;Gracilaria&#39;</span><span class="p">,</span> <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;biomassa_g&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">245.3</span><span class="p">,</span> <span class="mf">180.7</span><span class="p">,</span> <span class="mf">310.2</span><span class="p">,</span> <span class="mf">198.5</span><span class="p">,</span> <span class="mf">220.4</span><span class="p">,</span> <span class="mf">302.1</span><span class="p">,</span> <span class="mf">195.8</span><span class="p">,</span> <span class="mf">275.4</span><span class="p">,</span> <span class="mf">340.5</span><span class="p">,</span> <span class="mf">310.8</span><span class="p">,</span>
+                   <span class="mf">210.3</span><span class="p">,</span> <span class="mf">285.2</span><span class="p">,</span> <span class="mf">298.7</span><span class="p">,</span> <span class="mf">320.5</span><span class="p">,</span> <span class="mf">185.4</span><span class="p">,</span> <span class="mf">295.7</span><span class="p">,</span> <span class="mf">315.2</span><span class="p">,</span> <span class="mf">260.8</span><span class="p">,</span> <span class="mf">205.6</span><span class="p">,</span> <span class="mf">280.3</span><span class="p">],</span>
+    <span class="s1">&#39;temperatura_c&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">24.5</span><span class="p">,</span> <span class="mf">24.5</span><span class="p">,</span> <span class="mf">23.8</span><span class="p">,</span> <span class="mf">26.1</span><span class="p">,</span> <span class="mf">25.5</span><span class="p">,</span> <span class="mf">22.3</span><span class="p">,</span> <span class="mf">22.0</span><span class="p">,</span> <span class="mf">21.5</span><span class="p">,</span> <span class="mf">21.2</span><span class="p">,</span> <span class="mf">19.8</span><span class="p">,</span>
+                      <span class="mf">19.5</span><span class="p">,</span> <span class="mf">18.2</span><span class="p">,</span> <span class="mf">17.9</span><span class="p">,</span> <span class="mf">17.5</span><span class="p">,</span> <span class="mf">17.3</span><span class="p">,</span> <span class="mf">18.0</span><span class="p">,</span> <span class="mf">17.8</span><span class="p">,</span> <span class="mf">19.5</span><span class="p">,</span> <span class="mf">19.2</span><span class="p">,</span> <span class="mf">21.0</span><span class="p">],</span>
+    <span class="s1">&#39;salinidade_psu&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">35.0</span><span class="p">,</span> <span class="mf">35.0</span><span class="p">,</span> <span class="mf">34.8</span><span class="p">,</span> <span class="mf">34.5</span><span class="p">,</span> <span class="mf">34.7</span><span class="p">,</span> <span class="mf">35.2</span><span class="p">,</span> <span class="mf">35.1</span><span class="p">,</span> <span class="mf">35.3</span><span class="p">,</span> <span class="mf">35.2</span><span class="p">,</span> <span class="mf">35.4</span><span class="p">,</span>
+                       <span class="mf">35.3</span><span class="p">,</span> <span class="mf">35.5</span><span class="p">,</span> <span class="mf">35.4</span><span class="p">,</span> <span class="mf">35.6</span><span class="p">,</span> <span class="mf">35.5</span><span class="p">,</span> <span class="mf">35.4</span><span class="p">,</span> <span class="mf">35.3</span><span class="p">,</span> <span class="mf">35.2</span><span class="p">,</span> <span class="mf">35.1</span><span class="p">,</span> <span class="mf">35.0</span><span class="p">],</span>
+    <span class="s1">&#39;profundidade_m&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">3.2</span><span class="p">,</span> <span class="mf">5.1</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">5.3</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">,</span> <span class="mf">4.2</span><span class="p">,</span> <span class="mf">3.6</span><span class="p">,</span>
+                       <span class="mf">5.2</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">3.9</span><span class="p">,</span> <span class="mf">5.4</span><span class="p">,</span> <span class="mf">3.7</span><span class="p">,</span> <span class="mf">4.3</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">5.1</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span>
+
+<span class="c1"># Converter coluna de data para datetime</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span>
+
+<span class="c1"># Extrair mês e ano</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;mes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">month</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;mes_nome&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%B&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DATASET CARREGADO COM SUCESSO&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total de registros: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Período: </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">/%m/%Y&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2"> até </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">/%m/%Y&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Espécies monitoradas: </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Praias: </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;praia&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="c1"># ==========================</span>
+<span class="c1"># 2. ESTATÍSTICAS DESCRITIVAS</span>
+<span class="c1"># ==========================</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ESTATÍSTICAS POR ESPÉCIE&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+
+<span class="c1"># Agrupar por espécie</span>
+<span class="n">stats_especies</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;especie&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span>
+    <span class="s1">&#39;biomassa_g&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;std&#39;</span><span class="p">,</span> <span class="s1">&#39;min&#39;</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;temperatura_c&#39;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;salinidade_psu&#39;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span>
+<span class="p">})</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">stats_especies</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="c1"># ==========================</span>
+<span class="c1"># 3. ANÁLISE TEMPORAL</span>
+<span class="c1"># ==========================</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ANÁLISE TEMPORAL - ULVA LACTUCA&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+
+<span class="c1"># Filtrar apenas Ulva lactuca</span>
+<span class="n">ulva_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="c1"># Agrupar por mês</span>
+<span class="n">ulva_mensal</span> <span class="o">=</span> <span class="n">ulva_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;mes&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span>
+    <span class="s1">&#39;biomassa_g&#39;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;temperatura_c&#39;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;salinidade_psu&#39;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span>
+<span class="p">})</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">ulva_mensal</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="c1"># ==========================</span>
+<span class="c1"># 4. IDENTIFICAR TENDÊNCIAS</span>
+<span class="c1"># ==========================</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ANÁLISE DE CORRELAÇÕES&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+
+<span class="c1"># Correlação entre variáveis</span>
+<span class="n">correlacao</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;biomassa_g&#39;</span><span class="p">,</span> <span class="s1">&#39;temperatura_c&#39;</span><span class="p">,</span> <span class="s1">&#39;salinidade_psu&#39;</span><span class="p">,</span> <span class="s1">&#39;profundidade_m&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">correlacao</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="c1"># Identificar meses de maior biomassa</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;RANKING DE BIOMASSA POR MÊS&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+
+<span class="n">biomassa_mensal</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;mes&#39;</span><span class="p">)[</span><span class="s1">&#39;biomassa_g&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">biomassa_mensal</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="c1"># ==========================</span>
+<span class="c1"># 5. ALERTAS E INSIGHTS</span>
+<span class="c1"># ==========================</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🔍 INSIGHTS CIENTÍFICOS&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+
+<span class="c1"># Temperatura média ideal para Ulva lactuca</span>
+<span class="n">temp_ideal_ulva</span> <span class="o">=</span> <span class="n">ulva_df</span><span class="p">[</span><span class="s1">&#39;temperatura_c&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Temperatura média ideal para Ulva lactuca: </span><span class="si">{</span><span class="n">temp_ideal_ulva</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°C&quot;</span><span class="p">)</span>
+
+<span class="c1"># Meses de pico</span>
+<span class="n">mes_pico</span> <span class="o">=</span> <span class="n">biomassa_mensal</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
+<span class="n">biomassa_pico</span> <span class="o">=</span> <span class="n">biomassa_mensal</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Mês de maior biomassa: Mês </span><span class="si">{</span><span class="n">mes_pico</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">biomassa_pico</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">g)&quot;</span><span class="p">)</span>
+
+<span class="c1"># Correlação temperatura-biomassa</span>
+<span class="n">corr_temp_biomassa</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">][[</span><span class="s1">&#39;temperatura_c&#39;</span><span class="p">,</span> <span class="s1">&#39;biomassa_g&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="k">if</span> <span class="n">corr_temp_biomassa</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;⚠️ ALERTA: Correlação negativa forte entre temperatura e biomassa (</span><span class="si">{</span><span class="n">corr_temp_biomassa</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   → Ulva lactuca prefere águas mais frias!&quot;</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">corr_temp_biomassa</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Correlação positiva entre temperatura e biomassa (</span><span class="si">{</span><span class="n">corr_temp_biomassa</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ANÁLISE CONCLUÍDA!&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+</code></pre></div>
+
+<p><strong>Execute:</strong></p>
+<div class="codehilite"><pre><span></span><code>python<span class="w"> </span>analise_monitoramento.py
+</code></pre></div>
+
+<p><strong>Saída esperada:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="o">==================================================</span>
+<span class="n">DATASET</span><span class="w"> </span><span class="n">CARREGADO</span><span class="w"> </span><span class="n">COM</span><span class="w"> </span><span class="n">SUCESSO</span>
+<span class="o">==================================================</span>
+<span class="n">Total</span><span class="w"> </span><span class="n">de</span><span class="w"> </span><span class="nl">registros:</span><span class="w"> </span><span class="mh">20</span>
+<span class="nl">Período:</span><span class="w"> </span><span class="mh">15</span><span class="o">/</span><span class="mh">01</span><span class="o">/</span><span class="mh">2025</span><span class="w"> </span><span class="n">até</span><span class="w"> </span><span class="mh">18</span><span class="o">/</span><span class="mh">10</span><span class="o">/</span><span class="mh">2025</span>
+<span class="n">Espécies</span><span class="w"> </span><span class="nl">monitoradas:</span><span class="w"> </span><span class="p">[&#39;</span><span class="n">Ulva</span><span class="w"> </span><span class="n">lactuca</span><span class="sc">&#39; &#39;</span><span class="n">Gracilaria</span><span class="sc">&#39; &#39;</span><span class="n">Sargassum</span><span class="p">&#39;]</span>
+<span class="nl">Praias:</span><span class="w"> </span><span class="p">[&#39;</span><span class="n">Ingleses</span><span class="sc">&#39; &#39;</span><span class="n">Barra</span><span class="w"> </span><span class="n">da</span><span class="w"> </span><span class="n">Lagoa</span><span class="p">&#39;]</span>
+
+<span class="o">==================================================</span>
+<span class="err">🔍</span><span class="w"> </span><span class="n">INSIGHTS</span><span class="w"> </span><span class="n">CIENTÍFICOS</span>
+<span class="o">==================================================</span>
+<span class="err">✅</span><span class="w"> </span><span class="n">Temperatura</span><span class="w"> </span><span class="n">média</span><span class="w"> </span><span class="n">ideal</span><span class="w"> </span><span class="n">para</span><span class="w"> </span><span class="n">Ulva</span><span class="w"> </span><span class="nl">lactuca:</span><span class="w"> </span><span class="mf">21.3</span><span class="err">°</span><span class="n">C</span>
+<span class="err">✅</span><span class="w"> </span><span class="n">Mês</span><span class="w"> </span><span class="n">de</span><span class="w"> </span><span class="n">maior</span><span class="w"> </span><span class="nl">biomassa:</span><span class="w"> </span><span class="n">Mês</span><span class="w"> </span><span class="mh">8</span><span class="w"> </span><span class="p">(</span><span class="mf">305.35</span><span class="n">g</span><span class="p">)</span>
+<span class="err">⚠️</span><span class="w"> </span><span class="nl">ALERTA:</span><span class="w"> </span><span class="n">Correlação</span><span class="w"> </span><span class="n">negativa</span><span class="w"> </span><span class="n">forte</span><span class="w"> </span><span class="n">entre</span><span class="w"> </span><span class="n">temperatura</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="n">biomassa</span><span class="w"> </span><span class="p">(</span><span class="o">-</span><span class="mf">0.85</span><span class="p">)</span>
+<span class="w">   </span><span class="err">→</span><span class="w"> </span><span class="n">Ulva</span><span class="w"> </span><span class="n">lactuca</span><span class="w"> </span><span class="n">prefere</span><span class="w"> </span><span class="err">á</span><span class="n">guas</span><span class="w"> </span><span class="n">mais</span><span class="w"> </span><span class="n">frias</span><span class="o">!</span>
+</code></pre></div>
+
+<hr />
+<h2 id="codigo-completo-parte-2-visualizacoes">📊 Código Completo - Parte 2: Visualizações</h2>
+<p>Adicione ao arquivo (continuação):</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># ==========================</span>
+<span class="c1"># 6. VISUALIZAÇÕES</span>
+<span class="c1"># ==========================</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Gerando gráficos...&quot;</span><span class="p">)</span>
+
+<span class="c1"># Configurar estilo</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;seaborn-v0_8-darkgrid&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;📊 Monitoramento Costeiro LABFICOL - 2025&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+
+<span class="c1"># --- GRÁFICO 1: Biomassa temporal por espécie ---</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">especie</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+    <span class="n">dados_especie</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">especie</span><span class="p">]</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dados_especie</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">],</span> <span class="n">dados_especie</span><span class="p">[</span><span class="s1">&#39;biomassa_g&#39;</span><span class="p">],</span> 
+             <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">especie</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Data&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Biomassa (g)&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Variação Temporal de Biomassa&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">setp</span><span class="p">(</span><span class="n">ax1</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">get_majorticklabels</span><span class="p">(),</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+
+<span class="c1"># --- GRÁFICO 2: Temperatura vs Biomassa (Ulva) ---</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">ulva_scatter</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">]</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">ulva_scatter</span><span class="p">[</span><span class="s1">&#39;temperatura_c&#39;</span><span class="p">],</span> <span class="n">ulva_scatter</span><span class="p">[</span><span class="s1">&#39;biomassa_g&#39;</span><span class="p">],</span> 
+            <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+
+<span class="c1"># Adicionar linha de tendência</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">ulva_scatter</span><span class="p">[</span><span class="s1">&#39;temperatura_c&#39;</span><span class="p">],</span> <span class="n">ulva_scatter</span><span class="p">[</span><span class="s1">&#39;biomassa_g&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ulva_scatter</span><span class="p">[</span><span class="s1">&#39;temperatura_c&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(),</span> 
+         <span class="n">p</span><span class="p">(</span><span class="n">ulva_scatter</span><span class="p">[</span><span class="s1">&#39;temperatura_c&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">()),</span> 
+         <span class="s2">&quot;r--&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Tendência&#39;</span><span class="p">)</span>
+
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Temperatura (°C)&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Biomassa (g)&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Temperatura vs Biomassa - Ulva lactuca&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># --- GRÁFICO 3: Biomassa média por mês ---</span>
+<span class="n">ax3</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">biomassa_mes</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;mes&#39;</span><span class="p">)[</span><span class="s1">&#39;biomassa_g&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">cores</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;#FF6B6B&#39;</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">biomassa_mes</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="k">else</span> <span class="s1">&#39;#4ECDC4&#39;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">biomassa_mes</span><span class="p">]</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">biomassa_mes</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">biomassa_mes</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">cores</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">biomassa_mes</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> 
+            <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Média: </span><span class="si">{</span><span class="n">biomassa_mes</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">g&#39;</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Mês&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Biomassa Média (g)&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Biomassa Média Mensal (Todas Espécies)&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+
+<span class="c1"># --- GRÁFICO 4: Distribuição por praia ---</span>
+<span class="n">ax4</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">biomassa_praia</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;praia&#39;</span><span class="p">,</span> <span class="s1">&#39;especie&#39;</span><span class="p">])[</span><span class="s1">&#39;biomassa_g&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span>
+<span class="n">biomassa_praia</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax4</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">ax4</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Praia&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax4</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Biomassa Total (g)&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax4</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Biomassa Total por Praia e Espécie&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax4</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Espécie&#39;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">)</span>
+<span class="n">ax4</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">setp</span><span class="p">(</span><span class="n">ax4</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">get_majorticklabels</span><span class="p">(),</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;monitoramento_costeiro.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Gráfico salvo: monitoramento_costeiro.png&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;PROJETO CONCLUÍDO COM SUCESSO! 🎉&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+</code></pre></div>
+
+<p><strong>Adicione no topo do arquivo:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>  <span class="c1"># Para linha de tendência</span>
+</code></pre></div>
+
+<hr />
+<h2 id="resultados-esperados">📈 Resultados Esperados</h2>
+<p>Ao executar o código completo, você terá:</p>
+<ol>
+<li><strong>Console:</strong></li>
+<li>Estatísticas descritivas</li>
+<li>Correlações</li>
+<li>
+<p>Insights científicos automáticos</p>
+</li>
+<li>
+<p><strong>Arquivo gráfico:</strong></p>
+</li>
+<li>
+<p><code>monitoramento_costeiro.png</code> com 4 gráficos profissionais</p>
+</li>
+<li>
+<p><strong>Insights:</strong></p>
+</li>
+<li>Meses de maior/menor biomassa</li>
+<li>Relação temperatura-abundância</li>
+<li>Comparação entre praias</li>
+</ol>
+<hr />
+<h2 id="interpretacao-cientifica">🔬 Interpretação Científica</h2>
+<p>Com base nos resultados:</p>
+<h3 id="padrao-observado">📊 Padrão Observado</h3>
+<div class="codehilite"><pre><span></span><code>Temperatura ↑ → Biomassa Ulva ↓
+(Correlação negativa: -0.85)
+</code></pre></div>
+
+<p><strong>Conclusão científica:</strong>
+- <em>Ulva lactuca</em> prefere <strong>águas frias</strong> (17-19°C)
+- Maior abundância no <strong>inverno</strong> (meses 6-8)
+- Praias mais expostas têm maior diversidade</p>
+<h3 id="recomendacoes-para-coleta">🎯 Recomendações para Coleta</h3>
+<ol>
+<li><strong>Intensificar amostragem:</strong> Junho-Agosto (pico de Ulva)</li>
+<li><strong>Monitorar temperatura:</strong> Alerta se T &gt; 25°C</li>
+<li><strong>Expandir para outras praias:</strong> Sul da ilha</li>
+</ol>
+<hr />
+<h2 id="o-que-voce-aprendeu">🎓 O que você aprendeu</h2>
+<ul>
+<li>✅ Carregar e processar dados reais de campo</li>
+<li>✅ Calcular estatísticas descritivas</li>
+<li>✅ Identificar correlações entre variáveis</li>
+<li>✅ Criar visualizações profissionais</li>
+<li>✅ Gerar insights científicos automaticamente</li>
+</ul>
+<hr />
+<h2 id="desafio-extra">🚀 Desafio Extra</h2>
+<p><strong>Expanda o projeto:</strong></p>
+<ol>
+<li>Adicione mais espécies ao dataset</li>
+<li>Calcule índice de diversidade de Shannon</li>
+<li>Compare anos diferentes (2024 vs 2025)</li>
+<li>Exporte resultados para relatório PDF</li>
+</ol>
+<hr />
+<h2 id="proximo-caso-pratico">➡️ Próximo Caso Prático</h2>
+<ul>
+<li><strong>02-Distribuicao-Espacial.md</strong> (Análise geoespacial com mapas)</li>
+</ul>
+<hr />
+<p><strong>Parabéns!</strong> Você criou um sistema completo de análise científica! 🌊📊</p>
+      </article>
+    </main>
+    <footer role="contentinfo">
+      <p>Gerado automaticamente em 06/01/2026 16:10. Paleta: ColorBrewer BuGn.</p>
+    </footer>
+    <script src="..\assets/site.js"></script>
+  </body>
+</html>

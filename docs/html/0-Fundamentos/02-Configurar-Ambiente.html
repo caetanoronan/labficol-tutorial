@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>🛠️ Configurar Seu Ambiente de Desenvolvimento</title>
+    <link rel="preload" href="..\assets/theme.css" as="style" />
+    <link rel="stylesheet" href="..\assets/theme.css" />
+  </head>
+  <body>
+    <a href="#conteudo" class="skip-link">Pular para conteúdo</a>
+    <header role="banner">
+      <div class="wrap">
+        <h1>🛠️ Configurar Seu Ambiente de Desenvolvimento</h1>
+        <nav aria-label="Navegação">
+          <a href="..\index.html">Início</a>
+          <a href="https://github.com/caetanoronan/labficol-tutorial">Repositório</a>
+          <a href="https://caetanoronan.github.io/labficol-tutorial/">Site</a>
+        </nav>
+        <div class="controls">
+          <button id="toggleHC" aria-pressed="false" aria-label="Alternar alto contraste">Alto contraste</button>
+          <button id="toggleBT" aria-pressed="false" aria-label="Alternar texto grande">Texto grande</button>
+          <button id="toggleLM" aria-pressed="false" aria-label="Reduzir movimento">Menos movimento</button>
+        </div>
+      </div>
+    </header>
+    <main id="conteudo" role="main">
+      <article class="md-content" aria-label="Conteúdo">
+        <h1 id="configurar-seu-ambiente-de-desenvolvimento">🛠️ Configurar Seu Ambiente de Desenvolvimento</h1>
+<h2 id="o-que-e-ambiente-de-desenvolvimento">O que é Ambiente de Desenvolvimento?</h2>
+<p>É um espaço no seu computador onde você escreve, testa e executa programas.</p>
+<p><strong>Analogia:</strong> 
+- Sem ambiente = tentar fazer culinária sem cozinha
+- Com ambiente = uma cozinha equipada e organizada ✨</p>
+<hr />
+<h2 id="pre-requisitos">📋 Pré-requisitos</h2>
+<ul>
+<li>✅ Windows 10/11, macOS ou Linux</li>
+<li>✅ ~10GB de espaço em disco</li>
+<li>✅ Conexão internet (para download)</li>
+<li>✅ Paciência de 30 minutos</li>
+</ul>
+<hr />
+<h2 id="ferramentas-que-instalaremos">🎯 Ferramentas que Instalaremos</h2>
+<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────┐
+│    SEU AMBIENTE DE DESENVOLVIMENTO   │
+├──────────────────────────────────────┤
+│ 1️⃣  Python 3.11+       (linguagem)   │
+│ 2️⃣  VS Code            (editor)      │
+│ 3️⃣  Git                (versionamento)│
+│ 4️⃣  Bibliotecas Python (ferramentas) │
+└──────────────────────────────────────┘
+</code></pre></div>
+
+<hr />
+<h2 id="passo-1-instalar-python">🐍 Passo 1: Instalar Python</h2>
+<h3 id="windows">Windows</h3>
+<ol>
+<li>Visite: <strong>https://www.python.org/downloads/</strong></li>
+<li>Clique em "Download Python 3.11" (ou versão mais recente)</li>
+<li>Abra o instalador</li>
+<li><strong>⚠️ IMPORTANTE:</strong> Marque "Add Python to PATH"</li>
+</ol>
+<div class="codehilite"><pre><span></span><code><span class="o">[</span><span class="n">x</span><span class="o">]</span><span class="w"> </span><span class="n">Install</span><span class="w"> </span><span class="n">launcher</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="ow">all</span><span class="w"> </span><span class="n">users</span>
+<span class="o">[</span><span class="n">x</span><span class="o">]</span><span class="w"> </span><span class="k">Add</span><span class="w"> </span><span class="n">Python</span><span class="w"> </span><span class="mf">3.11</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="k">PATH</span><span class="w">  </span><span class="err">←</span><span class="w"> </span><span class="n">MARQUE</span><span class="w"> </span><span class="n">ISTO</span><span class="err">!</span>
+</code></pre></div>
+
+<ol>
+<li>Clique "Install Now"</li>
+<li>Aguarde conclusão</li>
+</ol>
+<p><strong>Verificar instalação:</strong></p>
+<p>Abra o PowerShell e execute:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">python</span> <span class="p">-</span><span class="n">-version</span>
+</code></pre></div>
+
+<p>Você deve ver:</p>
+<div class="codehilite"><pre><span></span><code>Python 3.11.x (ou versão mais recente)
+</code></pre></div>
+
+<h3 id="macos">macOS</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Via Homebrew (recomendado)</span>
+brew<span class="w"> </span>install<span class="w"> </span>python3
+
+<span class="c1"># Verificar</span>
+python3<span class="w"> </span>--version
+</code></pre></div>
+
+<h3 id="linux-ubuntudebian">Linux (Ubuntu/Debian)</h3>
+<div class="codehilite"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>update
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>python3<span class="w"> </span>python3-pip
+
+python3<span class="w"> </span>--version
+</code></pre></div>
+
+<hr />
+<h2 id="passo-2-instalar-vs-code">💻 Passo 2: Instalar VS Code</h2>
+<h3 id="o-que-e-vs-code">O que é VS Code?</h3>
+<p>Um <strong>editor de código moderno</strong> onde você escreve seus programas.</p>
+<h3 id="instalacao">Instalação</h3>
+<ol>
+<li>Visite: <strong>https://code.visualstudio.com/</strong></li>
+<li>Baixe a versão para seu SO</li>
+<li>Instale normalmente</li>
+<li>Abra VS Code</li>
+</ol>
+<h3 id="extensoes-recomendadas">Extensões Recomendadas</h3>
+<p>No VS Code, clique em "Extensions" (ícone de quadrado ao lado) e instale:</p>
+<ul>
+<li><strong>Python</strong> (Microsoft) - Essencial!</li>
+<li><strong>Pylance</strong> - Autocomplete inteligente</li>
+<li><strong>GitLens</strong> - Melhor integração Git</li>
+<li><strong>Thunder Client</strong> - Testar APIs</li>
+</ul>
+<hr />
+<h2 id="passo-3-configurar-pasta-de-trabalho">🌳 Passo 3: Configurar Pasta de Trabalho</h2>
+<h3 id="criar-estrutura-de-pastas">Criar estrutura de pastas</h3>
+<div class="codehilite"><pre><span></span><code><span class="c"># Windows PowerShell</span>
+<span class="n">mkdir</span> <span class="nv">$HOME</span><span class="p">\</span><span class="n">Documentos</span><span class="p">\</span><span class="n">Projetos-Programacao</span>
+<span class="nb">cd </span><span class="nv">$HOME</span><span class="p">\</span><span class="n">Documentos</span><span class="p">\</span><span class="n">Projetos-Programacao</span>
+
+<span class="c"># Criar subpastas</span>
+<span class="n">mkdir</span> <span class="n">aulas</span>
+<span class="n">mkdir</span> <span class="n">projetos</span>
+<span class="n">mkdir</span> <span class="n">datasets</span>
+</code></pre></div>
+
+<p>Ou criar manualmente no Windows Explorer:</p>
+<div class="codehilite"><pre><span></span><code>Documentos/
+└── Projetos-Programacao/
+    ├── aulas/
+    ├── projetos/
+    └── datasets/
+</code></pre></div>
+
+<hr />
+<h2 id="passo-4-instalar-git-versionamento">🔄 Passo 4: Instalar Git (Versionamento)</h2>
+<h3 id="por-que-git">Por que Git?</h3>
+<p>Rastreia mudanças no seu código. Essencial para pesquisa reproduzível!</p>
+<h3 id="windows_1">Windows</h3>
+<ol>
+<li>Visite: <strong>https://git-scm.com/download/win</strong></li>
+<li>Baixe e instale</li>
+<li>Use opções padrão</li>
+</ol>
+<p><strong>Verificar:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="n">git</span> <span class="p">-</span><span class="n">-version</span>
+</code></pre></div>
+
+<h3 id="macos_1">macOS</h3>
+<div class="codehilite"><pre><span></span><code>brew<span class="w"> </span>install<span class="w"> </span>git
+git<span class="w"> </span>--version
+</code></pre></div>
+
+<h3 id="linux">Linux</h3>
+<div class="codehilite"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>git
+git<span class="w"> </span>--version
+</code></pre></div>
+
+<hr />
+<h2 id="passo-5-instalar-bibliotecas-python">📦 Passo 5: Instalar Bibliotecas Python</h2>
+<p>As "ferramentas" que você usará para análise de dados.</p>
+<h3 id="abra-powershellterminal">Abra PowerShell/Terminal</h3>
+<div class="codehilite"><pre><span></span><code><span class="c"># Windows</span>
+<span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="p">-</span><span class="n">-upgrade</span> <span class="n">pip</span>
+
+<span class="c"># Instalar bibliotecas essenciais</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">numpy</span> <span class="n">pandas</span> <span class="n">matplotlib</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">geopandas</span> <span class="n">folium</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">jupyter</span> <span class="n">notebook</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">requests</span> <span class="n">beautifulsoup4</span>
+</code></pre></div>
+
+<h3 id="verificar-instalacao">Verificar Instalação</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">python</span>
+</code></pre></div>
+
+<p>Agora você está em Python. Digite:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span> <span class="nn">pandas</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="kn">import</span> <span class="nn">geopandas</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Tudo instalado!&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Se aparecer "✅ Tudo instalado!" sem erros, parabéns! 🎉</p>
+<p>Saia do Python:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">exit</span><span class="p">()</span>
+</code></pre></div>
+
+<hr />
+<h2 id="passo-6-teste-seu-primeiro-programa">🧪 Passo 6: Teste Seu Primeiro Programa</h2>
+<h3 id="criar-arquivo">Criar arquivo</h3>
+<ol>
+<li>Abra VS Code</li>
+<li>Crie arquivo: <code>teste-setup.py</code></li>
+<li>Escreva:</li>
+</ol>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Seu primeiro programa!</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🎉 Olá, Mundo!&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🐍 Python está funcionando!&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🎓 Você está pronto para aprender!&quot;</span><span class="p">)</span>
+
+<span class="c1"># Testar bibliotecas</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">dados</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Numpy funcionando: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Pandas funcionando: v</span><span class="si">{</span><span class="n">pd</span><span class="o">.</span><span class="n">__version__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="executar">Executar</h3>
+<p>No terminal do VS Code (Ctrl + Backtick):</p>
+<div class="codehilite"><pre><span></span><code><span class="n">python</span> <span class="n">teste-setup</span><span class="p">.</span><span class="n">py</span>
+</code></pre></div>
+
+<p>Você deve ver:</p>
+<div class="codehilite"><pre><span></span><code>🎉 Olá, Mundo!
+🐍 Python está funcionando!
+🎓 Você está pronto para aprender!
+✅ Numpy funcionando: 3.0
+✅ Pandas funcionando: v2.x.x
+</code></pre></div>
+
+<p>Se viu isso, <strong>PARABÉNS!</strong> ✨ Seu ambiente está pronto!</p>
+<hr />
+<h2 id="passo-7-primeiro-programa-com-dados-reais">🚀 Passo 7: Primeiro Programa com Dados Reais</h2>
+<p>Agora vamos fazer algo interessante!</p>
+<h3 id="criar-analise-simplespy">Criar: <code>analise-simples.py</code></h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Simular dados de coleta de plâncton</span>
+<span class="n">dados_fitoplancton</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Data&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;2025-01-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2025-01-02&#39;</span><span class="p">,</span> <span class="s1">&#39;2025-01-03&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;Densidade&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">150</span><span class="p">,</span> <span class="mi">230</span><span class="p">,</span> <span class="mi">180</span><span class="p">],</span>
+    <span class="s1">&#39;Temperatura&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">22.5</span><span class="p">,</span> <span class="mf">23.1</span><span class="p">,</span> <span class="mf">22.8</span><span class="p">],</span>
+    <span class="s1">&#39;Salinidade&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">35.0</span><span class="p">,</span> <span class="mf">34.8</span><span class="p">,</span> <span class="mf">35.1</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="c1"># Criar tabela</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dados_fitoplancton</span><span class="p">)</span>
+
+<span class="c1"># Análises</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;📊 ANÁLISE DE FITOPLÂNCTON&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📈 Estatísticas:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Densidade média: </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Densidade&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> células/mL&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Temperatura média: </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Temperatura&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°C&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Salinidade média: </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Salinidade&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> PSU&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p><strong>Executar:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="n">python</span> <span class="n">analise-simples</span><span class="p">.</span><span class="n">py</span>
+</code></pre></div>
+
+<p>Você verá:</p>
+<div class="codehilite"><pre><span></span><code>==================================================
+📊 ANÁLISE DE FITOPLÂNCTON
+==================================================
+        Data  Densidade  Temperatura  Salinidade
+0 2025-01-01        150         22.5        35.0
+1 2025-01-02        230         23.1        34.8
+2 2025-01-03        180         22.8        35.1
+
+📈 Estatísticas:
+Densidade média: 186.7 células/mL
+Temperatura média: 22.8°C
+Salinidade média: 35.0 PSU
+</code></pre></div>
+
+<hr />
+<h2 id="checklist-de-instalacao">✅ Checklist de Instalação</h2>
+<ul>
+<li>[ ] Python 3.11+ instalado e no PATH</li>
+<li>[ ] VS Code instalado com extensão Python</li>
+<li>[ ] Git instalado</li>
+<li>[ ] Pasta de trabalho criada</li>
+<li>[ ] Bibliotecas Python instaladas (numpy, pandas, geopandas, folium)</li>
+<li>[ ] Primeiro programa executado com sucesso</li>
+<li>[ ] Análise simples funcionando</li>
+</ul>
+<p>Se tudo estiver marcado, <strong>você está pronto!</strong> 🎉</p>
+<hr />
+<h2 id="troubleshooting">⚠️ Troubleshooting</h2>
+<h3 id="problema-python-nao-e-reconhecido">Problema: "python não é reconhecido"</h3>
+<p><strong>Solução:</strong> 
+- Reinstale Python e MARQUE "Add Python to PATH"
+- Reinicie o computador após instalação</p>
+<h3 id="problema-modulenotfounderror-no-module-named-pandas">Problema: "ModuleNotFoundError: No module named 'pandas'"</h3>
+<p><strong>Solução:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="n">pip</span> <span class="n">install</span> <span class="n">pandas</span>
+</code></pre></div>
+
+<h3 id="problema-vs-code-nao-encontra-python">Problema: VS Code não encontra Python</h3>
+<p><strong>Solução:</strong>
+- Ctrl+Shift+P → "Python: Select Interpreter"
+- Escolha a versão que você instalou</p>
+<h3 id="problema-git-nao-aparece-no-powershell">Problema: Git não aparece no PowerShell</h3>
+<p><strong>Solução:</strong>
+- Feche e reabra PowerShell após instalar Git</p>
+<hr />
+<h2 id="proximo-passo">🎓 Próximo Passo</h2>
+<p>Seu ambiente está configurado! Agora:</p>
+<p><strong>👉 Vá para: <a href="03-Conceitos-Basicos.md">03-Conceitos-Basicos.md</a></strong></p>
+<p>Lá você aprenderá:
+- O que é código?
+- Como pensa um programador?
+- Conceitos fundamentais de programação</p>
+<hr />
+<h2 id="resumo">📝 Resumo</h2>
+<table>
+<thead>
+<tr>
+<th>Ferramenta</th>
+<th>Função</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Python</strong></td>
+<td>Linguagem de programação</td>
+</tr>
+<tr>
+<td><strong>VS Code</strong></td>
+<td>Editor de código</td>
+</tr>
+<tr>
+<td><strong>Git</strong></td>
+<td>Controle de versão</td>
+</tr>
+<tr>
+<td><strong>Pandas</strong></td>
+<td>Análise de dados</td>
+</tr>
+<tr>
+<td><strong>GeoPandas</strong></td>
+<td>Dados geoespaciais</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>Parabéns por completar a configuração!</strong> 🚀</p>
+<p>Você agora tem um ambiente profissional de desenvolvimento!</p>
+<p>Vamos aprender os conceitos fundamentais? ➡️</p>
+      </article>
+    </main>
+    <footer role="contentinfo">
+      <p>Gerado automaticamente em 06/01/2026 16:10. Paleta: ColorBrewer BuGn.</p>
+    </footer>
+    <script src="..\assets/site.js"></script>
+  </body>
+</html>

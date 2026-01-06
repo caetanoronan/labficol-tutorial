@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>📊 Estruturas de Dados em Python</title>
+    <link rel="preload" href="..\assets/theme.css" as="style" />
+    <link rel="stylesheet" href="..\assets/theme.css" />
+  </head>
+  <body>
+    <a href="#conteudo" class="skip-link">Pular para conteúdo</a>
+    <header role="banner">
+      <div class="wrap">
+        <h1>📊 Estruturas de Dados em Python</h1>
+        <nav aria-label="Navegação">
+          <a href="..\index.html">Início</a>
+          <a href="https://github.com/caetanoronan/labficol-tutorial">Repositório</a>
+          <a href="https://caetanoronan.github.io/labficol-tutorial/">Site</a>
+        </nav>
+        <div class="controls">
+          <button id="toggleHC" aria-pressed="false" aria-label="Alternar alto contraste">Alto contraste</button>
+          <button id="toggleBT" aria-pressed="false" aria-label="Alternar texto grande">Texto grande</button>
+          <button id="toggleLM" aria-pressed="false" aria-label="Reduzir movimento">Menos movimento</button>
+        </div>
+      </div>
+    </header>
+    <main id="conteudo" role="main">
+      <article class="md-content" aria-label="Conteúdo">
+        <h1 id="estruturas-de-dados-em-python">📊 Estruturas de Dados em Python</h1>
+<h2 id="o-que-sao-estruturas-de-dados">O que são Estruturas de Dados?</h2>
+<p><strong>Estrutura de dados</strong> = forma de organizar múltiplos valores.</p>
+<p>Analogia:
+- Uma variável = uma caixa com um item
+- Uma estrutura = uma caixa com vários itens organizados</p>
+<hr />
+<h2 id="listas-arrays">📋 Listas (Arrays)</h2>
+<p>A estrutura mais usada em Python!</p>
+<h3 id="criar-uma-lista">Criar uma Lista</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Lista vazia</span>
+<span class="n">lista_vazia</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># Lista com valores</span>
+<span class="n">especies</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Ulva&quot;</span><span class="p">,</span> <span class="s2">&quot;Gracilaria&quot;</span><span class="p">,</span> <span class="s2">&quot;Sargassum&quot;</span><span class="p">]</span>
+<span class="n">temperaturas</span> <span class="o">=</span> <span class="p">[</span><span class="mf">22.5</span><span class="p">,</span> <span class="mf">23.1</span><span class="p">,</span> <span class="mf">22.8</span><span class="p">,</span> <span class="mf">23.4</span><span class="p">,</span> <span class="mf">22.9</span><span class="p">]</span>
+<span class="n">dados_mistos</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;texto&quot;</span><span class="p">,</span> <span class="mf">3.14</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]</span>
+
+<span class="c1"># Usando list()</span>
+<span class="n">numeros</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>  <span class="c1"># [1, 2, 3, 4, 5]</span>
+</code></pre></div>
+
+<h3 id="acessar-elementos">Acessar Elementos</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">especies</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Ulva&quot;</span><span class="p">,</span> <span class="s2">&quot;Gracilaria&quot;</span><span class="p">,</span> <span class="s2">&quot;Sargassum&quot;</span><span class="p">]</span>
+
+<span class="c1"># Índices começam em 0!</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">especies</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>   <span class="c1"># &quot;Ulva&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">especies</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>   <span class="c1"># &quot;Gracilaria&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">especies</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>   <span class="c1"># &quot;Sargassum&quot;</span>
+
+<span class="c1"># Índices negativos (do final para trás)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">especies</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># &quot;Sargassum&quot; (último)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">especies</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>  <span class="c1"># &quot;Gracilaria&quot; (penúltimo)</span>
+</code></pre></div>
+
+<h3 id="modificar-lista">Modificar Lista</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">especies</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Ulva&quot;</span><span class="p">,</span> <span class="s2">&quot;Gracilaria&quot;</span><span class="p">,</span> <span class="s2">&quot;Sargassum&quot;</span><span class="p">]</span>
+
+<span class="c1"># Alterar elemento</span>
+<span class="n">especies</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Ulva lactuca&quot;</span>
+
+<span class="c1"># Adicionar um elemento no final</span>
+<span class="n">especies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Laminaria&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">especies</span><span class="p">)</span>  <span class="c1"># [&quot;Ulva lactuca&quot;, &quot;Gracilaria&quot;, &quot;Sargassum&quot;, &quot;Laminaria&quot;]</span>
+
+<span class="c1"># Inserir em posição específica</span>
+<span class="n">especies</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Chondracanthus&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">especies</span><span class="p">)</span>  <span class="c1"># [&quot;Ulva lactuca&quot;, &quot;Chondracanthus&quot;, ...]</span>
+
+<span class="c1"># Remover elemento (por valor)</span>
+<span class="n">especies</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;Sargassum&quot;</span><span class="p">)</span>
+
+<span class="c1"># Remover elemento (por índice)</span>
+<span class="n">removida</span> <span class="o">=</span> <span class="n">especies</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Remove e retorna primeiro</span>
+
+<span class="c1"># Remover tudo</span>
+<span class="n">especies</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+</code></pre></div>
+
+<h3 id="operacoes-com-listas">Operações com Listas</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">temperaturas</span> <span class="o">=</span> <span class="p">[</span><span class="mf">22.5</span><span class="p">,</span> <span class="mf">23.1</span><span class="p">,</span> <span class="mf">22.8</span><span class="p">,</span> <span class="mf">23.4</span><span class="p">,</span> <span class="mf">22.9</span><span class="p">]</span>
+
+<span class="c1"># Tamanho</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">temperaturas</span><span class="p">))</span>  <span class="c1"># 5</span>
+
+<span class="c1"># Soma</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">temperaturas</span><span class="p">))</span>  <span class="c1"># 114.7</span>
+
+<span class="c1"># Máximo e mínimo</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">temperaturas</span><span class="p">))</span>  <span class="c1"># 23.4</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">temperaturas</span><span class="p">))</span>  <span class="c1"># 22.5</span>
+
+<span class="c1"># Ordenar</span>
+<span class="n">ordenado</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">temperaturas</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ordenado</span><span class="p">)</span>  <span class="c1"># [22.5, 22.8, 22.9, 23.1, 23.4]</span>
+
+<span class="c1"># Reverso</span>
+<span class="n">reverso</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">temperaturas</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">reverso</span><span class="p">)</span>  <span class="c1"># [22.9, 23.4, 22.8, 23.1, 22.5]</span>
+
+<span class="c1"># Verificar se contém</span>
+<span class="k">if</span> <span class="mf">22.5</span> <span class="ow">in</span> <span class="n">temperaturas</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Encontrada&quot;</span><span class="p">)</span>
+
+<span class="c1"># Contar ocorrências</span>
+<span class="n">amostras</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Ulva&quot;</span><span class="p">,</span> <span class="s2">&quot;Gracilaria&quot;</span><span class="p">,</span> <span class="s2">&quot;Ulva&quot;</span><span class="p">,</span> <span class="s2">&quot;Ulva&quot;</span><span class="p">,</span> <span class="s2">&quot;Sargassum&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">amostras</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;Ulva&quot;</span><span class="p">))</span>  <span class="c1"># 3</span>
+
+<span class="c1"># Encontrar índice</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">amostras</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;Gracilaria&quot;</span><span class="p">))</span>  <span class="c1"># 1</span>
+</code></pre></div>
+
+<h3 id="fatiar-lista-slicing">Fatiar Lista (Slicing)</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">especies</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Ulva&quot;</span><span class="p">,</span> <span class="s2">&quot;Gracilaria&quot;</span><span class="p">,</span> <span class="s2">&quot;Sargassum&quot;</span><span class="p">,</span> <span class="s2">&quot;Laminaria&quot;</span><span class="p">,</span> <span class="s2">&quot;Chondracanthus&quot;</span><span class="p">]</span>
+
+<span class="c1"># [início:fim:passo] - fim é EXCLUSIVO!</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">especies</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>      <span class="c1"># [&quot;Ulva&quot;, &quot;Gracilaria&quot;]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">especies</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span>      <span class="c1"># [&quot;Gracilaria&quot;, &quot;Sargassum&quot;, &quot;Laminaria&quot;]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">especies</span><span class="p">[:</span><span class="mi">3</span><span class="p">])</span>       <span class="c1"># [&quot;Ulva&quot;, &quot;Gracilaria&quot;, &quot;Sargassum&quot;] (começa do início)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">especies</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span>       <span class="c1"># [&quot;Sargassum&quot;, &quot;Laminaria&quot;, &quot;Chondracanthus&quot;] (até o fim)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">especies</span><span class="p">[::</span><span class="mi">2</span><span class="p">])</span>      <span class="c1"># [&quot;Ulva&quot;, &quot;Sargassum&quot;, &quot;Chondracanthus&quot;] (cada 2)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">especies</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>     <span class="c1"># Reverso! [&quot;Chondracanthus&quot;, &quot;Laminaria&quot;, ...]</span>
+</code></pre></div>
+
+<h3 id="juntar-e-dividir-listas">Juntar e Dividir Listas</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">lista1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">lista2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+
+<span class="c1"># Juntar</span>
+<span class="n">combinada</span> <span class="o">=</span> <span class="n">lista1</span> <span class="o">+</span> <span class="n">lista2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">combinada</span><span class="p">)</span>  <span class="c1"># [1, 2, 3, 4, 5, 6]</span>
+
+<span class="c1"># Repetir</span>
+<span class="n">repetida</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">repetida</span><span class="p">)</span>  <span class="c1"># [1, 2, 1, 2, 1, 2]</span>
+
+<span class="c1"># Dividir (string para lista)</span>
+<span class="n">texto</span> <span class="o">=</span> <span class="s2">&quot;Ulva,Gracilaria,Sargassum&quot;</span>
+<span class="n">especies</span> <span class="o">=</span> <span class="n">texto</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">especies</span><span class="p">)</span>  <span class="c1"># [&quot;Ulva&quot;, &quot;Gracilaria&quot;, &quot;Sargassum&quot;]</span>
+
+<span class="c1"># Juntar (lista para string)</span>
+<span class="n">resultado</span> <span class="o">=</span> <span class="s2">&quot; | &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">especies</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">resultado</span><span class="p">)</span>  <span class="c1"># &quot;Ulva | Gracilaria | Sargassum&quot;</span>
+</code></pre></div>
+
+<hr />
+<h2 id="dicionarios-dicts">🔑 Dicionários (Dicts)</h2>
+<p>Dados com rótulo/chave.</p>
+<h3 id="criar-dicionario">Criar Dicionário</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Dicionário vazio</span>
+<span class="n">vazio</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="c1"># Com dados</span>
+<span class="n">amostra</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;especie&quot;</span><span class="p">:</span> <span class="s2">&quot;Ulva lactuca&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;profundidade&quot;</span><span class="p">:</span> <span class="mf">5.2</span><span class="p">,</span>
+    <span class="s2">&quot;temperatura&quot;</span><span class="p">:</span> <span class="mf">22.5</span><span class="p">,</span>
+    <span class="s2">&quot;valida&quot;</span><span class="p">:</span> <span class="kc">True</span>
+<span class="p">}</span>
+
+<span class="c1"># Usando dict()</span>
+<span class="n">dados</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">nome</span><span class="o">=</span><span class="s2">&quot;Caetano&quot;</span><span class="p">,</span> <span class="n">profissao</span><span class="o">=</span><span class="s2">&quot;Oceanógrafo&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="acessar-valores">Acessar Valores</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">amostra</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;especie&quot;</span><span class="p">:</span> <span class="s2">&quot;Ulva lactuca&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;profundidade&quot;</span><span class="p">:</span> <span class="mf">5.2</span><span class="p">,</span>
+    <span class="s2">&quot;temperatura&quot;</span><span class="p">:</span> <span class="mf">22.5</span>
+<span class="p">}</span>
+
+<span class="c1"># Acessar por chave</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">amostra</span><span class="p">[</span><span class="s2">&quot;especie&quot;</span><span class="p">])</span>      <span class="c1"># &quot;Ulva lactuca&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">amostra</span><span class="p">[</span><span class="s2">&quot;profundidade&quot;</span><span class="p">])</span> <span class="c1"># 5.2</span>
+
+<span class="c1"># Usando .get() (mais seguro)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">amostra</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;especie&quot;</span><span class="p">))</span>        <span class="c1"># &quot;Ulva lactuca&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">amostra</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;salario&quot;</span><span class="p">,</span> <span class="s2">&quot;N/A&quot;</span><span class="p">))</span> <span class="c1"># &quot;N/A&quot; (não existe)</span>
+</code></pre></div>
+
+<h3 id="modificar-dicionario">Modificar Dicionário</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">amostra</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;especie&quot;</span><span class="p">:</span> <span class="s2">&quot;Ulva&quot;</span><span class="p">,</span> <span class="s2">&quot;profundidade&quot;</span><span class="p">:</span> <span class="mf">5.2</span><span class="p">}</span>
+
+<span class="c1"># Adicionar chave</span>
+<span class="n">amostra</span><span class="p">[</span><span class="s2">&quot;temperatura&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">22.5</span>
+
+<span class="c1"># Modificar existente</span>
+<span class="n">amostra</span><span class="p">[</span><span class="s2">&quot;profundidade&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">6.0</span>
+
+<span class="c1"># Remover chave</span>
+<span class="k">del</span> <span class="n">amostra</span><span class="p">[</span><span class="s2">&quot;temperatura&quot;</span><span class="p">]</span>
+
+<span class="c1"># Remover e retornar</span>
+<span class="n">valor</span> <span class="o">=</span> <span class="n">amostra</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;profundidade&quot;</span><span class="p">)</span>  <span class="c1"># Remove e retorna 6.0</span>
+
+<span class="c1"># Limpar tudo</span>
+<span class="n">amostra</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+</code></pre></div>
+
+<h3 id="operacoes-com-dicionarios">Operações com Dicionários</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">amostra</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;especie&quot;</span><span class="p">:</span> <span class="s2">&quot;Ulva&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;profundidade&quot;</span><span class="p">:</span> <span class="mf">5.2</span><span class="p">,</span>
+    <span class="s2">&quot;temperatura&quot;</span><span class="p">:</span> <span class="mf">22.5</span><span class="p">,</span>
+    <span class="s2">&quot;valida&quot;</span><span class="p">:</span> <span class="kc">True</span>
+<span class="p">}</span>
+
+<span class="c1"># Tamanho</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">amostra</span><span class="p">))</span>  <span class="c1"># 4</span>
+
+<span class="c1"># Chaves</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">amostra</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>  <span class="c1"># dict_keys([&#39;especie&#39;, &#39;profundidade&#39;, ...])</span>
+
+<span class="c1"># Valores</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">amostra</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>  <span class="c1"># dict_values([&#39;Ulva&#39;, 5.2, 22.5, True])</span>
+
+<span class="c1"># Pares chave-valor</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">amostra</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>  <span class="c1"># dict_items([(&#39;especie&#39;, &#39;Ulva&#39;), ...])</span>
+
+<span class="c1"># Verificar se chave existe</span>
+<span class="k">if</span> <span class="s2">&quot;especie&quot;</span> <span class="ow">in</span> <span class="n">amostra</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Existe&quot;</span><span class="p">)</span>
+
+<span class="c1"># Atualizar múltiplas chaves</span>
+<span class="n">amostra</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;profundidade&quot;</span><span class="p">:</span> <span class="mf">7.0</span><span class="p">,</span> <span class="s2">&quot;salinidade&quot;</span><span class="p">:</span> <span class="mf">35.0</span><span class="p">})</span>
+</code></pre></div>
+
+<h3 id="exemplo-pratico-registro-de-amostra">Exemplo Prático: Registro de Amostra</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Criar vários registros</span>
+<span class="n">amostras</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;especie&quot;</span><span class="p">:</span> <span class="s2">&quot;Ulva&quot;</span><span class="p">,</span> <span class="s2">&quot;prof_m&quot;</span><span class="p">:</span> <span class="mf">5.2</span><span class="p">,</span> <span class="s2">&quot;temp_c&quot;</span><span class="p">:</span> <span class="mf">22.5</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;especie&quot;</span><span class="p">:</span> <span class="s2">&quot;Gracilaria&quot;</span><span class="p">,</span> <span class="s2">&quot;prof_m&quot;</span><span class="p">:</span> <span class="mf">7.8</span><span class="p">,</span> <span class="s2">&quot;temp_c&quot;</span><span class="p">:</span> <span class="mf">23.1</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;especie&quot;</span><span class="p">:</span> <span class="s2">&quot;Sargassum&quot;</span><span class="p">,</span> <span class="s2">&quot;prof_m&quot;</span><span class="p">:</span> <span class="mf">3.1</span><span class="p">,</span> <span class="s2">&quot;temp_c&quot;</span><span class="p">:</span> <span class="mf">22.8</span><span class="p">}</span>
+<span class="p">]</span>
+
+<span class="c1"># Acessar</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">amostras</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;especie&quot;</span><span class="p">])</span>  <span class="c1"># &quot;Ulva&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">amostras</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;temp_c&quot;</span><span class="p">])</span>   <span class="c1"># 23.1</span>
+
+<span class="c1"># Iterar</span>
+<span class="k">for</span> <span class="n">amostra</span> <span class="ow">in</span> <span class="n">amostras</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ID </span><span class="si">{</span><span class="n">amostra</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">amostra</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> a </span><span class="si">{</span><span class="n">amostra</span><span class="p">[</span><span class="s1">&#39;prof_m&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">m&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="tuplas">(Tuplas)</h2>
+<p>Listas imutáveis (não podem ser alteradas).</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Tupla (com parênteses)</span>
+<span class="n">coordenadas</span> <span class="o">=</span> <span class="p">(</span><span class="mf">27.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.5</span><span class="p">)</span>  <span class="c1"># latitude, longitude</span>
+
+<span class="c1"># Acessar</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">coordenadas</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># 27.5</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">coordenadas</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># -48.5</span>
+
+<span class="c1"># Tuplas são imutáveis</span>
+<span class="n">coordenadas</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">28.0</span>  <span class="c1"># ❌ ERRO!</span>
+
+<span class="c1"># Mas podem ser reatribuídas</span>
+<span class="n">coordenadas</span> <span class="o">=</span> <span class="p">(</span><span class="mf">28.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.5</span><span class="p">)</span>  <span class="c1"># ✅ OK</span>
+
+<span class="c1"># Desempacotamento</span>
+<span class="n">lat</span><span class="p">,</span> <span class="n">lon</span> <span class="o">=</span> <span class="n">coordenadas</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Latitude: </span><span class="si">{</span><span class="n">lat</span><span class="si">}</span><span class="s2">, Longitude: </span><span class="si">{</span><span class="n">lon</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Múltiplos retornos de função</span>
+<span class="k">def</span> <span class="nf">get_localizacao</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">(</span><span class="mf">27.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.5</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>  <span class="c1"># lat, lon, profundidade</span>
+
+<span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">prof</span> <span class="o">=</span> <span class="n">get_localizacao</span><span class="p">()</span>
+</code></pre></div>
+
+<p><strong>Quando usar:</strong> Quando você quer garantir que dados não sejam alterados.</p>
+<hr />
+<h2 id="conjuntos-sets">⚙️ Conjuntos (Sets)</h2>
+<p>Coleções sem duplicatas.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Criar conjunto</span>
+<span class="n">especies_unicas</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Ulva&quot;</span><span class="p">,</span> <span class="s2">&quot;Gracilaria&quot;</span><span class="p">,</span> <span class="s2">&quot;Sargassum&quot;</span><span class="p">,</span> <span class="s2">&quot;Ulva&quot;</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">especies_unicas</span><span class="p">)</span>  <span class="c1"># {&#39;Ulva&#39;, &#39;Gracilaria&#39;, &#39;Sargassum&#39;} - sem duplicata!</span>
+
+<span class="c1"># Operações</span>
+<span class="n">especies_unicas</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;Laminaria&quot;</span><span class="p">)</span>
+<span class="n">especies_unicas</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;Ulva&quot;</span><span class="p">)</span>
+
+<span class="c1"># Interseção (elementos em comum)</span>
+<span class="n">grupo1</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Ulva&quot;</span><span class="p">,</span> <span class="s2">&quot;Gracilaria&quot;</span><span class="p">,</span> <span class="s2">&quot;Sargassum&quot;</span><span class="p">}</span>
+<span class="n">grupo2</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Ulva&quot;</span><span class="p">,</span> <span class="s2">&quot;Laminaria&quot;</span><span class="p">,</span> <span class="s2">&quot;Codium&quot;</span><span class="p">}</span>
+<span class="n">comuns</span> <span class="o">=</span> <span class="n">grupo1</span> <span class="o">&amp;</span> <span class="n">grupo2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">comuns</span><span class="p">)</span>  <span class="c1"># {&#39;Ulva&#39;}</span>
+
+<span class="c1"># União (tudo)</span>
+<span class="n">todos</span> <span class="o">=</span> <span class="n">grupo1</span> <span class="o">|</span> <span class="n">grupo2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">todos</span><span class="p">)</span>  <span class="c1"># {&#39;Ulva&#39;, &#39;Gracilaria&#39;, &#39;Sargassum&#39;, &#39;Laminaria&#39;, &#39;Codium&#39;}</span>
+
+<span class="c1"># Diferença</span>
+<span class="n">so_em_grupo1</span> <span class="o">=</span> <span class="n">grupo1</span> <span class="o">-</span> <span class="n">grupo2</span>
+</code></pre></div>
+
+<hr />
+<h2 id="loops-com-estruturas">🔄 Loops com Estruturas</h2>
+<h3 id="for-loop-com-listas">For Loop com Listas</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">especies</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Ulva&quot;</span><span class="p">,</span> <span class="s2">&quot;Gracilaria&quot;</span><span class="p">,</span> <span class="s2">&quot;Sargassum&quot;</span><span class="p">]</span>
+
+<span class="c1"># Iterar valores</span>
+<span class="k">for</span> <span class="n">especie</span> <span class="ow">in</span> <span class="n">especies</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Analisando: </span><span class="si">{</span><span class="n">especie</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Iterar com índice</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">especie</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">especies</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">especie</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># 0: Ulva, 1: Gracilaria, 2: Sargassum</span>
+
+<span class="c1"># Iterar com range</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">especies</span><span class="p">)):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">especies</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="for-loop-com-dicionarios">For Loop com Dicionários</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">amostra</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;especie&quot;</span><span class="p">:</span> <span class="s2">&quot;Ulva&quot;</span><span class="p">,</span> <span class="s2">&quot;prof_m&quot;</span><span class="p">:</span> <span class="mf">5.2</span><span class="p">,</span> <span class="s2">&quot;temp_c&quot;</span><span class="p">:</span> <span class="mf">22.5</span><span class="p">}</span>
+
+<span class="c1"># Iterar chaves</span>
+<span class="k">for</span> <span class="n">chave</span> <span class="ow">in</span> <span class="n">amostra</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">chave</span><span class="p">)</span>
+
+<span class="c1"># Iterar valores</span>
+<span class="k">for</span> <span class="n">valor</span> <span class="ow">in</span> <span class="n">amostra</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">valor</span><span class="p">)</span>
+
+<span class="c1"># Iterar pares</span>
+<span class="k">for</span> <span class="n">chave</span><span class="p">,</span> <span class="n">valor</span> <span class="ow">in</span> <span class="n">amostra</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">chave</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">valor</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="while-loop">While Loop</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Contar até 5</span>
+<span class="n">contador</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">while</span> <span class="n">contador</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Contagem: </span><span class="si">{</span><span class="n">contador</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">contador</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="c1"># Coletar dados até digitar &quot;sair&quot;</span>
+<span class="n">temperaturas</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Digite temperatura (ou &#39;sair&#39;): &quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">temp</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;sair&quot;</span><span class="p">:</span>
+        <span class="k">break</span>
+    <span class="n">temperaturas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">temp</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Temperaturas coletadas: </span><span class="si">{</span><span class="n">temperaturas</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="compreensao-de-listas-list-comprehension">💡 Compreensão de Listas (List Comprehension)</h2>
+<p>Forma elegante de criar listas:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Forma tradicional</span>
+<span class="n">quadrados</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span>
+    <span class="n">quadrados</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">quadrados</span><span class="p">)</span>  <span class="c1"># [1, 4, 9, 16, 25]</span>
+
+<span class="c1"># Compreensão de lista (mais Pythônica)</span>
+<span class="n">quadrados</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="o">**</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">quadrados</span><span class="p">)</span>  <span class="c1"># [1, 4, 9, 16, 25]</span>
+
+<span class="c1"># Com condição</span>
+<span class="n">pares</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pares</span><span class="p">)</span>  <span class="c1"># [2, 4, 6, 8, 10]</span>
+
+<span class="c1"># Exemplo oceanográfico</span>
+<span class="n">temperaturas_raw</span> <span class="o">=</span> <span class="p">[</span><span class="mf">22.5</span><span class="p">,</span> <span class="mf">23.1</span><span class="p">,</span> <span class="mf">22.8</span><span class="p">,</span> <span class="mf">23.4</span><span class="p">,</span> <span class="mf">22.9</span><span class="p">]</span>
+<span class="c1"># Arredondar todas para 1 casa decimal</span>
+<span class="n">temperaturas_limpas</span> <span class="o">=</span> <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">temperaturas_raw</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">temperaturas_limpas</span><span class="p">)</span>  <span class="c1"># [22.5, 23.1, 22.8, 23.4, 22.9]</span>
+
+<span class="c1"># Com transformação</span>
+<span class="n">especias_maiusculas</span> <span class="o">=</span> <span class="p">[</span><span class="n">sp</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">for</span> <span class="n">sp</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;Ulva&quot;</span><span class="p">,</span> <span class="s2">&quot;Gracilaria&quot;</span><span class="p">]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">especias_maiusculas</span><span class="p">)</span>  <span class="c1"># [&#39;ULVA&#39;, &#39;GRACILARIA&#39;]</span>
+</code></pre></div>
+
+<hr />
+<h2 id="exemplo-pratico-completo">🎯 Exemplo Prático Completo</h2>
+<p>Crie arquivo <code>analise_amostras.py</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Sistema de análise de amostras de ficologia</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># Banco de dados de amostras</span>
+<span class="n">amostras</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;especie&quot;</span><span class="p">:</span> <span class="s2">&quot;Ulva lactuca&quot;</span><span class="p">,</span> <span class="s2">&quot;prof_m&quot;</span><span class="p">:</span> <span class="mf">5.2</span><span class="p">,</span> <span class="s2">&quot;temp_c&quot;</span><span class="p">:</span> <span class="mf">22.5</span><span class="p">,</span> <span class="s2">&quot;sal_psu&quot;</span><span class="p">:</span> <span class="mf">35.0</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;especie&quot;</span><span class="p">:</span> <span class="s2">&quot;Gracilaria&quot;</span><span class="p">,</span> <span class="s2">&quot;prof_m&quot;</span><span class="p">:</span> <span class="mf">7.8</span><span class="p">,</span> <span class="s2">&quot;temp_c&quot;</span><span class="p">:</span> <span class="mf">23.1</span><span class="p">,</span> <span class="s2">&quot;sal_psu&quot;</span><span class="p">:</span> <span class="mf">34.8</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;especie&quot;</span><span class="p">:</span> <span class="s2">&quot;Sargassum&quot;</span><span class="p">,</span> <span class="s2">&quot;prof_m&quot;</span><span class="p">:</span> <span class="mf">3.1</span><span class="p">,</span> <span class="s2">&quot;temp_c&quot;</span><span class="p">:</span> <span class="mf">22.8</span><span class="p">,</span> <span class="s2">&quot;sal_psu&quot;</span><span class="p">:</span> <span class="mf">35.1</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;especie&quot;</span><span class="p">:</span> <span class="s2">&quot;Ulva lactuca&quot;</span><span class="p">,</span> <span class="s2">&quot;prof_m&quot;</span><span class="p">:</span> <span class="mf">6.5</span><span class="p">,</span> <span class="s2">&quot;temp_c&quot;</span><span class="p">:</span> <span class="mf">23.4</span><span class="p">,</span> <span class="s2">&quot;sal_psu&quot;</span><span class="p">:</span> <span class="mf">35.0</span><span class="p">},</span>
+<span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;📊 ANÁLISE DE AMOSTRAS - LABFICOL&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># 1. Listar todas as amostras</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📋 AMOSTRAS COLETADAS:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">amostra</span> <span class="ow">in</span> <span class="n">amostras</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  #</span><span class="si">{</span><span class="n">amostra</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">amostra</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> &quot;</span>
+          <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">amostra</span><span class="p">[</span><span class="s1">&#39;prof_m&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">m, </span><span class="si">{</span><span class="n">amostra</span><span class="p">[</span><span class="s1">&#39;temp_c&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">°C)&quot;</span><span class="p">)</span>
+
+<span class="c1"># 2. Encontrar espécie mais frequente</span>
+<span class="n">especies</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="s2">&quot;especie&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">amostras</span><span class="p">]</span>
+<span class="n">especie_freq</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">especies</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="n">especies</span><span class="o">.</span><span class="n">count</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🌿 Espécie mais frequente: </span><span class="si">{</span><span class="n">especie_freq</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># 3. Média de profundidade</span>
+<span class="n">profundidades</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="s2">&quot;prof_m&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">amostras</span><span class="p">]</span>
+<span class="n">prof_media</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">profundidades</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">profundidades</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📏 Profundidade média: </span><span class="si">{</span><span class="n">prof_media</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">m&quot;</span><span class="p">)</span>
+
+<span class="c1"># 4. Temperatura extrema</span>
+<span class="n">temp_minima</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">amostras</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;temp_c&quot;</span><span class="p">])</span>
+<span class="n">temp_maxima</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">amostras</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;temp_c&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🌡️ Temperatura: </span><span class="si">{</span><span class="n">temp_minima</span><span class="p">[</span><span class="s1">&#39;temp_c&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">°C (min) a </span><span class="si">{</span><span class="n">temp_maxima</span><span class="p">[</span><span class="s1">&#39;temp_c&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">°C (max)&quot;</span><span class="p">)</span>
+
+<span class="c1"># 5. Filtrar amostras válidas</span>
+<span class="n">validas</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">amostras</span> <span class="k">if</span> <span class="mi">20</span> <span class="o">&lt;=</span> <span class="n">a</span><span class="p">[</span><span class="s2">&quot;temp_c&quot;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">25</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✅ Amostras válidas: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">validas</span><span class="p">)</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">amostras</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># 6. Relatório final</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✓ Análise concluída com sucesso!&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Execute:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">python</span> <span class="n">analise_amostras</span><span class="p">.</span><span class="n">py</span>
+</code></pre></div>
+
+<hr />
+<h2 id="checklist-desta-licao">🎓 Checklist desta Lição</h2>
+<ul>
+<li>[ ] Entendo listas e operações básicas</li>
+<li>[ ] Sei usar dicionários</li>
+<li>[ ] Consigo usar loops com estruturas</li>
+<li>[ ] Entendo fatiar listas (slicing)</li>
+<li>[ ] Testei pelo menos 3 exemplos completos</li>
+<li>[ ] Conheço list comprehension</li>
+</ul>
+<p>Se marcou tudo, você está pronto para <strong>Funções</strong>! 🎉</p>
+<hr />
+<h2 id="proximo-topico">➡️ Próximo Tópico</h2>
+<p><strong>👉 <a href="03-Funcoes-Modulos.md">03-Funcoes-Modulos.md</a></strong></p>
+<p>Lá você aprenderá:
+- Definir funções
+- Parâmetros e retornos
+- Escopo de variáveis
+- Importar módulos</p>
+<hr />
+<h2 id="resumo-de-operacoes">📝 Resumo de Operações</h2>
+<table>
+<thead>
+<tr>
+<th>Estrutura</th>
+<th>Exemplo</th>
+<th>Mutável?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lista</td>
+<td><code>[1, 2, 3]</code></td>
+<td>✅ Sim</td>
+</tr>
+<tr>
+<td>Dicionário</td>
+<td><code>{"a": 1}</code></td>
+<td>✅ Sim</td>
+</tr>
+<tr>
+<td>Tupla</td>
+<td><code>(1, 2, 3)</code></td>
+<td>❌ Não</td>
+</tr>
+<tr>
+<td>Conjunto</td>
+<td><code>{1, 2, 3}</code></td>
+<td>✅ Sim</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>Você está aprendendo rápido!</strong> Próximo: Funções! 🚀</p>
+      </article>
+    </main>
+    <footer role="contentinfo">
+      <p>Gerado automaticamente em 06/01/2026 16:10. Paleta: ColorBrewer BuGn.</p>
+    </footer>
+    <script src="..\assets/site.js"></script>
+  </body>
+</html>

@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>🌐 Git, GitHub e GitHub Pages</title>
+    <link rel="preload" href="..\assets/theme.css" as="style" />
+    <link rel="stylesheet" href="..\assets/theme.css" />
+  </head>
+  <body>
+    <a href="#conteudo" class="skip-link">Pular para conteúdo</a>
+    <header role="banner">
+      <div class="wrap">
+        <h1>🌐 Git, GitHub e GitHub Pages</h1>
+        <nav aria-label="Navegação">
+          <a href="..\index.html">Início</a>
+          <a href="https://github.com/caetanoronan/labficol-tutorial">Repositório</a>
+          <a href="https://caetanoronan.github.io/labficol-tutorial/">Site</a>
+        </nav>
+        <div class="controls">
+          <button id="toggleHC" aria-pressed="false" aria-label="Alternar alto contraste">Alto contraste</button>
+          <button id="toggleBT" aria-pressed="false" aria-label="Alternar texto grande">Texto grande</button>
+          <button id="toggleLM" aria-pressed="false" aria-label="Reduzir movimento">Menos movimento</button>
+        </div>
+      </div>
+    </header>
+    <main id="conteudo" role="main">
+      <article class="md-content" aria-label="Conteúdo">
+        <h1 id="git-github-e-github-pages">🌐 Git, GitHub e GitHub Pages</h1>
+<h2 id="objetivo">🎯 Objetivo</h2>
+<p>Aprender a versionar seu projeto com <strong>Git</strong>, hospedar no <strong>GitHub</strong> e publicar páginas estáticas (mapas/dashboards) com <strong>GitHub Pages</strong>.</p>
+<hr />
+<h2 id="instalacao-e-configuracao-windows">🛠️ Instalação e Configuração (Windows)</h2>
+<ol>
+<li>Instale Git: https://git-scm.com/download/win</li>
+<li>Abra "Git Bash" ou PowerShell</li>
+<li>Configure sua identidade:</li>
+</ol>
+<div class="codehilite"><pre><span></span><code>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.name<span class="w"> </span><span class="s2">&quot;Seu Nome&quot;</span>
+git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.email<span class="w"> </span><span class="s2">&quot;seu@email&quot;</span>
+</code></pre></div>
+
+<p>— Opcional: instalar GitHub CLI: https://cli.github.com/</p>
+<hr />
+<h2 id="iniciar-repositorio-local">📦 Iniciar Repositório Local</h2>
+<p>No diretório do projeto (esta pasta):</p>
+<div class="codehilite"><pre><span></span><code>git<span class="w"> </span>init
+git<span class="w"> </span>branch<span class="w"> </span>-M<span class="w"> </span>main
+git<span class="w"> </span>add<span class="w"> </span>.
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Inicial: tutorial LABFICOL (módulos 0-6, exemplos)&quot;</span>
+</code></pre></div>
+
+<p>— Cria <code>.git</code> e registra estado inicial.</p>
+<hr />
+<h2 id="criar-repositorio-no-github">☁️ Criar Repositório no GitHub</h2>
+<p>Pelo navegador:
+- Vá a https://github.com/new
+- Nome: <code>tutorial-labficol</code> (exemplo)
+- Público (para GitHub Pages)
+- Crie sem README (já temos)</p>
+<p>Depois, vincule remoto e envie:</p>
+<div class="codehilite"><pre><span></span><code>git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>origin<span class="w"> </span>https://github.com/&lt;seu-usuario&gt;/&lt;seu-repo&gt;.git
+git<span class="w"> </span>push<span class="w"> </span>-u<span class="w"> </span>origin<span class="w"> </span>main
+</code></pre></div>
+
+<p>— Se pedir login/token, gere um PAT: https://github.com/settings/tokens</p>
+<hr />
+<h2 id="publicar-com-github-pages-site-estatico">🗺️ Publicar com GitHub Pages (site estático)</h2>
+<p>GitHub Pages hospeda HTML/CSS/JS (ex.: mapas Leaflet, dashboards front-end).</p>
+<ol>
+<li>No repositório no GitHub, acesse Settings → Pages</li>
+<li>Build and deployment:</li>
+<li>Source: <code>Deploy from a branch</code></li>
+<li>Branch: <code>main</code></li>
+<li>Folder: <code>/root</code> (ou <code>/docs</code>)</li>
+<li>Salvar → espere 1–2 minutos</li>
+<li>Seu site: <code>https://&lt;usuario&gt;.github.io/&lt;repo&gt;/</code></li>
+</ol>
+<h3 id="publicar-pagina-indexhtml">Publicar página <code>index.html</code></h3>
+<p>Crie uma pasta <code>docs/</code> (ou use raiz) com seu <code>index.html</code> (ex.: dashboard front-end):</p>
+<div class="codehilite"><pre><span></span><code>mkdir<span class="w"> </span>docs
+copy<span class="w"> </span>frontend<span class="se">\i</span>ndex.html<span class="w"> </span>docs<span class="se">\i</span>ndex.html
+copy<span class="w"> </span>frontend<span class="se">\s</span>tyle.css<span class="w"> </span>docs<span class="se">\s</span>tyle.css
+copy<span class="w"> </span>frontend<span class="se">\s</span>cript.js<span class="w"> </span>docs<span class="se">\s</span>cript.js
+
+git<span class="w"> </span>add<span class="w"> </span>docs
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Publicar dashboard estático em GitHub Pages&quot;</span>
+git<span class="w"> </span>push
+</code></pre></div>
+
+<p>— GH Pages servirá <code>docs/index.html</code>.</p>
+<h3 id="publicar-mapas-gerados-folium">Publicar mapas gerados (Folium)</h3>
+<p>Arquivos <code>.html</code> gerados (ex.: <code>distribuicao_espacial.html</code>) devem ser copiados para <code>docs/</code>:</p>
+<div class="codehilite"><pre><span></span><code>copy<span class="w"> </span><span class="m">4</span>-Casos-Praticos<span class="se">\d</span>istribuicao_espacial.html<span class="w"> </span>docs<span class="se">\d</span>istribuicao_espacial.html
+
+git<span class="w"> </span>add<span class="w"> </span>docs<span class="se">\d</span>istribuicao_espacial.html
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Publicar mapa Folium&quot;</span>
+git<span class="w"> </span>push
+</code></pre></div>
+
+<p>Acesse: <code>https://&lt;usuario&gt;.github.io/&lt;repo&gt;/distribuicao_espacial.html</code></p>
+<hr />
+<h2 id="dicas-de-seguranca">🔒 Dicas de Segurança</h2>
+<ul>
+<li>Nunca commitar senhas/tokens</li>
+<li>Adicionar <code>.gitignore</code> para <code>venv/</code>, <code>__pycache__/</code>, etc.</li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span>__pycache__/&gt;<span class="w"> </span>.gitignore
+<span class="nb">echo</span><span class="w"> </span>venv/&gt;<span class="w"> </span>.gitignore
+<span class="nb">echo</span><span class="w"> </span>.ipynb_checkpoints/&gt;<span class="w"> </span>.gitignore
+<span class="nb">echo</span><span class="w"> </span>*.pyc&gt;&gt;<span class="w"> </span>.gitignore
+</code></pre></div>
+
+<p>— Commit: <code>git add .gitignore &amp;&amp; git commit -m "Add .gitignore" &amp;&amp; git push</code></p>
+<hr />
+<h2 id="fluxo-de-trabalho-sugerido">🔄 Fluxo de Trabalho Sugerido</h2>
+<div class="codehilite"><pre><span></span><code><span class="c1"># 1. Edite/crie arquivos</span>
+<span class="c1"># 2. Veja mudanças</span>
+git<span class="w"> </span>status
+
+<span class="c1"># 3. Selecione para commit</span>
+git<span class="w"> </span>add<span class="w"> </span>caminho/do/arquivo
+
+<span class="c1"># 4. Commit com mensagem clara</span>
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Adicionar lição de regressão (módulo 5)&quot;</span>
+
+<span class="c1"># 5. Envie ao GitHub</span>
+git<span class="w"> </span>push
+</code></pre></div>
+
+<p>— Para colaborações: use branches (<code>git checkout -b feature/nome</code>), PRs e reviews.</p>
+<hr />
+<h2 id="verificacao-rapida">🧪 Verificação Rápida</h2>
+<p>Depois do push, confira:
+- Repositório mostra seus commits
+- GH Pages ativo (Settings → Pages)
+- Site acessível na URL </p>
+<p>— Problemas comuns: branch errado, pasta Pages não configurada, arquivos faltando.</p>
+<hr />
+<h2 id="checklist">🎓 Checklist</h2>
+<ul>
+<li>[ ] Repositório Git inicializado</li>
+<li>[ ] Remote GitHub configurado</li>
+<li>[ ] Commit e push funcionando</li>
+<li>[ ] GH Pages habilitado</li>
+<li>[ ] Dashboard/Mapas publicados</li>
+</ul>
+<p>Com isso, você publica seus resultados científicos online de forma profissional! 🚀</p>
+      </article>
+    </main>
+    <footer role="contentinfo">
+      <p>Gerado automaticamente em 06/01/2026 16:10. Paleta: ColorBrewer BuGn.</p>
+    </footer>
+    <script src="..\assets/site.js"></script>
+  </body>
+</html>

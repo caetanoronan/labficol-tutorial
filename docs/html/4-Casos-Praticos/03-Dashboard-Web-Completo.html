@@ -1,0 +1,895 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>🌐 Caso Prático 3: Dashboard Web Completo</title>
+    <link rel="preload" href="..\assets/theme.css" as="style" />
+    <link rel="stylesheet" href="..\assets/theme.css" />
+  </head>
+  <body>
+    <a href="#conteudo" class="skip-link">Pular para conteúdo</a>
+    <header role="banner">
+      <div class="wrap">
+        <h1>🌐 Caso Prático 3: Dashboard Web Completo</h1>
+        <nav aria-label="Navegação">
+          <a href="..\index.html">Início</a>
+          <a href="https://github.com/caetanoronan/labficol-tutorial">Repositório</a>
+          <a href="https://caetanoronan.github.io/labficol-tutorial/">Site</a>
+        </nav>
+        <div class="controls">
+          <button id="toggleHC" aria-pressed="false" aria-label="Alternar alto contraste">Alto contraste</button>
+          <button id="toggleBT" aria-pressed="false" aria-label="Alternar texto grande">Texto grande</button>
+          <button id="toggleLM" aria-pressed="false" aria-label="Reduzir movimento">Menos movimento</button>
+        </div>
+      </div>
+    </header>
+    <main id="conteudo" role="main">
+      <article class="md-content" aria-label="Conteúdo">
+        <h1 id="caso-pratico-3-dashboard-web-completo">🌐 Caso Prático 3: Dashboard Web Completo</h1>
+<h2 id="objetivo-do-projeto">🎯 Objetivo do Projeto</h2>
+<p>Criar um <strong>dashboard web profissional</strong> integrando todas as tecnologias aprendidas: Python (backend) + HTML/CSS/JavaScript (frontend) + Leaflet (mapas) + API REST.</p>
+<p><strong>Sistema completo:</strong>
+- Backend Python com Flask
+- API REST para dados
+- Frontend interativo
+- Mapas dinâmicos
+- Gráficos em tempo real</p>
+<hr />
+<h2 id="arquitetura-do-sistema">🏗️ Arquitetura do Sistema</h2>
+<div class="codehilite"><pre><span></span><code>dashboard-labficol/
+│
+├── backend/
+│   ├── app.py              # Servidor Flask
+│   ├── dados.py            # Gerador de dados
+│   └── requirements.txt
+│
+├── frontend/
+│   ├── index.html          # Dashboard principal
+│   ├── style.css           # Estilos
+│   └── script.js           # Lógica JavaScript
+│
+└── dados/
+    └── coletas.json        # Base de dados
+</code></pre></div>
+
+<hr />
+<h2 id="parte-1-backend-python-flask-api">🐍 Parte 1: Backend Python (Flask API)</h2>
+<h3 id="instalar-dependencias">Instalar Dependências</h3>
+<div class="codehilite"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>flask<span class="w"> </span>flask-cors<span class="w"> </span>pandas
+</code></pre></div>
+
+<h3 id="criar-backendrequirementstxt">Criar <code>backend/requirements.txt</code>:</h3>
+<div class="codehilite"><pre><span></span><code>flask==3.0.0
+flask-cors==4.0.0
+pandas==2.1.4
+</code></pre></div>
+
+<h3 id="criar-backenddadospy">Criar <code>backend/dados.py</code>:</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="k">def</span> <span class="nf">gerar_dados_coletas</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Gera dados sintéticos de coletas&quot;&quot;&quot;</span>
+
+    <span class="n">especies</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">,</span> <span class="s1">&#39;Gracilaria&#39;</span><span class="p">,</span> <span class="s1">&#39;Sargassum&#39;</span><span class="p">,</span> <span class="s1">&#39;Laminaria&#39;</span><span class="p">]</span>
+    <span class="n">praias</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Ingleses&#39;</span><span class="p">,</span> <span class="s1">&#39;Barra da Lagoa&#39;</span><span class="p">,</span> <span class="s1">&#39;Armação&#39;</span><span class="p">,</span> <span class="s1">&#39;Garopaba&#39;</span><span class="p">,</span> <span class="s1">&#39;Laguna&#39;</span><span class="p">]</span>
+
+    <span class="c1"># Coordenadas aproximadas das praias</span>
+    <span class="n">coords_praias</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;Ingleses&#39;</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">27.4374</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.3923</span><span class="p">),</span>
+        <span class="s1">&#39;Barra da Lagoa&#39;</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">27.5750</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.4200</span><span class="p">),</span>
+        <span class="s1">&#39;Armação&#39;</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">27.7500</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.5100</span><span class="p">),</span>
+        <span class="s1">&#39;Garopaba&#39;</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">28.0200</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.6200</span><span class="p">),</span>
+        <span class="s1">&#39;Laguna&#39;</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">28.4833</span><span class="p">,</span> <span class="o">-</span><span class="mf">48.7833</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="n">coletas</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">data_inicial</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">praia</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">praias</span><span class="p">)</span>
+        <span class="n">lat_base</span><span class="p">,</span> <span class="n">lon_base</span> <span class="o">=</span> <span class="n">coords_praias</span><span class="p">[</span><span class="n">praia</span><span class="p">]</span>
+
+        <span class="c1"># Adicionar variação pequena nas coordenadas</span>
+        <span class="n">lat</span> <span class="o">=</span> <span class="n">lat_base</span> <span class="o">+</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+        <span class="n">lon</span> <span class="o">=</span> <span class="n">lon_base</span> <span class="o">+</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+
+        <span class="c1"># Data aleatória nos últimos 6 meses</span>
+        <span class="n">dias_passados</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">180</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data_inicial</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">dias_passados</span><span class="p">)</span>
+
+        <span class="n">coleta</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;praia&#39;</span><span class="p">:</span> <span class="n">praia</span><span class="p">,</span>
+            <span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">lat</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+            <span class="s1">&#39;lon&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+            <span class="s1">&#39;especie&#39;</span><span class="p">:</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">especies</span><span class="p">),</span>
+            <span class="s1">&#39;biomassa_g&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">500</span><span class="p">),</span> <span class="mi">1</span><span class="p">),</span>
+            <span class="s1">&#39;temperatura_c&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span> <span class="mi">26</span><span class="p">),</span> <span class="mi">1</span><span class="p">),</span>
+            <span class="s1">&#39;salinidade_psu&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">34</span><span class="p">,</span> <span class="mi">36</span><span class="p">),</span> <span class="mi">1</span><span class="p">),</span>
+            <span class="s1">&#39;profundidade_m&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="n">coletas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">coleta</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">coletas</span>
+
+<span class="k">def</span> <span class="nf">salvar_dados</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;../dados/coletas.json&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Salva dados em arquivo JSON&quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">os</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">dados</span> <span class="o">=</span> <span class="n">gerar_dados_coletas</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">dados</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span><span class="si">}</span><span class="s2"> coletas salvas em </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">salvar_dados</span><span class="p">()</span>
+</code></pre></div>
+
+<h3 id="criar-backendapppy">Criar <code>backend/app.py</code>:</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">jsonify</span><span class="p">,</span> <span class="n">request</span>
+<span class="kn">from</span> <span class="nn">flask_cors</span> <span class="kn">import</span> <span class="n">CORS</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">CORS</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>  <span class="c1"># Permitir requisições de outros domínios</span>
+
+<span class="c1"># Carregar dados</span>
+<span class="k">def</span> <span class="nf">carregar_dados</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;../dados/coletas.json&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
+<span class="c1"># ====================</span>
+<span class="c1"># ROTAS DA API</span>
+<span class="c1"># ====================</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">home</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span>
+        <span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;🌊 API LABFICOL - Dashboard de Macroalgas&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="s1">&#39;1.0&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;endpoints&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s1">&#39;/api/coletas&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;/api/estatisticas&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;/api/especies&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;/api/praias&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;/api/timeline&#39;</span>
+        <span class="p">]</span>
+    <span class="p">})</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/coletas&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">get_coletas</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Retorna todas as coletas&quot;&quot;&quot;</span>
+    <span class="n">dados</span> <span class="o">=</span> <span class="n">carregar_dados</span><span class="p">()</span>
+
+    <span class="c1"># Filtros opcionais</span>
+    <span class="n">especie</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;especie&#39;</span><span class="p">)</span>
+    <span class="n">praia</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;praia&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">especie</span><span class="p">:</span>
+        <span class="n">dados</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dados</span> <span class="k">if</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">especie</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">praia</span><span class="p">:</span>
+        <span class="n">dados</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dados</span> <span class="k">if</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;praia&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">praia</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span>
+        <span class="s1">&#39;total&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">dados</span><span class="p">),</span>
+        <span class="s1">&#39;coletas&#39;</span><span class="p">:</span> <span class="n">dados</span>
+    <span class="p">})</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/estatisticas&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">get_estatisticas</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Retorna estatísticas gerais&quot;&quot;&quot;</span>
+    <span class="n">dados</span> <span class="o">=</span> <span class="n">carregar_dados</span><span class="p">()</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;Sem dados&#39;</span><span class="p">}),</span> <span class="mi">404</span>
+
+    <span class="n">stats</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;total_coletas&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">),</span>
+        <span class="s1">&#39;total_especies&#39;</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">(),</span>
+        <span class="s1">&#39;total_praias&#39;</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;praia&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">(),</span>
+        <span class="s1">&#39;biomassa_total&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;biomassa_g&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="s1">&#39;biomassa_media&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;biomassa_g&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="s1">&#39;temperatura_media&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;temperatura_c&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="s1">&#39;salinidade_media&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;salinidade_psu&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="s1">&#39;profundidade_media&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;profundidade_m&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="s1">&#39;data_primeira_coleta&#39;</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span>
+        <span class="s1">&#39;data_ultima_coleta&#39;</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/especies&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">get_especies</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Retorna contagem e estatísticas por espécie&quot;&quot;&quot;</span>
+    <span class="n">dados</span> <span class="o">=</span> <span class="n">carregar_dados</span><span class="p">()</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;Sem dados&#39;</span><span class="p">}),</span> <span class="mi">404</span>
+
+    <span class="n">especies_stats</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;especie&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span>
+        <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;count&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;biomassa_g&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="s1">&#39;min&#39;</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;temperatura_c&#39;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;profundidade_m&#39;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span>
+    <span class="p">})</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">especies_stats</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">col</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">especies_stats</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+
+    <span class="n">resultado</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">especie</span> <span class="ow">in</span> <span class="n">especies_stats</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+        <span class="n">resultado</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s1">&#39;especie&#39;</span><span class="p">:</span> <span class="n">especie</span><span class="p">,</span>
+            <span class="s1">&#39;ocorrencias&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">especies_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">especie</span><span class="p">,</span> <span class="s1">&#39;id_count&#39;</span><span class="p">]),</span>
+            <span class="s1">&#39;biomassa_media&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">especies_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">especie</span><span class="p">,</span> <span class="s1">&#39;biomassa_g_mean&#39;</span><span class="p">]),</span>
+            <span class="s1">&#39;biomassa_total&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">especies_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">especie</span><span class="p">,</span> <span class="s1">&#39;biomassa_g_sum&#39;</span><span class="p">]),</span>
+            <span class="s1">&#39;temperatura_media&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">especies_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">especie</span><span class="p">,</span> <span class="s1">&#39;temperatura_c_mean&#39;</span><span class="p">]),</span>
+            <span class="s1">&#39;profundidade_media&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">especies_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">especie</span><span class="p">,</span> <span class="s1">&#39;profundidade_m_mean&#39;</span><span class="p">])</span>
+        <span class="p">})</span>
+
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">resultado</span><span class="p">)</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/praias&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">get_praias</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Retorna estatísticas por praia&quot;&quot;&quot;</span>
+    <span class="n">dados</span> <span class="o">=</span> <span class="n">carregar_dados</span><span class="p">()</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;Sem dados&#39;</span><span class="p">}),</span> <span class="mi">404</span>
+
+    <span class="n">praias_stats</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;praia&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span>
+        <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;count&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;especie&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">nunique</span><span class="p">(),</span>
+        <span class="s1">&#39;biomassa_g&#39;</span><span class="p">:</span> <span class="s1">&#39;sum&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;lon&#39;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span>
+    <span class="p">})</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+    <span class="n">resultado</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">praia</span> <span class="ow">in</span> <span class="n">praias_stats</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+        <span class="n">resultado</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s1">&#39;praia&#39;</span><span class="p">:</span> <span class="n">praia</span><span class="p">,</span>
+            <span class="s1">&#39;coletas&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">praias_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">praia</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">]),</span>
+            <span class="s1">&#39;especies_diferentes&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">praias_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">praia</span><span class="p">,</span> <span class="s1">&#39;especie&#39;</span><span class="p">]),</span>
+            <span class="s1">&#39;biomassa_total&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">praias_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">praia</span><span class="p">,</span> <span class="s1">&#39;biomassa_g&#39;</span><span class="p">]),</span>
+            <span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">praias_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">praia</span><span class="p">,</span> <span class="s1">&#39;lat&#39;</span><span class="p">]),</span>
+            <span class="s1">&#39;lon&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">praias_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">praia</span><span class="p">,</span> <span class="s1">&#39;lon&#39;</span><span class="p">])</span>
+        <span class="p">})</span>
+
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">resultado</span><span class="p">)</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/timeline&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">get_timeline</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Retorna dados para timeline (agregado por mês)&quot;&quot;&quot;</span>
+    <span class="n">dados</span> <span class="o">=</span> <span class="n">carregar_dados</span><span class="p">()</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;Sem dados&#39;</span><span class="p">}),</span> <span class="mi">404</span>
+
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;mes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">to_period</span><span class="p">(</span><span class="s1">&#39;M&#39;</span><span class="p">)</span>
+
+    <span class="n">timeline</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;mes&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span>
+        <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;count&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;biomassa_g&#39;</span><span class="p">:</span> <span class="s1">&#39;sum&#39;</span>
+    <span class="p">})</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">resultado</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">mes</span> <span class="ow">in</span> <span class="n">timeline</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+        <span class="n">resultado</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s1">&#39;mes&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">mes</span><span class="p">),</span>
+            <span class="s1">&#39;coletas&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">timeline</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mes</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">]),</span>
+            <span class="s1">&#39;biomassa_total&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">timeline</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mes</span><span class="p">,</span> <span class="s1">&#39;biomassa_g&#39;</span><span class="p">])</span>
+        <span class="p">})</span>
+
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">resultado</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🚀 Iniciando servidor Flask...&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;📍 Acesse: http://localhost:5000&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;📚 API Docs: http://localhost:5000/&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="parte-2-frontend-html-css-javascript">🌐 Parte 2: Frontend (HTML + CSS + JavaScript)</h2>
+<h3 id="criar-frontendindexhtml">Criar <code>frontend/index.html</code>:</h3>
+<div class="codehilite"><pre><span></span><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;pt-BR&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;width=device-width, initial-scale=1.0&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Dashboard LABFICOL - Monitoramento de Macroalgas<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+
+    <span class="cm">&lt;!-- Leaflet CSS --&gt;</span>
+    <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://unpkg.com/leaflet@1.9.4/dist/leaflet.css&quot;</span> <span class="p">/&gt;</span>
+
+    <span class="cm">&lt;!-- CSS Customizado --&gt;</span>
+    <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;style.css&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="cm">&lt;!-- Header --&gt;</span>
+    <span class="p">&lt;</span><span class="nt">header</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;container-header&quot;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>🌊 Dashboard LABFICOL<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Monitoramento de Macroalgas - Costa de Santa Catarina<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;lastUpdate&quot;</span><span class="p">&gt;</span>Carregando...<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">header</span><span class="p">&gt;</span>
+
+    <span class="cm">&lt;!-- Dashboard Grid --&gt;</span>
+    <span class="p">&lt;</span><span class="nt">main</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;dashboard-grid&quot;</span><span class="p">&gt;</span>
+
+        <span class="cm">&lt;!-- Cards de Estatísticas --&gt;</span>
+        <span class="p">&lt;</span><span class="nt">section</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;stats-cards&quot;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;card stat-card&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;cardColetas&quot;</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;card-icon&quot;</span><span class="p">&gt;</span>📊<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;card-content&quot;</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Total de Coletas<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;stat-number&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;totalColetas&quot;</span><span class="p">&gt;</span>-<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;card stat-card&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;cardEspecies&quot;</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;card-icon&quot;</span><span class="p">&gt;</span>🌿<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;card-content&quot;</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Espécies<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;stat-number&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;totalEspecies&quot;</span><span class="p">&gt;</span>-<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;card stat-card&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;cardPraias&quot;</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;card-icon&quot;</span><span class="p">&gt;</span>📍<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;card-content&quot;</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Praias Monitoradas<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;stat-number&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;totalPraias&quot;</span><span class="p">&gt;</span>-<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;card stat-card&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;cardBiomassa&quot;</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;card-icon&quot;</span><span class="p">&gt;</span>⚖️<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;card-content&quot;</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Biomassa Total<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;stat-number&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;biomassamTotal&quot;</span><span class="p">&gt;</span>-<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;stat-unit&quot;</span><span class="p">&gt;</span>gramas<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">section</span><span class="p">&gt;</span>
+
+        <span class="cm">&lt;!-- Mapa --&gt;</span>
+        <span class="p">&lt;</span><span class="nt">section</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;card map-container&quot;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>🗺️ Distribuição Geográfica<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;map&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">section</span><span class="p">&gt;</span>
+
+        <span class="cm">&lt;!-- Lista de Espécies --&gt;</span>
+        <span class="p">&lt;</span><span class="nt">section</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;card&quot;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>🌿 Ranking de Espécies<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;especiesList&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;list-container&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">section</span><span class="p">&gt;</span>
+
+        <span class="cm">&lt;!-- Praias --&gt;</span>
+        <span class="p">&lt;</span><span class="nt">section</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;card&quot;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>📍 Estatísticas por Praia<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;praiasList&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;list-container&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">section</span><span class="p">&gt;</span>
+
+        <span class="cm">&lt;!-- Timeline --&gt;</span>
+        <span class="p">&lt;</span><span class="nt">section</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;card timeline-container&quot;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>📈 Evolução Temporal<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">canvas</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;timelineChart&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">canvas</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">section</span><span class="p">&gt;</span>
+
+    <span class="p">&lt;/</span><span class="nt">main</span><span class="p">&gt;</span>
+
+    <span class="cm">&lt;!-- Footer --&gt;</span>
+    <span class="p">&lt;</span><span class="nt">footer</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>© 2025 LABFICOL - UFSC | Desenvolvido para pesquisa em Ficologia<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">footer</span><span class="p">&gt;</span>
+
+    <span class="cm">&lt;!-- Scripts --&gt;</span>
+    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://unpkg.com/leaflet@1.9.4/dist/leaflet.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;script.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<h3 id="criar-frontendstylecss">Criar <code>frontend/style.css</code>:</h3>
+<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">margin</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">box-sizing</span><span class="p">:</span><span class="w"> </span><span class="kc">border-box</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">body</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">font-family</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;Segoe UI&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">Tahoma</span><span class="p">,</span><span class="w"> </span><span class="n">Geneva</span><span class="p">,</span><span class="w"> </span><span class="n">Verdana</span><span class="p">,</span><span class="w"> </span><span class="kc">sans-serif</span><span class="p">;</span>
+<span class="w">    </span><span class="k">background</span><span class="p">:</span><span class="w"> </span><span class="nb">linear-gradient</span><span class="p">(</span><span class="mi">135</span><span class="kt">deg</span><span class="p">,</span><span class="w"> </span><span class="mh">#e0f7fa</span><span class="w"> </span><span class="mi">0</span><span class="kt">%</span><span class="p">,</span><span class="w"> </span><span class="mh">#b2ebf2</span><span class="w"> </span><span class="mi">100</span><span class="kt">%</span><span class="p">);</span>
+<span class="w">    </span><span class="k">min-height</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="kt">vh</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c">/* Header */</span>
+<span class="nt">header</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">background</span><span class="p">:</span><span class="w"> </span><span class="nb">linear-gradient</span><span class="p">(</span><span class="mi">135</span><span class="kt">deg</span><span class="p">,</span><span class="w"> </span><span class="mh">#006064</span><span class="w"> </span><span class="mi">0</span><span class="kt">%</span><span class="p">,</span><span class="w"> </span><span class="mh">#00838f</span><span class="w"> </span><span class="mi">100</span><span class="kt">%</span><span class="p">);</span>
+<span class="w">    </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="kc">white</span><span class="p">;</span>
+<span class="w">    </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="kt">px</span><span class="w"> </span><span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">    </span><span class="k">box-shadow</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">4</span><span class="kt">px</span><span class="w"> </span><span class="mi">6</span><span class="kt">px</span><span class="w"> </span><span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.1</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">container-header</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">max-width</span><span class="p">:</span><span class="w"> </span><span class="mi">1400</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">    </span><span class="k">margin</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="kc">auto</span><span class="p">;</span>
+<span class="w">    </span><span class="k">text-align</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">header</span><span class="w"> </span><span class="nt">h1</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mf">2.5</span><span class="kt">em</span><span class="p">;</span>
+<span class="w">    </span><span class="k">margin-bottom</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">header</span><span class="w"> </span><span class="nt">p</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mf">1.2</span><span class="kt">em</span><span class="p">;</span>
+<span class="w">    </span><span class="k">opacity</span><span class="p">:</span><span class="w"> </span><span class="mf">0.9</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">#</span><span class="nn">lastUpdate</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">margin-top</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">    </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mf">0.9</span><span class="kt">em</span><span class="p">;</span>
+<span class="w">    </span><span class="k">opacity</span><span class="p">:</span><span class="w"> </span><span class="mf">0.8</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c">/* Dashboard Grid */</span>
+<span class="p">.</span><span class="nc">dashboard-grid</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">max-width</span><span class="p">:</span><span class="w"> </span><span class="mi">1400</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">    </span><span class="k">margin</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="kt">px</span><span class="w"> </span><span class="kc">auto</span><span class="p">;</span>
+<span class="w">    </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">    </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="k">grid</span><span class="p">;</span>
+<span class="w">    </span><span class="k">grid-template-columns</span><span class="p">:</span><span class="w"> </span><span class="nf">repeat</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="n">fr</span><span class="p">);</span>
+<span class="w">    </span><span class="n">grid-gap</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c">/* Cards */</span>
+<span class="p">.</span><span class="nc">card</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">background</span><span class="p">:</span><span class="w"> </span><span class="kc">white</span><span class="p">;</span>
+<span class="w">    </span><span class="k">border-radius</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">    </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">    </span><span class="k">box-shadow</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">4</span><span class="kt">px</span><span class="w"> </span><span class="mi">6</span><span class="kt">px</span><span class="w"> </span><span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.1</span><span class="p">);</span>
+<span class="w">    </span><span class="k">transition</span><span class="p">:</span><span class="w"> </span><span class="k">transform</span><span class="w"> </span><span class="mf">0.3</span><span class="kt">s</span><span class="p">,</span><span class="w"> </span><span class="k">box-shadow</span><span class="w"> </span><span class="mf">0.3</span><span class="kt">s</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">card</span><span class="p">:</span><span class="nd">hover</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">transform</span><span class="p">:</span><span class="w"> </span><span class="nb">translateY</span><span class="p">(</span><span class="mi">-5</span><span class="kt">px</span><span class="p">);</span>
+<span class="w">    </span><span class="k">box-shadow</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">8</span><span class="kt">px</span><span class="w"> </span><span class="mi">12</span><span class="kt">px</span><span class="w"> </span><span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.15</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c">/* Stats Cards */</span>
+<span class="p">.</span><span class="nc">stats-cards</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">grid-column</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
+<span class="w">    </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="k">grid</span><span class="p">;</span>
+<span class="w">    </span><span class="k">grid-template-columns</span><span class="p">:</span><span class="w"> </span><span class="nf">repeat</span><span class="p">(</span><span class="kc">auto</span><span class="nv">-fit</span><span class="p">,</span><span class="w"> </span><span class="nf">minmax</span><span class="p">(</span><span class="mi">250</span><span class="kt">px</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="n">fr</span><span class="p">));</span>
+<span class="w">    </span><span class="n">grid-gap</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">stat-card</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">flex</span><span class="p">;</span>
+<span class="w">    </span><span class="k">align-items</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
+<span class="w">    </span><span class="k">gap</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">card-icon</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="kt">em</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">card-content</span><span class="w"> </span><span class="nt">h3</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mf">0.9</span><span class="kt">em</span><span class="p">;</span>
+<span class="w">    </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="mh">#666</span><span class="p">;</span>
+<span class="w">    </span><span class="k">margin-bottom</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">stat-number</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mf">2.5</span><span class="kt">em</span><span class="p">;</span>
+<span class="w">    </span><span class="k">font-weight</span><span class="p">:</span><span class="w"> </span><span class="kc">bold</span><span class="p">;</span>
+<span class="w">    </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="mh">#006064</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">stat-unit</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mf">0.8</span><span class="kt">em</span><span class="p">;</span>
+<span class="w">    </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="mh">#999</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c">/* Mapa */</span>
+<span class="p">.</span><span class="nc">map-container</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">grid-column</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<span class="w">    </span><span class="k">grid-row</span><span class="p">:</span><span class="w"> </span><span class="n">span</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">#</span><span class="nn">map</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">height</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">    </span><span class="k">border-radius</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">    </span><span class="k">margin-top</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c">/* Listas */</span>
+<span class="p">.</span><span class="nc">list-container</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">max-height</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">    </span><span class="k">overflow-y</span><span class="p">:</span><span class="w"> </span><span class="kc">auto</span><span class="p">;</span>
+<span class="w">    </span><span class="k">margin-top</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">list-item</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">    </span><span class="k">margin-bottom</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">    </span><span class="k">background</span><span class="p">:</span><span class="w"> </span><span class="mh">#f5f5f5</span><span class="p">;</span>
+<span class="w">    </span><span class="k">border-radius</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">    </span><span class="k">border-left</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="kt">px</span><span class="w"> </span><span class="kc">solid</span><span class="w"> </span><span class="mh">#00838f</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">list-item</span><span class="w"> </span><span class="nt">h4</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="mh">#006064</span><span class="p">;</span>
+<span class="w">    </span><span class="k">margin-bottom</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">list-item</span><span class="w"> </span><span class="nt">p</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mf">0.9</span><span class="kt">em</span><span class="p">;</span>
+<span class="w">    </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="mh">#666</span><span class="p">;</span>
+<span class="w">    </span><span class="k">margin</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="kt">px</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c">/* Timeline */</span>
+<span class="p">.</span><span class="nc">timeline-container</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">grid-column</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">#</span><span class="nn">timelineChart</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">margin-top</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c">/* Footer */</span>
+<span class="nt">footer</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">background</span><span class="p">:</span><span class="w"> </span><span class="mh">#006064</span><span class="p">;</span>
+<span class="w">    </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="kc">white</span><span class="p">;</span>
+<span class="w">    </span><span class="k">text-align</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
+<span class="w">    </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">    </span><span class="k">margin-top</span><span class="p">:</span><span class="w"> </span><span class="mi">40</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c">/* Responsivo */</span>
+<span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="o">(</span><span class="nt">max-width</span><span class="o">:</span><span class="w"> </span><span class="nt">1024px</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">.</span><span class="nc">dashboard-grid</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">grid-template-columns</span><span class="p">:</span><span class="w"> </span><span class="nf">repeat</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="n">fr</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="p">.</span><span class="nc">map-container</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">grid-column</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="o">(</span><span class="nt">max-width</span><span class="o">:</span><span class="w"> </span><span class="nt">768px</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">.</span><span class="nc">dashboard-grid</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">grid-template-columns</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="n">fr</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nt">header</span><span class="w"> </span><span class="nt">h1</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mf">1.8</span><span class="kt">em</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h3 id="criar-frontendscriptjs">Criar <code>frontend/script.js</code>:</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1">// Configuração da API</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">API_URL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;http://localhost:5000/api&#39;</span><span class="p">;</span>
+
+<span class="c1">// Cores por espécie</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">CORES_ESPECIES</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="s1">&#39;Ulva lactuca&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;#4CAF50&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="s1">&#39;Gracilaria&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;#F44336&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="s1">&#39;Sargassum&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;#2196F3&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="s1">&#39;Laminaria&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;#9C27B0&#39;</span>
+<span class="p">};</span>
+
+<span class="c1">// Mapa global</span>
+<span class="kd">let</span><span class="w"> </span><span class="nx">mapa</span><span class="p">;</span>
+
+<span class="c1">// ====================</span>
+<span class="c1">// CARREGAR DADOS</span>
+<span class="c1">// ====================</span>
+
+<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">carregarDashboard</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;🔄 Carregando dados da API...&#39;</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// Carregar todos os endpoints</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">stats</span><span class="p">,</span><span class="w"> </span><span class="nx">especies</span><span class="p">,</span><span class="w"> </span><span class="nx">praias</span><span class="p">,</span><span class="w"> </span><span class="nx">timeline</span><span class="p">,</span><span class="w"> </span><span class="nx">coletas</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nb">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">([</span>
+<span class="w">            </span><span class="nx">fetch</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">API_URL</span><span class="si">}</span><span class="sb">/estatisticas`</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">r</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">json</span><span class="p">()),</span>
+<span class="w">            </span><span class="nx">fetch</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">API_URL</span><span class="si">}</span><span class="sb">/especies`</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">r</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">json</span><span class="p">()),</span>
+<span class="w">            </span><span class="nx">fetch</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">API_URL</span><span class="si">}</span><span class="sb">/praias`</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">r</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">json</span><span class="p">()),</span>
+<span class="w">            </span><span class="nx">fetch</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">API_URL</span><span class="si">}</span><span class="sb">/timeline`</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">r</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">json</span><span class="p">()),</span>
+<span class="w">            </span><span class="nx">fetch</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">API_URL</span><span class="si">}</span><span class="sb">/coletas`</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">r</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span>
+<span class="w">        </span><span class="p">]);</span>
+
+<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;✅ Dados carregados!&#39;</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// Atualizar interface</span>
+<span class="w">        </span><span class="nx">atualizarStats</span><span class="p">(</span><span class="nx">stats</span><span class="p">);</span>
+<span class="w">        </span><span class="nx">atualizarEspecies</span><span class="p">(</span><span class="nx">especies</span><span class="p">);</span>
+<span class="w">        </span><span class="nx">atualizarPraias</span><span class="p">(</span><span class="nx">praias</span><span class="p">);</span>
+<span class="w">        </span><span class="nx">criarTimeline</span><span class="p">(</span><span class="nx">timeline</span><span class="p">);</span>
+<span class="w">        </span><span class="nx">inicializarMapa</span><span class="p">(</span><span class="nx">coletas</span><span class="p">.</span><span class="nx">coletas</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// Atualizar timestamp</span>
+<span class="w">        </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;lastUpdate&#39;</span><span class="p">).</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
+<span class="w">            </span><span class="sb">`Última atualização: </span><span class="si">${</span><span class="ow">new</span><span class="w"> </span><span class="nb">Date</span><span class="p">().</span><span class="nx">toLocaleString</span><span class="p">(</span><span class="s1">&#39;pt-BR&#39;</span><span class="p">)</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
+
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;❌ Erro ao carregar dados:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
+<span class="w">        </span><span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;Erro ao conectar com a API. Certifique-se de que o servidor Flask está rodando.&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// ====================</span>
+<span class="c1">// ATUALIZAR STATS</span>
+<span class="c1">// ====================</span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">atualizarStats</span><span class="p">(</span><span class="nx">stats</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;totalColetas&#39;</span><span class="p">).</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">stats</span><span class="p">.</span><span class="nx">total_coletas</span><span class="p">;</span>
+<span class="w">    </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;totalEspecies&#39;</span><span class="p">).</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">stats</span><span class="p">.</span><span class="nx">total_especies</span><span class="p">;</span>
+<span class="w">    </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;totalPraias&#39;</span><span class="p">).</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">stats</span><span class="p">.</span><span class="nx">total_praias</span><span class="p">;</span>
+<span class="w">    </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;biomassamTotal&#39;</span><span class="p">).</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
+<span class="w">        </span><span class="nx">stats</span><span class="p">.</span><span class="nx">biomassa_total</span><span class="p">.</span><span class="nx">toLocaleString</span><span class="p">(</span><span class="s1">&#39;pt-BR&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// ====================</span>
+<span class="c1">// LISTA DE ESPÉCIES</span>
+<span class="c1">// ====================</span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">atualizarEspecies</span><span class="p">(</span><span class="nx">especies</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">container</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;especiesList&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">container</span><span class="p">.</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Ordenar por ocorrências</span>
+<span class="w">    </span><span class="nx">especies</span><span class="p">.</span><span class="nx">sort</span><span class="p">((</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">b</span><span class="p">.</span><span class="nx">ocorrencias</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">a</span><span class="p">.</span><span class="nx">ocorrencias</span><span class="p">);</span>
+
+<span class="w">    </span><span class="nx">especies</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">especie</span><span class="p">,</span><span class="w"> </span><span class="nx">index</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">item</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">);</span>
+<span class="w">        </span><span class="nx">item</span><span class="p">.</span><span class="nx">className</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;list-item&#39;</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">item</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">borderLeftColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">CORES_ESPECIES</span><span class="p">[</span><span class="nx">especie</span><span class="p">.</span><span class="nx">especie</span><span class="p">];</span>
+
+<span class="w">        </span><span class="nx">item</span><span class="p">.</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span>
+<span class="sb">            &lt;h4&gt;</span><span class="si">${</span><span class="nx">index</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="si">}</span><span class="sb">. </span><span class="si">${</span><span class="nx">especie</span><span class="p">.</span><span class="nx">especie</span><span class="si">}</span><span class="sb">&lt;/h4&gt;</span>
+<span class="sb">            &lt;p&gt;&lt;strong&gt;Ocorrências:&lt;/strong&gt; </span><span class="si">${</span><span class="nx">especie</span><span class="p">.</span><span class="nx">ocorrencias</span><span class="si">}</span><span class="sb">&lt;/p&gt;</span>
+<span class="sb">            &lt;p&gt;&lt;strong&gt;Biomassa média:&lt;/strong&gt; </span><span class="si">${</span><span class="nx">especie</span><span class="p">.</span><span class="nx">biomassa_media</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">1</span><span class="p">)</span><span class="si">}</span><span class="sb">g&lt;/p&gt;</span>
+<span class="sb">            &lt;p&gt;&lt;strong&gt;Temperatura média:&lt;/strong&gt; </span><span class="si">${</span><span class="nx">especie</span><span class="p">.</span><span class="nx">temperatura_media</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">1</span><span class="p">)</span><span class="si">}</span><span class="sb">°C&lt;/p&gt;</span>
+<span class="sb">        `</span><span class="p">;</span>
+
+<span class="w">        </span><span class="nx">container</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">item</span><span class="p">);</span>
+<span class="w">    </span><span class="p">});</span>
+<span class="p">}</span>
+
+<span class="c1">// ====================</span>
+<span class="c1">// LISTA DE PRAIAS</span>
+<span class="c1">// ====================</span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">atualizarPraias</span><span class="p">(</span><span class="nx">praias</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">container</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;praiasList&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">container</span><span class="p">.</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Ordenar por coletas</span>
+<span class="w">    </span><span class="nx">praias</span><span class="p">.</span><span class="nx">sort</span><span class="p">((</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">b</span><span class="p">.</span><span class="nx">coletas</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">a</span><span class="p">.</span><span class="nx">coletas</span><span class="p">);</span>
+
+<span class="w">    </span><span class="nx">praias</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">praia</span><span class="p">,</span><span class="w"> </span><span class="nx">index</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">item</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">);</span>
+<span class="w">        </span><span class="nx">item</span><span class="p">.</span><span class="nx">className</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;list-item&#39;</span><span class="p">;</span>
+
+<span class="w">        </span><span class="nx">item</span><span class="p">.</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span>
+<span class="sb">            &lt;h4&gt;</span><span class="si">${</span><span class="nx">index</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="si">}</span><span class="sb">. </span><span class="si">${</span><span class="nx">praia</span><span class="p">.</span><span class="nx">praia</span><span class="si">}</span><span class="sb">&lt;/h4&gt;</span>
+<span class="sb">            &lt;p&gt;&lt;strong&gt;Coletas:&lt;/strong&gt; </span><span class="si">${</span><span class="nx">praia</span><span class="p">.</span><span class="nx">coletas</span><span class="si">}</span><span class="sb">&lt;/p&gt;</span>
+<span class="sb">            &lt;p&gt;&lt;strong&gt;Espécies:&lt;/strong&gt; </span><span class="si">${</span><span class="nx">praia</span><span class="p">.</span><span class="nx">especies_diferentes</span><span class="si">}</span><span class="sb">&lt;/p&gt;</span>
+<span class="sb">            &lt;p&gt;&lt;strong&gt;Biomassa total:&lt;/strong&gt; </span><span class="si">${</span><span class="nx">praia</span><span class="p">.</span><span class="nx">biomassa_total</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">1</span><span class="p">)</span><span class="si">}</span><span class="sb">g&lt;/p&gt;</span>
+<span class="sb">        `</span><span class="p">;</span>
+
+<span class="w">        </span><span class="nx">container</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">item</span><span class="p">);</span>
+<span class="w">    </span><span class="p">});</span>
+<span class="p">}</span>
+
+<span class="c1">// ====================</span>
+<span class="c1">// TIMELINE (Chart.js)</span>
+<span class="c1">// ====================</span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">criarTimeline</span><span class="p">(</span><span class="nx">timeline</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">ctx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;timelineChart&#39;</span><span class="p">).</span><span class="nx">getContext</span><span class="p">(</span><span class="s1">&#39;2d&#39;</span><span class="p">);</span>
+
+<span class="w">    </span><span class="ow">new</span><span class="w"> </span><span class="nx">Chart</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;line&#39;</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">labels</span><span class="o">:</span><span class="w"> </span><span class="nx">timeline</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">t</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">t</span><span class="p">.</span><span class="nx">mes</span><span class="p">),</span>
+<span class="w">            </span><span class="nx">datasets</span><span class="o">:</span><span class="w"> </span><span class="p">[{</span>
+<span class="w">                </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Número de Coletas&#39;</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="nx">timeline</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">t</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">t</span><span class="p">.</span><span class="nx">coletas</span><span class="p">),</span>
+<span class="w">                </span><span class="nx">borderColor</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;#2196F3&#39;</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">backgroundColor</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;rgba(33, 150, 243, 0.1)&#39;</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">tension</span><span class="o">:</span><span class="w"> </span><span class="mf">0.4</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">fill</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">            </span><span class="p">},</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Biomassa Total (g)&#39;</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="nx">timeline</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">t</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">t</span><span class="p">.</span><span class="nx">biomassa_total</span><span class="p">),</span>
+<span class="w">                </span><span class="nx">borderColor</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;#4CAF50&#39;</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">backgroundColor</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;rgba(76, 175, 80, 0.1)&#39;</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">tension</span><span class="o">:</span><span class="w"> </span><span class="mf">0.4</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">fill</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">yAxisID</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;y1&#39;</span>
+<span class="w">            </span><span class="p">}]</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nx">options</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">responsive</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">maintainAspectRatio</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">plugins</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nx">legend</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nx">position</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;top&#39;</span><span class="p">,</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nx">display</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nx">scales</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nx">y</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;linear&#39;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nx">display</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                    </span><span class="nx">position</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;left&#39;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nx">display</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                        </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Número de Coletas&#39;</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="nx">y1</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;linear&#39;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nx">display</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                    </span><span class="nx">position</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;right&#39;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nx">display</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                        </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Biomassa (g)&#39;</span>
+<span class="w">                    </span><span class="p">},</span>
+<span class="w">                    </span><span class="nx">grid</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nx">drawOnChartArea</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">});</span>
+<span class="p">}</span>
+
+<span class="c1">// ====================</span>
+<span class="c1">// MAPA LEAFLET</span>
+<span class="c1">// ====================</span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">inicializarMapa</span><span class="p">(</span><span class="nx">coletas</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Criar mapa centrado em SC</span>
+<span class="w">    </span><span class="nx">mapa</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">L</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="s1">&#39;map&#39;</span><span class="p">).</span><span class="nx">setView</span><span class="p">([</span><span class="o">-</span><span class="mf">27.5</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">48.5</span><span class="p">],</span><span class="w"> </span><span class="mf">8</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Adicionar tiles</span>
+<span class="w">    </span><span class="nx">L</span><span class="p">.</span><span class="nx">tileLayer</span><span class="p">(</span><span class="s1">&#39;https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">attribution</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;© OpenStreetMap&#39;</span>
+<span class="w">    </span><span class="p">}).</span><span class="nx">addTo</span><span class="p">(</span><span class="nx">mapa</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Adicionar marcadores</span>
+<span class="w">    </span><span class="nx">coletas</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">coleta</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">cor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">CORES_ESPECIES</span><span class="p">[</span><span class="nx">coleta</span><span class="p">.</span><span class="nx">especie</span><span class="p">];</span>
+
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">popup</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span>
+<span class="sb">            &lt;div style=&quot;font-family: Arial; min-width: 200px;&quot;&gt;</span>
+<span class="sb">                &lt;h3 style=&quot;color: </span><span class="si">${</span><span class="nx">cor</span><span class="si">}</span><span class="sb">; margin: 0 0 10px 0;&quot;&gt;</span>
+<span class="sb">                    </span><span class="si">${</span><span class="nx">coleta</span><span class="p">.</span><span class="nx">especie</span><span class="si">}</span>
+<span class="sb">                &lt;/h3&gt;</span>
+<span class="sb">                &lt;hr style=&quot;margin: 10px 0;&quot;&gt;</span>
+<span class="sb">                &lt;p&gt;&lt;strong&gt;Praia:&lt;/strong&gt; </span><span class="si">${</span><span class="nx">coleta</span><span class="p">.</span><span class="nx">praia</span><span class="si">}</span><span class="sb">&lt;/p&gt;</span>
+<span class="sb">                &lt;p&gt;&lt;strong&gt;Data:&lt;/strong&gt; </span><span class="si">${</span><span class="ow">new</span><span class="w"> </span><span class="nb">Date</span><span class="p">(</span><span class="nx">coleta</span><span class="p">.</span><span class="nx">data</span><span class="p">).</span><span class="nx">toLocaleDateString</span><span class="p">(</span><span class="s1">&#39;pt-BR&#39;</span><span class="p">)</span><span class="si">}</span><span class="sb">&lt;/p&gt;</span>
+<span class="sb">                &lt;p&gt;&lt;strong&gt;Biomassa:&lt;/strong&gt; </span><span class="si">${</span><span class="nx">coleta</span><span class="p">.</span><span class="nx">biomassa_g</span><span class="si">}</span><span class="sb">g&lt;/p&gt;</span>
+<span class="sb">                &lt;p&gt;&lt;strong&gt;Temperatura:&lt;/strong&gt; </span><span class="si">${</span><span class="nx">coleta</span><span class="p">.</span><span class="nx">temperatura_c</span><span class="si">}</span><span class="sb">°C&lt;/p&gt;</span>
+<span class="sb">                &lt;p&gt;&lt;strong&gt;Profundidade:&lt;/strong&gt; </span><span class="si">${</span><span class="nx">coleta</span><span class="p">.</span><span class="nx">profundidade_m</span><span class="si">}</span><span class="sb">m&lt;/p&gt;</span>
+<span class="sb">            &lt;/div&gt;</span>
+<span class="sb">        `</span><span class="p">;</span>
+
+<span class="w">        </span><span class="nx">L</span><span class="p">.</span><span class="nx">circleMarker</span><span class="p">([</span><span class="nx">coleta</span><span class="p">.</span><span class="nx">lat</span><span class="p">,</span><span class="w"> </span><span class="nx">coleta</span><span class="p">.</span><span class="nx">lon</span><span class="p">],</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">radius</span><span class="o">:</span><span class="w"> </span><span class="mf">8</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">fillColor</span><span class="o">:</span><span class="w"> </span><span class="nx">cor</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;#fff&#39;</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">weight</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">opacity</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">fillOpacity</span><span class="o">:</span><span class="w"> </span><span class="mf">0.8</span>
+<span class="w">        </span><span class="p">}).</span><span class="nx">bindPopup</span><span class="p">(</span><span class="nx">popup</span><span class="p">).</span><span class="nx">addTo</span><span class="p">(</span><span class="nx">mapa</span><span class="p">);</span>
+<span class="w">    </span><span class="p">});</span>
+<span class="p">}</span>
+
+<span class="c1">// ====================</span>
+<span class="c1">// INICIALIZAR</span>
+<span class="c1">// ====================</span>
+
+<span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;DOMContentLoaded&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;🚀 Dashboard inicializado&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">carregarDashboard</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Atualizar a cada 30 segundos</span>
+<span class="w">    </span><span class="nx">setInterval</span><span class="p">(</span><span class="nx">carregarDashboard</span><span class="p">,</span><span class="w"> </span><span class="mf">30000</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div>
+
+<hr />
+<h2 id="como-executar">🚀 Como Executar</h2>
+<h3 id="1-gerar-dados">1. Gerar dados:</h3>
+<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>backend
+python<span class="w"> </span>dados.py
+</code></pre></div>
+
+<h3 id="2-iniciar-servidor-flask">2. Iniciar servidor Flask:</h3>
+<div class="codehilite"><pre><span></span><code>python<span class="w"> </span>app.py
+</code></pre></div>
+
+<h3 id="3-abrir-dashboard">3. Abrir dashboard:</h3>
+<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>../frontend
+<span class="c1"># Abra index.html no navegador</span>
+<span class="c1"># Ou use um servidor simples:</span>
+python<span class="w"> </span>-m<span class="w"> </span>http.server<span class="w"> </span><span class="m">8000</span>
+<span class="c1"># Acesse: http://localhost:8000</span>
+</code></pre></div>
+
+<hr />
+<h2 id="funcionalidades-do-dashboard">✅ Funcionalidades do Dashboard</h2>
+<ul>
+<li>✅ <strong>Cards estatísticos</strong> em tempo real</li>
+<li>✅ <strong>Mapa interativo</strong> com todas as coletas</li>
+<li>✅ <strong>Ranking de espécies</strong> ordenado</li>
+<li>✅ <strong>Estatísticas por praia</strong></li>
+<li>✅ <strong>Timeline</strong> com gráfico Chart.js</li>
+<li>✅ <strong>API REST</strong> completa</li>
+<li>✅ <strong>Auto-atualização</strong> a cada 30s</li>
+<li>✅ <strong>Design responsivo</strong></li>
+</ul>
+<hr />
+<h2 id="o-que-voce-aprendeu">🎓 O que você aprendeu</h2>
+<ul>
+<li>✅ Criar API REST com Flask</li>
+<li>✅ Integrar Python (backend) + JavaScript (frontend)</li>
+<li>✅ Consumir APIs com fetch()</li>
+<li>✅ Manipular DOM dinamicamente</li>
+<li>✅ Criar gráficos com Chart.js</li>
+<li>✅ Mapas Leaflet integrados</li>
+<li>✅ Dashboard profissional completo</li>
+</ul>
+<hr />
+<h2 id="melhorias-futuras">🚀 Melhorias Futuras</h2>
+<ol>
+<li><strong>Banco de dados:</strong> Substituir JSON por PostgreSQL/PostGIS</li>
+<li><strong>Autenticação:</strong> Login de usuários</li>
+<li><strong>Exportação:</strong> PDF/Excel dos relatórios</li>
+<li><strong>Upload:</strong> Enviar novos dados via formulário</li>
+<li><strong>Deploy:</strong> Hospedar na nuvem (Heroku, AWS, Azure)</li>
+</ol>
+<hr />
+<p><strong>Parabéns!</strong> Você criou um sistema web completo de ponta a ponta! 🎉🌐</p>
+      </article>
+    </main>
+    <footer role="contentinfo">
+      <p>Gerado automaticamente em 06/01/2026 16:10. Paleta: ColorBrewer BuGn.</p>
+    </footer>
+    <script src="..\assets/site.js"></script>
+  </body>
+</html>

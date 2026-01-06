@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>🧪 Testes de Hipótese para Dados Biológicos</title>
+    <link rel="preload" href="..\assets/theme.css" as="style" />
+    <link rel="stylesheet" href="..\assets/theme.css" />
+  </head>
+  <body>
+    <a href="#conteudo" class="skip-link">Pular para conteúdo</a>
+    <header role="banner">
+      <div class="wrap">
+        <h1>🧪 Testes de Hipótese para Dados Biológicos</h1>
+        <nav aria-label="Navegação">
+          <a href="..\index.html">Início</a>
+          <a href="https://github.com/caetanoronan/labficol-tutorial">Repositório</a>
+          <a href="https://caetanoronan.github.io/labficol-tutorial/">Site</a>
+        </nav>
+        <div class="controls">
+          <button id="toggleHC" aria-pressed="false" aria-label="Alternar alto contraste">Alto contraste</button>
+          <button id="toggleBT" aria-pressed="false" aria-label="Alternar texto grande">Texto grande</button>
+          <button id="toggleLM" aria-pressed="false" aria-label="Reduzir movimento">Menos movimento</button>
+        </div>
+      </div>
+    </header>
+    <main id="conteudo" role="main">
+      <article class="md-content" aria-label="Conteúdo">
+        <h1 id="testes-de-hipotese-para-dados-biologicos">🧪 Testes de Hipótese para Dados Biológicos</h1>
+<h2 id="objetivo-da-licao">🎯 Objetivo da Lição</h2>
+<p>Aprender a realizar <strong>testes estatísticos</strong> para comparar grupos e testar hipóteses científicas usando Python.</p>
+<p><strong>O que faremos:</strong>
+- Teste t (Student's t-test)
+- ANOVA (Analysis of Variance)
+- Testes não-paramétricos
+- Interpretar p-valores
+- Tomar decisões estatísticas</p>
+<hr />
+<h2 id="conceitos-fundamentais">🔬 Conceitos Fundamentais</h2>
+<h3 id="hipotese-nula-h0-vs-alternativa-h1">Hipótese Nula (H₀) vs Alternativa (H₁)</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">H₀</span><span class="o">:</span><span class="w"> </span><span class="n">Não</span><span class="w"> </span><span class="n">há</span><span class="w"> </span><span class="n">diferença</span><span class="w"> </span><span class="n">entre</span><span class="w"> </span><span class="n">os</span><span class="w"> </span><span class="n">grupos</span>
+<span class="n">H₁</span><span class="o">:</span><span class="w"> </span><span class="n">Há</span><span class="w"> </span><span class="n">diferença</span><span class="w"> </span><span class="n">entre</span><span class="w"> </span><span class="n">os</span><span class="w"> </span><span class="n">grupos</span>
+</code></pre></div>
+
+<h3 id="p-valor">P-valor</h3>
+<p><strong>Definição:</strong> Probabilidade de obter os resultados observados se H₀ for verdadeira.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">if</span> <span class="n">p_valor</span> <span class="o">&lt;</span> <span class="mf">0.05</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Rejeitamos H₀ (diferença significativa)&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;❌ Não rejeitamos H₀ (sem diferença significativa)&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p><strong>Níveis de significância comuns:</strong>
+- α = 0.05 (5%) → padrão
+- α = 0.01 (1%) → mais rigoroso
+- α = 0.10 (10%) → exploratório</p>
+<hr />
+<h2 id="teste-t-de-student">📊 Teste t de Student</h2>
+<h3 id="teste-t-para-uma-amostra">Teste t para Uma Amostra</h3>
+<p><strong>Objetivo:</strong> Comparar média da amostra com valor de referência.</p>
+<p><strong>Exemplo:</strong> Biomassa média é diferente de 250g?</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Dados de biomassa (g)</span>
+<span class="n">biomassas</span> <span class="o">=</span> <span class="p">[</span><span class="mf">245.3</span><span class="p">,</span> <span class="mf">180.7</span><span class="p">,</span> <span class="mf">310.2</span><span class="p">,</span> <span class="mf">198.5</span><span class="p">,</span> <span class="mf">220.4</span><span class="p">,</span> <span class="mf">302.1</span><span class="p">,</span> <span class="mf">195.8</span><span class="p">,</span> <span class="mf">275.4</span><span class="p">]</span>
+
+<span class="c1"># Valor de referência (hipotético)</span>
+<span class="n">valor_referencia</span> <span class="o">=</span> <span class="mi">250</span>
+
+<span class="c1"># Realizar teste t para uma amostra</span>
+<span class="n">t_stat</span><span class="p">,</span> <span class="n">p_valor</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">ttest_1samp</span><span class="p">(</span><span class="n">biomassas</span><span class="p">,</span> <span class="n">valor_referencia</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🧪 TESTE T PARA UMA AMOSTRA&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">H₀: μ = </span><span class="si">{</span><span class="n">valor_referencia</span><span class="si">}</span><span class="s2">g&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;H₁: μ ≠ </span><span class="si">{</span><span class="n">valor_referencia</span><span class="si">}</span><span class="s2">g&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Média observada: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">biomassas</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">g&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Estatística t: </span><span class="si">{</span><span class="n">t_stat</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;P-valor: </span><span class="si">{</span><span class="n">p_valor</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">p_valor</span> <span class="o">&lt;</span> <span class="mf">0.05</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✅ Resultado: SIGNIFICATIVO (p &lt; 0.05)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   Rejeitamos H₀: A média é diferente de 250g&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">❌ Resultado: NÃO SIGNIFICATIVO (p ≥ 0.05)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   Não rejeitamos H₀: A média pode ser 250g&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h3 id="teste-t-para-amostras-independentes">Teste t para Amostras Independentes</h3>
+<p><strong>Objetivo:</strong> Comparar médias de dois grupos diferentes.</p>
+<p><strong>Exemplo:</strong> Biomassa de <em>Ulva</em> vs <em>Gracilaria</em> é diferente?</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Dados de duas espécies</span>
+<span class="n">dados</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;especie&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Ulva&#39;</span><span class="p">,</span> <span class="s1">&#39;Ulva&#39;</span><span class="p">,</span> <span class="s1">&#39;Ulva&#39;</span><span class="p">,</span> <span class="s1">&#39;Ulva&#39;</span><span class="p">,</span> <span class="s1">&#39;Ulva&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Gracilaria&#39;</span><span class="p">,</span> <span class="s1">&#39;Gracilaria&#39;</span><span class="p">,</span> <span class="s1">&#39;Gracilaria&#39;</span><span class="p">,</span> <span class="s1">&#39;Gracilaria&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;biomassa_g&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">245.3</span><span class="p">,</span> <span class="mf">302.1</span><span class="p">,</span> <span class="mf">275.4</span><span class="p">,</span> <span class="mf">310.8</span><span class="p">,</span> <span class="mf">295.7</span><span class="p">,</span>
+                   <span class="mf">180.7</span><span class="p">,</span> <span class="mf">195.8</span><span class="p">,</span> <span class="mf">205.6</span><span class="p">,</span> <span class="mf">220.4</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span>
+
+<span class="c1"># Separar grupos</span>
+<span class="n">ulva</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Ulva&#39;</span><span class="p">][</span><span class="s1">&#39;biomassa_g&#39;</span><span class="p">]</span>
+<span class="n">gracilaria</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Gracilaria&#39;</span><span class="p">][</span><span class="s1">&#39;biomassa_g&#39;</span><span class="p">]</span>
+
+<span class="c1"># Teste t independente</span>
+<span class="n">t_stat</span><span class="p">,</span> <span class="n">p_valor</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span><span class="n">ulva</span><span class="p">,</span> <span class="n">gracilaria</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🧪 TESTE T PARA AMOSTRAS INDEPENDENTES&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">H₀: μ₁ = μ₂ (médias iguais)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;H₁: μ₁ ≠ μ₂ (médias diferentes)&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 Estatísticas descritivas:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Ulva:       n=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">ulva</span><span class="p">)</span><span class="si">}</span><span class="s2">, média=</span><span class="si">{</span><span class="n">ulva</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">g ± </span><span class="si">{</span><span class="n">ulva</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">g&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Gracilaria: n=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">gracilaria</span><span class="p">)</span><span class="si">}</span><span class="s2">, média=</span><span class="si">{</span><span class="n">gracilaria</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">g ± </span><span class="si">{</span><span class="n">gracilaria</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">g&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🔬 Resultado do teste:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Estatística t: </span><span class="si">{</span><span class="n">t_stat</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   P-valor: </span><span class="si">{</span><span class="n">p_valor</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">p_valor</span> <span class="o">&lt;</span> <span class="mf">0.05</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✅ Conclusão: Há diferença significativa entre as espécies (p &lt; 0.05)&quot;</span><span class="p">)</span>
+    <span class="n">diferenca</span> <span class="o">=</span> <span class="n">ulva</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">-</span> <span class="n">gracilaria</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Ulva tem </span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="n">diferenca</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">g </span><span class="si">{</span><span class="s1">&#39;a mais&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">diferenca</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;a menos&#39;</span><span class="si">}</span><span class="s2"> que Gracilaria&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">❌ Conclusão: Não há diferença significativa (p ≥ 0.05)&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h3 id="teste-t-pareado">Teste t Pareado</h3>
+<p><strong>Objetivo:</strong> Comparar médias de duas medições no mesmo indivíduo/local.</p>
+<p><strong>Exemplo:</strong> Biomassa antes vs depois de tratamento.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Biomassa antes e depois de experimento (mesmos locais)</span>
+<span class="n">antes</span> <span class="o">=</span> <span class="p">[</span><span class="mf">245.3</span><span class="p">,</span> <span class="mf">180.7</span><span class="p">,</span> <span class="mf">310.2</span><span class="p">,</span> <span class="mf">198.5</span><span class="p">,</span> <span class="mf">220.4</span><span class="p">]</span>
+<span class="n">depois</span> <span class="o">=</span> <span class="p">[</span><span class="mf">280.1</span><span class="p">,</span> <span class="mf">195.3</span><span class="p">,</span> <span class="mf">335.8</span><span class="p">,</span> <span class="mf">210.2</span><span class="p">,</span> <span class="mf">245.7</span><span class="p">]</span>
+
+<span class="c1"># Teste t pareado</span>
+<span class="n">t_stat</span><span class="p">,</span> <span class="n">p_valor</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">ttest_rel</span><span class="p">(</span><span class="n">antes</span><span class="p">,</span> <span class="n">depois</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🧪 TESTE T PAREADO&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">H₀: μ_diferença = 0 (sem mudança)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;H₁: μ_diferença ≠ 0 (houve mudança)&quot;</span><span class="p">)</span>
+
+<span class="n">diferencas</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="o">-</span> <span class="n">a</span> <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">depois</span><span class="p">,</span> <span class="n">antes</span><span class="p">)]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 Diferenças: </span><span class="si">{</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">d</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">&#39;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">diferencas</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Média das diferenças: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">diferencas</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">g&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🔬 Resultado do teste:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Estatística t: </span><span class="si">{</span><span class="n">t_stat</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   P-valor: </span><span class="si">{</span><span class="n">p_valor</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">p_valor</span> <span class="o">&lt;</span> <span class="mf">0.05</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✅ Conclusão: Houve mudança significativa (p &lt; 0.05)&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">❌ Conclusão: Não houve mudança significativa (p ≥ 0.05)&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="anova-analysis-of-variance">📊 ANOVA (Analysis of Variance)</h2>
+<p><strong>Objetivo:</strong> Comparar médias de 3 ou mais grupos.</p>
+<p><strong>Exemplo:</strong> Biomassa difere entre 4 praias?</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Dados de 4 praias</span>
+<span class="n">praia1</span> <span class="o">=</span> <span class="p">[</span><span class="mf">245.3</span><span class="p">,</span> <span class="mf">302.1</span><span class="p">,</span> <span class="mf">275.4</span><span class="p">]</span>  <span class="c1"># Ingleses</span>
+<span class="n">praia2</span> <span class="o">=</span> <span class="p">[</span><span class="mf">180.7</span><span class="p">,</span> <span class="mf">195.8</span><span class="p">,</span> <span class="mf">205.6</span><span class="p">]</span>  <span class="c1"># Barra</span>
+<span class="n">praia3</span> <span class="o">=</span> <span class="p">[</span><span class="mf">310.2</span><span class="p">,</span> <span class="mf">340.5</span><span class="p">,</span> <span class="mf">315.2</span><span class="p">]</span>  <span class="c1"># Armação</span>
+<span class="n">praia4</span> <span class="o">=</span> <span class="p">[</span><span class="mf">198.5</span><span class="p">,</span> <span class="mf">220.4</span><span class="p">,</span> <span class="mf">210.8</span><span class="p">]</span>  <span class="c1"># Garopaba</span>
+
+<span class="c1"># ANOVA one-way</span>
+<span class="n">f_stat</span><span class="p">,</span> <span class="n">p_valor</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">f_oneway</span><span class="p">(</span><span class="n">praia1</span><span class="p">,</span> <span class="n">praia2</span><span class="p">,</span> <span class="n">praia3</span><span class="p">,</span> <span class="n">praia4</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🧪 ANOVA (ONE-WAY)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">H₀: μ₁ = μ₂ = μ₃ = μ₄ (todas as médias iguais)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;H₁: Pelo menos uma média é diferente&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 Estatísticas por praia:&quot;</span><span class="p">)</span>
+<span class="n">praias</span> <span class="o">=</span> <span class="p">[</span><span class="n">praia1</span><span class="p">,</span> <span class="n">praia2</span><span class="p">,</span> <span class="n">praia3</span><span class="p">,</span> <span class="n">praia4</span><span class="p">]</span>
+<span class="n">nomes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Ingleses&#39;</span><span class="p">,</span> <span class="s1">&#39;Barra&#39;</span><span class="p">,</span> <span class="s1">&#39;Armação&#39;</span><span class="p">,</span> <span class="s1">&#39;Garopaba&#39;</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">nome</span><span class="p">,</span> <span class="n">dados</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">nomes</span><span class="p">,</span> <span class="n">praias</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   </span><span class="si">{</span><span class="n">nome</span><span class="si">}</span><span class="s2">: média=</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">g ± </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">dados</span><span class="p">,</span><span class="w"> </span><span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">g&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🔬 Resultado do ANOVA:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Estatística F: </span><span class="si">{</span><span class="n">f_stat</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   P-valor: </span><span class="si">{</span><span class="n">p_valor</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">p_valor</span> <span class="o">&lt;</span> <span class="mf">0.05</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✅ Conclusão: Há diferença significativa entre as praias (p &lt; 0.05)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   💡 Use teste post-hoc (Tukey) para ver quais praias diferem&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">❌ Conclusão: Não há diferença significativa (p ≥ 0.05)&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="teste-post-hoc-tukey-hsd">Teste Post-Hoc (Tukey HSD)</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">tukey_hsd</span>
+
+<span class="c1"># Após ANOVA significativo, identificar diferenças</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">tukey_hsd</span><span class="p">(</span><span class="n">praia1</span><span class="p">,</span> <span class="n">praia2</span><span class="p">,</span> <span class="n">praia3</span><span class="p">,</span> <span class="n">praia4</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;📊 TESTE POST-HOC (TUKEY HSD)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Comparações pareadas:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="testes-nao-parametricos">🔄 Testes Não-Paramétricos</h2>
+<h3 id="quando-usar">Quando usar?</h3>
+<ul>
+<li>Dados <strong>não seguem distribuição normal</strong></li>
+<li>Amostras <strong>pequenas</strong> (n &lt; 30)</li>
+<li>Dados <strong>ordinais</strong> (rankings)</li>
+<li>Presença de <strong>outliers</strong></li>
+</ul>
+<h3 id="mann-whitney-u-alternativa-ao-teste-t">Mann-Whitney U (alternativa ao teste t)</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Comparar dois grupos (não-paramétrico)</span>
+<span class="n">grupo1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">245</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">310</span><span class="p">,</span> <span class="mi">198</span><span class="p">,</span> <span class="mi">220</span><span class="p">]</span>
+<span class="n">grupo2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">302</span><span class="p">,</span> <span class="mi">195</span><span class="p">,</span> <span class="mi">275</span><span class="p">,</span> <span class="mi">310</span><span class="p">,</span> <span class="mi">295</span><span class="p">]</span>
+
+<span class="n">u_stat</span><span class="p">,</span> <span class="n">p_valor</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">mannwhitneyu</span><span class="p">(</span><span class="n">grupo1</span><span class="p">,</span> <span class="n">grupo2</span><span class="p">,</span> <span class="n">alternative</span><span class="o">=</span><span class="s1">&#39;two-sided&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🧪 MANN-WHITNEY U TEST&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Estatística U: </span><span class="si">{</span><span class="n">u_stat</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;P-valor: </span><span class="si">{</span><span class="n">p_valor</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">p_valor</span> <span class="o">&lt;</span> <span class="mf">0.05</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Diferença significativa (p &lt; 0.05)&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;❌ Sem diferença significativa (p ≥ 0.05)&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="kruskal-wallis-alternativa-ao-anova">Kruskal-Wallis (alternativa ao ANOVA)</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Comparar 3+ grupos (não-paramétrico)</span>
+<span class="n">h_stat</span><span class="p">,</span> <span class="n">p_valor</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">kruskal</span><span class="p">(</span><span class="n">praia1</span><span class="p">,</span> <span class="n">praia2</span><span class="p">,</span> <span class="n">praia3</span><span class="p">,</span> <span class="n">praia4</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🧪 KRUSKAL-WALLIS TEST&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Estatística H: </span><span class="si">{</span><span class="n">h_stat</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;P-valor: </span><span class="si">{</span><span class="n">p_valor</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="exemplo-completo-analise-comparativa">📈 Exemplo Completo: Análise Comparativa</h2>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Dataset completo</span>
+<span class="n">dados</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;praia&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Ingleses&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">5</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;Barra&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">5</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;Armação&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">5</span><span class="p">,</span>
+    <span class="s1">&#39;biomassa_g&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">245.3</span><span class="p">,</span> <span class="mf">302.1</span><span class="p">,</span> <span class="mf">275.4</span><span class="p">,</span> <span class="mf">310.8</span><span class="p">,</span> <span class="mf">295.7</span><span class="p">,</span>  <span class="c1"># Ingleses</span>
+                   <span class="mf">180.7</span><span class="p">,</span> <span class="mf">195.8</span><span class="p">,</span> <span class="mf">205.6</span><span class="p">,</span> <span class="mf">220.4</span><span class="p">,</span> <span class="mf">198.5</span><span class="p">,</span>  <span class="c1"># Barra</span>
+                   <span class="mf">310.2</span><span class="p">,</span> <span class="mf">340.5</span><span class="p">,</span> <span class="mf">315.2</span><span class="p">,</span> <span class="mf">325.8</span><span class="p">,</span> <span class="mf">330.1</span><span class="p">]</span>  <span class="c1"># Armação</span>
+<span class="p">}</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🔬 ANÁLISE COMPARATIVA COMPLETA&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="c1"># ====================</span>
+<span class="c1"># 1. ESTATÍSTICAS DESCRITIVAS</span>
+<span class="c1"># ====================</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 ESTATÍSTICAS POR PRAIA:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">praia</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;praia&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+    <span class="n">dados_praia</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;praia&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">praia</span><span class="p">][</span><span class="s1">&#39;biomassa_g&#39;</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">praia</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   n = </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">dados_praia</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Média = </span><span class="si">{</span><span class="n">dados_praia</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">g ± </span><span class="si">{</span><span class="n">dados_praia</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">g&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Mediana = </span><span class="si">{</span><span class="n">dados_praia</span><span class="o">.</span><span class="n">median</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">g&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Range = [</span><span class="si">{</span><span class="n">dados_praia</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">dados_praia</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">]g&quot;</span><span class="p">)</span>
+
+<span class="c1"># ====================</span>
+<span class="c1"># 2. TESTE DE NORMALIDADE</span>
+<span class="c1"># ====================</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🔍 TESTE DE NORMALIDADE (SHAPIRO-WILK)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">praia</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;praia&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+    <span class="n">dados_praia</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;praia&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">praia</span><span class="p">][</span><span class="s1">&#39;biomassa_g&#39;</span><span class="p">]</span>
+    <span class="n">stat</span><span class="p">,</span> <span class="n">p_valor</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">shapiro</span><span class="p">(</span><span class="n">dados_praia</span><span class="p">)</span>
+
+    <span class="n">normal</span> <span class="o">=</span> <span class="s2">&quot;SIM ✅&quot;</span> <span class="k">if</span> <span class="n">p_valor</span> <span class="o">&gt;</span> <span class="mf">0.05</span> <span class="k">else</span> <span class="s2">&quot;NÃO ❌&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">praia</span><span class="si">}</span><span class="s2">: p=</span><span class="si">{</span><span class="n">p_valor</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> → Distribução normal? </span><span class="si">{</span><span class="n">normal</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># ====================</span>
+<span class="c1"># 3. ANOVA</span>
+<span class="c1"># ====================</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🧪 ANOVA ONE-WAY&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="n">ingleses</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;praia&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Ingleses&#39;</span><span class="p">][</span><span class="s1">&#39;biomassa_g&#39;</span><span class="p">]</span>
+<span class="n">barra</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;praia&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Barra&#39;</span><span class="p">][</span><span class="s1">&#39;biomassa_g&#39;</span><span class="p">]</span>
+<span class="n">armacao</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;praia&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Armação&#39;</span><span class="p">][</span><span class="s1">&#39;biomassa_g&#39;</span><span class="p">]</span>
+
+<span class="n">f_stat</span><span class="p">,</span> <span class="n">p_valor</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">f_oneway</span><span class="p">(</span><span class="n">ingleses</span><span class="p">,</span> <span class="n">barra</span><span class="p">,</span> <span class="n">armacao</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">H₀: μ₁ = μ₂ = μ₃&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Estatística F: </span><span class="si">{</span><span class="n">f_stat</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;P-valor: </span><span class="si">{</span><span class="n">p_valor</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">p_valor</span> <span class="o">&lt;</span> <span class="mf">0.05</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✅ RESULTADO: Há diferença significativa entre praias (p &lt; 0.05)&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">❌ RESULTADO: Não há diferença significativa (p ≥ 0.05)&quot;</span><span class="p">)</span>
+
+<span class="c1"># ====================</span>
+<span class="c1"># 4. COMPARAÇÕES PAREADAS (Post-hoc)</span>
+<span class="c1"># ====================</span>
+
+<span class="k">if</span> <span class="n">p_valor</span> <span class="o">&lt;</span> <span class="mf">0.05</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;📊 COMPARAÇÕES PAREADAS (TESTE T)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+    <span class="n">comparacoes</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s1">&#39;Ingleses&#39;</span><span class="p">,</span> <span class="n">ingleses</span><span class="p">,</span> <span class="s1">&#39;Barra&#39;</span><span class="p">,</span> <span class="n">barra</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;Ingleses&#39;</span><span class="p">,</span> <span class="n">ingleses</span><span class="p">,</span> <span class="s1">&#39;Armação&#39;</span><span class="p">,</span> <span class="n">armacao</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;Barra&#39;</span><span class="p">,</span> <span class="n">barra</span><span class="p">,</span> <span class="s1">&#39;Armação&#39;</span><span class="p">,</span> <span class="n">armacao</span><span class="p">)</span>
+    <span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">nome1</span><span class="p">,</span> <span class="n">dados1</span><span class="p">,</span> <span class="n">nome2</span><span class="p">,</span> <span class="n">dados2</span> <span class="ow">in</span> <span class="n">comparacoes</span><span class="p">:</span>
+        <span class="n">t_stat</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span><span class="n">dados1</span><span class="p">,</span> <span class="n">dados2</span><span class="p">)</span>
+
+        <span class="c1"># Correção de Bonferroni</span>
+        <span class="n">p_corrigido</span> <span class="o">=</span> <span class="n">p</span> <span class="o">*</span> <span class="mi">3</span>  <span class="c1"># 3 comparações</span>
+
+        <span class="n">sig</span> <span class="o">=</span> <span class="s2">&quot;✅ SIG&quot;</span> <span class="k">if</span> <span class="n">p_corrigido</span> <span class="o">&lt;</span> <span class="mf">0.05</span> <span class="k">else</span> <span class="s2">&quot;❌ NS&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">nome1</span><span class="si">}</span><span class="s2"> vs </span><span class="si">{</span><span class="n">nome2</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   p-valor: </span><span class="si">{</span><span class="n">p</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> (corrigido: </span><span class="si">{</span><span class="n">p_corrigido</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">) </span><span class="si">{</span><span class="n">sig</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># ====================</span>
+<span class="c1"># 5. VISUALIZAÇÃO</span>
+<span class="c1"># ====================</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="c1"># Boxplot</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">df</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s1">&#39;biomassa_g&#39;</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s1">&#39;praia&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Praia&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Biomassa (g)&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Distribuição de Biomassa por Praia&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">sca</span><span class="p">(</span><span class="n">ax1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Barplot com erro</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">medias</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;praia&#39;</span><span class="p">)[</span><span class="s1">&#39;biomassa_g&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">erros</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;praia&#39;</span><span class="p">)[</span><span class="s1">&#39;biomassa_g&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+
+<span class="n">ax2</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">medias</span><span class="p">)),</span> <span class="n">medias</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">erros</span><span class="p">,</span> 
+        <span class="n">capsize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;skyblue&#39;</span><span class="p">,</span> <span class="s1">&#39;lightcoral&#39;</span><span class="p">,</span> <span class="s1">&#39;lightgreen&#39;</span><span class="p">])</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">medias</span><span class="p">)))</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">medias</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Praia&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Biomassa Média (g)&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Biomassa Média (± DP)&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;analise_comparativa.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✅ Gráfico salvo: analise_comparativa.png&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ ANÁLISE CONCLUÍDA!&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="checklist-desta-licao">🎓 Checklist desta Lição</h2>
+<ul>
+<li>[ ] Entendi hipótese nula e alternativa</li>
+<li>[ ] Realizei teste t para comparar 2 grupos</li>
+<li>[ ] Usei ANOVA para comparar 3+ grupos</li>
+<li>[ ] Interpretei p-valores corretamente</li>
+<li>[ ] Apliquei testes não-paramétricos quando necessário</li>
+</ul>
+<hr />
+<h2 id="proxima-licao">➡️ Próxima Lição</h2>
+<ul>
+<li><strong>03-Correlacao-Regressao.md</strong> (Análise de relações entre variáveis)</li>
+</ul>
+<hr />
+<p><strong>Você domina testes de hipótese!</strong> 🧪✨</p>
+      </article>
+    </main>
+    <footer role="contentinfo">
+      <p>Gerado automaticamente em 06/01/2026 16:10. Paleta: ColorBrewer BuGn.</p>
+    </footer>
+    <script src="..\assets/site.js"></script>
+  </body>
+</html>

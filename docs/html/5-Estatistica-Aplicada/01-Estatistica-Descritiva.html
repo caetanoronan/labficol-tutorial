@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>📊 Estatística Descritiva para Dados Biológicos</title>
+    <link rel="preload" href="..\assets/theme.css" as="style" />
+    <link rel="stylesheet" href="..\assets/theme.css" />
+  </head>
+  <body>
+    <a href="#conteudo" class="skip-link">Pular para conteúdo</a>
+    <header role="banner">
+      <div class="wrap">
+        <h1>📊 Estatística Descritiva para Dados Biológicos</h1>
+        <nav aria-label="Navegação">
+          <a href="..\index.html">Início</a>
+          <a href="https://github.com/caetanoronan/labficol-tutorial">Repositório</a>
+          <a href="https://caetanoronan.github.io/labficol-tutorial/">Site</a>
+        </nav>
+        <div class="controls">
+          <button id="toggleHC" aria-pressed="false" aria-label="Alternar alto contraste">Alto contraste</button>
+          <button id="toggleBT" aria-pressed="false" aria-label="Alternar texto grande">Texto grande</button>
+          <button id="toggleLM" aria-pressed="false" aria-label="Reduzir movimento">Menos movimento</button>
+        </div>
+      </div>
+    </header>
+    <main id="conteudo" role="main">
+      <article class="md-content" aria-label="Conteúdo">
+        <h1 id="estatistica-descritiva-para-dados-biologicos">📊 Estatística Descritiva para Dados Biológicos</h1>
+<h2 id="objetivo-da-licao">🎯 Objetivo da Lição</h2>
+<p>Aprender a calcular e interpretar <strong>estatísticas descritivas</strong> essenciais para análise de dados de pesquisa: médias, medianas, desvio padrão, quartis e muito mais.</p>
+<p><strong>Por que é importante:</strong>
+- Resumir grandes conjuntos de dados
+- Identificar padrões e anomalias
+- Tomar decisões baseadas em evidências
+- Comunicar resultados de forma clara</p>
+<hr />
+<h2 id="medidas-de-tendencia-central">📐 Medidas de Tendência Central</h2>
+<h3 id="media-aritmetica">Média Aritmética</h3>
+<p><strong>Definição:</strong> Soma de todos os valores dividido pela quantidade.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Biomassas coletadas (gramas)</span>
+<span class="n">biomassas</span> <span class="o">=</span> <span class="p">[</span><span class="mf">245.3</span><span class="p">,</span> <span class="mf">180.7</span><span class="p">,</span> <span class="mf">310.2</span><span class="p">,</span> <span class="mf">198.5</span><span class="p">,</span> <span class="mf">220.4</span><span class="p">,</span> <span class="mf">302.1</span><span class="p">,</span> <span class="mf">195.8</span><span class="p">,</span> <span class="mf">275.4</span><span class="p">]</span>
+
+<span class="c1"># Calcular média</span>
+<span class="n">media</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">biomassas</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Média: </span><span class="si">{</span><span class="n">media</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">g&quot;</span><span class="p">)</span>  <span class="c1"># 241.05g</span>
+
+<span class="c1"># Ou manualmente:</span>
+<span class="n">media_manual</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">biomassas</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">biomassas</span><span class="p">)</span>
+</code></pre></div>
+
+<p><strong>Quando usar:</strong> Dados simétricos sem outliers extremos.</p>
+<hr />
+<h3 id="mediana">Mediana</h3>
+<p><strong>Definição:</strong> Valor central quando os dados estão ordenados.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Calcular mediana</span>
+<span class="n">mediana</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">biomassas</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mediana: </span><span class="si">{</span><span class="n">mediana</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">g&quot;</span><span class="p">)</span>  <span class="c1"># 233.75g</span>
+
+<span class="c1"># Manualmente:</span>
+<span class="n">biomassas_ordenadas</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">biomassas</span><span class="p">)</span>
+<span class="n">meio</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">biomassas_ordenadas</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">biomassas_ordenadas</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">mediana_manual</span> <span class="o">=</span> <span class="p">(</span><span class="n">biomassas_ordenadas</span><span class="p">[</span><span class="n">meio</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">biomassas_ordenadas</span><span class="p">[</span><span class="n">meio</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">mediana_manual</span> <span class="o">=</span> <span class="n">biomassas_ordenadas</span><span class="p">[</span><span class="n">meio</span><span class="p">]</span>
+</code></pre></div>
+
+<p><strong>Quando usar:</strong> Dados com outliers ou distribuição assimétrica.</p>
+<hr />
+<h3 id="moda">Moda</h3>
+<p><strong>Definição:</strong> Valor que aparece com maior frequência.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+
+<span class="n">especies</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">,</span> <span class="s1">&#39;Gracilaria&#39;</span><span class="p">,</span> <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">,</span> <span class="s1">&#39;Sargassum&#39;</span><span class="p">,</span> 
+            <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">,</span> <span class="s1">&#39;Gracilaria&#39;</span><span class="p">,</span> <span class="s1">&#39;Ulva lactuca&#39;</span><span class="p">]</span>
+
+<span class="n">moda</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">mode</span><span class="p">(</span><span class="n">especies</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Espécie mais comum: </span><span class="si">{</span><span class="n">moda</span><span class="o">.</span><span class="n">mode</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># Ulva lactuca</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Frequência: </span><span class="si">{</span><span class="n">moda</span><span class="o">.</span><span class="n">count</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> vezes&quot;</span><span class="p">)</span>   <span class="c1"># 4 vezes</span>
+</code></pre></div>
+
+<hr />
+<h2 id="medidas-de-dispersao">📏 Medidas de Dispersão</h2>
+<h3 id="variancia-e-desvio-padrao">Variância e Desvio Padrão</h3>
+<p><strong>Variância:</strong> Média dos quadrados das diferenças em relação à média.<br />
+<strong>Desvio Padrão:</strong> Raiz quadrada da variância (mesma unidade dos dados).</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Temperaturas registradas (°C)</span>
+<span class="n">temperaturas</span> <span class="o">=</span> <span class="p">[</span><span class="mf">24.5</span><span class="p">,</span> <span class="mf">26.1</span><span class="p">,</span> <span class="mf">22.3</span><span class="p">,</span> <span class="mf">21.5</span><span class="p">,</span> <span class="mf">19.8</span><span class="p">,</span> <span class="mf">18.2</span><span class="p">,</span> <span class="mf">17.5</span><span class="p">,</span> <span class="mf">18.0</span><span class="p">,</span> <span class="mf">19.5</span><span class="p">,</span> <span class="mf">21.0</span><span class="p">]</span>
+
+<span class="c1"># Variância</span>
+<span class="n">variancia</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">temperaturas</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># ddof=1 para amostra</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Variância: </span><span class="si">{</span><span class="n">variancia</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> °C²&quot;</span><span class="p">)</span>
+
+<span class="c1"># Desvio padrão</span>
+<span class="n">desvio_padrao</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">temperaturas</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Desvio padrão: </span><span class="si">{</span><span class="n">desvio_padrao</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> °C&quot;</span><span class="p">)</span>
+
+<span class="c1"># Interpretação</span>
+<span class="n">media_temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">temperaturas</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Temperatura: </span><span class="si">{</span><span class="n">media_temp</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">desvio_padrao</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> °C&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p><strong>Interpretação:</strong>
+- Desvio padrão baixo → Dados concentrados perto da média
+- Desvio padrão alto → Dados dispersos</p>
+<hr />
+<h3 id="coeficiente-de-variacao">Coeficiente de Variação</h3>
+<p><strong>Definição:</strong> Desvio padrão relativo à média (em %).</p>
+<div class="codehilite"><pre><span></span><code><span class="n">cv</span> <span class="o">=</span> <span class="p">(</span><span class="n">desvio_padrao</span> <span class="o">/</span> <span class="n">media_temp</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Coeficiente de Variação: </span><span class="si">{</span><span class="n">cv</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+
+<span class="c1"># Interpretação:</span>
+<span class="k">if</span> <span class="n">cv</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Variabilidade: BAIXA&quot;</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">cv</span> <span class="o">&lt;</span> <span class="mi">30</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Variabilidade: MODERADA&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Variabilidade: ALTA&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h3 id="amplitude-e-amplitude-interquartil">Amplitude e Amplitude Interquartil</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Amplitude total (range)</span>
+<span class="n">amplitude</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">temperaturas</span><span class="p">)</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="n">temperaturas</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Amplitude: </span><span class="si">{</span><span class="n">amplitude</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> °C&quot;</span><span class="p">)</span>
+
+<span class="c1"># Quartis</span>
+<span class="n">q1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">temperaturas</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>  <span class="c1"># 1º quartil (25%)</span>
+<span class="n">q2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">temperaturas</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>  <span class="c1"># 2º quartil (mediana)</span>
+<span class="n">q3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">temperaturas</span><span class="p">,</span> <span class="mi">75</span><span class="p">)</span>  <span class="c1"># 3º quartil (75%)</span>
+
+<span class="c1"># Amplitude interquartil (IQR)</span>
+<span class="n">iqr</span> <span class="o">=</span> <span class="n">q3</span> <span class="o">-</span> <span class="n">q1</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Q1 (25%): </span><span class="si">{</span><span class="n">q1</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> °C&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Q2 (50%): </span><span class="si">{</span><span class="n">q2</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> °C&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Q3 (75%): </span><span class="si">{</span><span class="n">q3</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> °C&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;IQR: </span><span class="si">{</span><span class="n">iqr</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> °C&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p><strong>IQR:</strong> Contém os 50% centrais dos dados (menos sensível a outliers).</p>
+<hr />
+<h2 id="exemplo-completo-analise-de-coletas">📊 Exemplo Completo: Análise de Coletas</h2>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+
+<span class="c1"># Dataset de coletas</span>
+<span class="n">dados</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;praia&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Ingleses&#39;</span><span class="p">,</span> <span class="s1">&#39;Ingleses&#39;</span><span class="p">,</span> <span class="s1">&#39;Barra&#39;</span><span class="p">,</span> <span class="s1">&#39;Barra&#39;</span><span class="p">,</span> <span class="s1">&#39;Armação&#39;</span><span class="p">,</span> 
+              <span class="s1">&#39;Armação&#39;</span><span class="p">,</span> <span class="s1">&#39;Garopaba&#39;</span><span class="p">,</span> <span class="s1">&#39;Garopaba&#39;</span><span class="p">,</span> <span class="s1">&#39;Laguna&#39;</span><span class="p">,</span> <span class="s1">&#39;Laguna&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;especie&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Ulva&#39;</span><span class="p">,</span> <span class="s1">&#39;Gracilaria&#39;</span><span class="p">,</span> <span class="s1">&#39;Ulva&#39;</span><span class="p">,</span> <span class="s1">&#39;Sargassum&#39;</span><span class="p">,</span> <span class="s1">&#39;Ulva&#39;</span><span class="p">,</span> 
+                <span class="s1">&#39;Gracilaria&#39;</span><span class="p">,</span> <span class="s1">&#39;Ulva&#39;</span><span class="p">,</span> <span class="s1">&#39;Laminaria&#39;</span><span class="p">,</span> <span class="s1">&#39;Ulva&#39;</span><span class="p">,</span> <span class="s1">&#39;Gracilaria&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;biomassa_g&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">245.3</span><span class="p">,</span> <span class="mf">180.7</span><span class="p">,</span> <span class="mf">302.1</span><span class="p">,</span> <span class="mf">310.2</span><span class="p">,</span> <span class="mf">275.4</span><span class="p">,</span> <span class="mf">195.8</span><span class="p">,</span> <span class="mf">310.8</span><span class="p">,</span> <span class="mf">425.8</span><span class="p">,</span> <span class="mf">295.7</span><span class="p">,</span> <span class="mf">205.6</span><span class="p">],</span>
+    <span class="s1">&#39;temperatura_c&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">24.5</span><span class="p">,</span> <span class="mf">24.5</span><span class="p">,</span> <span class="mf">22.3</span><span class="p">,</span> <span class="mf">23.8</span><span class="p">,</span> <span class="mf">21.5</span><span class="p">,</span> <span class="mf">21.5</span><span class="p">,</span> <span class="mf">19.8</span><span class="p">,</span> <span class="mf">21.0</span><span class="p">,</span> <span class="mf">18.0</span><span class="p">,</span> <span class="mf">18.0</span><span class="p">],</span>
+    <span class="s1">&#39;profundidade_m&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">3.2</span><span class="p">,</span> <span class="mf">5.1</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">3.6</span><span class="p">,</span> <span class="mf">10.5</span><span class="p">,</span> <span class="mf">3.7</span><span class="p">,</span> <span class="mf">5.4</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span>
+
+<span class="c1"># ====================</span>
+<span class="c1"># ESTATÍSTICAS GERAIS</span>
+<span class="c1"># ====================</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;📊 ESTATÍSTICAS DESCRITIVAS - BIOMASSA&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="n">biomassas</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;biomassa_g&#39;</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📏 Tendência Central:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Média: </span><span class="si">{</span><span class="n">biomassas</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">g&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Mediana: </span><span class="si">{</span><span class="n">biomassas</span><span class="o">.</span><span class="n">median</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">g&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📐 Dispersão:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Desvio Padrão: </span><span class="si">{</span><span class="n">biomassas</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">g&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Variância: </span><span class="si">{</span><span class="n">biomassas</span><span class="o">.</span><span class="n">var</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">g²&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   CV: </span><span class="si">{</span><span class="p">(</span><span class="n">biomassas</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">biomassas</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 Valores Extremos:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Mínimo: </span><span class="si">{</span><span class="n">biomassas</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">g&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Máximo: </span><span class="si">{</span><span class="n">biomassas</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">g&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Amplitude: </span><span class="si">{</span><span class="n">biomassas</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">biomassas</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">g&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🎯 Quartis:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Q1 (25%): </span><span class="si">{</span><span class="n">biomassas</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">g&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Q2 (50%): </span><span class="si">{</span><span class="n">biomassas</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.50</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">g&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Q3 (75%): </span><span class="si">{</span><span class="n">biomassas</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">g&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   IQR: </span><span class="si">{</span><span class="n">biomassas</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">biomassas</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">g&quot;</span><span class="p">)</span>
+
+<span class="c1"># ====================</span>
+<span class="c1"># POR ESPÉCIE</span>
+<span class="c1"># ====================</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🌿 ESTATÍSTICAS POR ESPÉCIE&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">especie</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+    <span class="n">dados_especie</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">especie</span><span class="p">][</span><span class="s1">&#39;biomassa_g&#39;</span><span class="p">]</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📌 </span><span class="si">{</span><span class="n">especie</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   n = </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">dados_especie</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Média: </span><span class="si">{</span><span class="n">dados_especie</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">g ± </span><span class="si">{</span><span class="n">dados_especie</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">g&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Mediana: </span><span class="si">{</span><span class="n">dados_especie</span><span class="o">.</span><span class="n">median</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">g&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Range: [</span><span class="si">{</span><span class="n">dados_especie</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">dados_especie</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">]g&quot;</span><span class="p">)</span>
+
+<span class="c1"># ====================</span>
+<span class="c1"># VISUALIZAÇÕES</span>
+<span class="c1"># ====================</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;📊 Análise Estatística de Coletas&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+
+<span class="c1"># 1. Histograma</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">biomassas</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;skyblue&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">biomassas</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Média: </span><span class="si">{</span><span class="n">biomassas</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">g&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">biomassas</span><span class="o">.</span><span class="n">median</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Mediana: </span><span class="si">{</span><span class="n">biomassas</span><span class="o">.</span><span class="n">median</span><span class="p">()</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">g&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Biomassa (g)&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Frequência&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Histograma de Biomassa&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># 2. Boxplot</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">biomassas</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Biomassa (g)&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Boxplot de Biomassa&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># 3. Boxplot por espécie</span>
+<span class="n">ax3</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">especies_ordenadas</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;especie&#39;</span><span class="p">)[</span><span class="s1">&#39;biomassa_g&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">()</span><span class="o">.</span><span class="n">index</span>
+<span class="n">df_plot</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;especie&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">especies_ordenadas</span><span class="p">]</span>
+<span class="n">df_plot</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s1">&#39;biomassa_g&#39;</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s1">&#39;especie&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax3</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Espécie&#39;</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Biomassa (g)&#39;</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Biomassa por Espécie&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">sca</span><span class="p">(</span><span class="n">ax3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+
+<span class="c1"># 4. Scatter com tendência</span>
+<span class="n">ax4</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">ax4</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;temperatura_c&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;biomassa_g&#39;</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">ax4</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Temperatura (°C)&#39;</span><span class="p">)</span>
+<span class="n">ax4</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Biomassa (g)&#39;</span><span class="p">)</span>
+<span class="n">ax4</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Biomassa vs Temperatura&#39;</span><span class="p">)</span>
+<span class="n">ax4</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># Linha de tendência</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;temperatura_c&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;biomassa_g&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+<span class="n">ax4</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;temperatura_c&#39;</span><span class="p">],</span> <span class="n">p</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;temperatura_c&#39;</span><span class="p">]),</span> 
+         <span class="s2">&quot;r--&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Tendência&#39;</span><span class="p">)</span>
+<span class="n">ax4</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;estatisticas_descritivas.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✅ Gráfico salvo: estatisticas_descritivas.png&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ ANÁLISE CONCLUÍDA!&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="resumo-dos-5-numeros">📈 Resumo dos 5 Números</h2>
+<p><strong>Five-number summary:</strong> Resumo completo da distribuição.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">resumo_cinco_numeros</span><span class="p">(</span><span class="n">dados</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calcula e exibe o resumo de 5 números&quot;&quot;&quot;</span>
+    <span class="n">minimo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span>
+    <span class="n">q1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">dados</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
+    <span class="n">mediana</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span>
+    <span class="n">q3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">dados</span><span class="p">,</span> <span class="mi">75</span><span class="p">)</span>
+    <span class="n">maximo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 RESUMO DOS 5 NÚMEROS:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Mínimo:   </span><span class="si">{</span><span class="n">minimo</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Q1 (25%): </span><span class="si">{</span><span class="n">q1</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Mediana:  </span><span class="si">{</span><span class="n">mediana</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Q3 (75%): </span><span class="si">{</span><span class="n">q3</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Máximo:   </span><span class="si">{</span><span class="n">maximo</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">minimo</span><span class="p">,</span> <span class="n">q1</span><span class="p">,</span> <span class="n">mediana</span><span class="p">,</span> <span class="n">q3</span><span class="p">,</span> <span class="n">maximo</span>
+
+<span class="n">resumo_cinco_numeros</span><span class="p">(</span><span class="n">biomassas</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="identificacao-de-outliers">🔍 Identificação de Outliers</h2>
+<p><strong>Método IQR:</strong> Valores fora de 1.5 × IQR são considerados outliers.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">identificar_outliers</span><span class="p">(</span><span class="n">dados</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Identifica outliers usando método IQR&quot;&quot;&quot;</span>
+    <span class="n">q1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">dados</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
+    <span class="n">q3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">dados</span><span class="p">,</span> <span class="mi">75</span><span class="p">)</span>
+    <span class="n">iqr</span> <span class="o">=</span> <span class="n">q3</span> <span class="o">-</span> <span class="n">q1</span>
+
+    <span class="c1"># Limites</span>
+    <span class="n">limite_inferior</span> <span class="o">=</span> <span class="n">q1</span> <span class="o">-</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">iqr</span>
+    <span class="n">limite_superior</span> <span class="o">=</span> <span class="n">q3</span> <span class="o">+</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">iqr</span>
+
+    <span class="c1"># Identificar outliers</span>
+    <span class="n">outliers</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">dados</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">limite_inferior</span> <span class="ow">or</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">limite_superior</span><span class="p">]</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🔍 DETECÇÃO DE OUTLIERS:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Limite inferior: </span><span class="si">{</span><span class="n">limite_inferior</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Limite superior: </span><span class="si">{</span><span class="n">limite_superior</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">outliers</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   ⚠️ </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">outliers</span><span class="p">)</span><span class="si">}</span><span class="s2"> outlier(s) detectado(s): </span><span class="si">{</span><span class="n">outliers</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   ✅ Nenhum outlier detectado&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">outliers</span>
+
+<span class="n">identificar_outliers</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;biomassa_g&#39;</span><span class="p">])</span>
+</code></pre></div>
+
+<hr />
+<h2 id="checklist-desta-licao">🎓 Checklist desta Lição</h2>
+<ul>
+<li>[ ] Calculei média, mediana e moda</li>
+<li>[ ] Entendi desvio padrão e variância</li>
+<li>[ ] Criei boxplots para visualizar distribuição</li>
+<li>[ ] Identifiquei outliers usando IQR</li>
+<li>[ ] Comparei estatísticas entre grupos</li>
+</ul>
+<hr />
+<h2 id="proxima-licao">➡️ Próxima Lição</h2>
+<ul>
+<li><strong>02-Testes-Hipotese.md</strong> (Testes estatísticos: t-test, ANOVA, etc.)</li>
+</ul>
+<hr />
+<p><strong>Você domina estatística descritiva!</strong> 📊✨</p>
+      </article>
+    </main>
+    <footer role="contentinfo">
+      <p>Gerado automaticamente em 06/01/2026 16:10. Paleta: ColorBrewer BuGn.</p>
+    </footer>
+    <script src="..\assets/site.js"></script>
+  </body>
+</html>

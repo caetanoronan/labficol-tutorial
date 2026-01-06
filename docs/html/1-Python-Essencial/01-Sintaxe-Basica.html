@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>🐍 Sintaxe Básica de Python</title>
+    <link rel="preload" href="..\assets/theme.css" as="style" />
+    <link rel="stylesheet" href="..\assets/theme.css" />
+  </head>
+  <body>
+    <a href="#conteudo" class="skip-link">Pular para conteúdo</a>
+    <header role="banner">
+      <div class="wrap">
+        <h1>🐍 Sintaxe Básica de Python</h1>
+        <nav aria-label="Navegação">
+          <a href="..\index.html">Início</a>
+          <a href="https://github.com/caetanoronan/labficol-tutorial">Repositório</a>
+          <a href="https://caetanoronan.github.io/labficol-tutorial/">Site</a>
+        </nav>
+        <div class="controls">
+          <button id="toggleHC" aria-pressed="false" aria-label="Alternar alto contraste">Alto contraste</button>
+          <button id="toggleBT" aria-pressed="false" aria-label="Alternar texto grande">Texto grande</button>
+          <button id="toggleLM" aria-pressed="false" aria-label="Reduzir movimento">Menos movimento</button>
+        </div>
+      </div>
+    </header>
+    <main id="conteudo" role="main">
+      <article class="md-content" aria-label="Conteúdo">
+        <h1 id="sintaxe-basica-de-python">🐍 Sintaxe Básica de Python</h1>
+<h2 id="o-que-e-sintaxe">O que é Sintaxe?</h2>
+<p><strong>Sintaxe</strong> = as "regras de escrita" da linguagem.</p>
+<p>Assim como português tem regras (acentuação, pontuação), Python também tem.</p>
+<hr />
+<h2 id="seu-primeiro-programa">🎯 Seu Primeiro Programa</h2>
+<h3 id="executar-o-basico">Executar o Básico</h3>
+<p>Abra VS Code, crie arquivo <code>hello.py</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🎉 Olá, Mundo!&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Execute:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">python</span> <span class="n">hello</span><span class="p">.</span><span class="n">py</span>
+</code></pre></div>
+
+<p>Resultado:</p>
+<div class="codehilite"><pre><span></span><code>🎉 Olá, Mundo!
+</code></pre></div>
+
+<p><strong>Parabéns!</strong> Você escreveu seu primeiro programa! 🚀</p>
+<hr />
+<h2 id="comentarios-notas-no-codigo">📝 Comentários (Notas no Código)</h2>
+<p>Comentários são anotações que <strong>não são executadas</strong>.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Isto é um comentário de linha única</span>
+<span class="c1"># Python ignora tudo depois de #</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Isto executa&quot;</span><span class="p">)</span>  <span class="c1"># Comentário depois do código</span>
+
+<span class="c1"># Comentário de múltiplas linhas</span>
+<span class="c1"># Você pode escrever quantas linhas quiser</span>
+<span class="c1"># Python ignora tudo</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Isto é um docstring (comentário de documentação)</span>
+<span class="sd">Usado para descrever funções e módulos</span>
+<span class="sd">Pode ter múltiplas linhas</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</code></pre></div>
+
+<p><strong>Boa prática:</strong> Escreva comentários explicando O QUE o código faz, não COMO.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># ❌ Ruim - explica óbvio</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># Adiciona 1 a x</span>
+
+<span class="c1"># ✅ Bom - explica o contexto</span>
+<span class="n">profundidade_final</span> <span class="o">=</span> <span class="n">profundidade_inicial</span> <span class="o">+</span> <span class="n">incremento_coleta</span>  <span class="c1"># Soma profundidade de coleta</span>
+</code></pre></div>
+
+<hr />
+<h2 id="print-mostrar-resultados">🔤 Print (Mostrar Resultados)</h2>
+<p><code>print()</code> é a função mais básica. Mostra mensagens na tela.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Texto simples</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Olá, Oceanógrafo!&quot;</span><span class="p">)</span>
+
+<span class="c1"># Múltiplos valores</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Temperatura:&quot;</span><span class="p">,</span> <span class="mf">22.5</span><span class="p">)</span>
+
+<span class="c1"># Vários argumentos separados por vírgula</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Data&quot;</span><span class="p">,</span> <span class="s2">&quot;Espécie&quot;</span><span class="p">,</span> <span class="s2">&quot;Profundidade&quot;</span><span class="p">)</span>
+
+<span class="c1"># Sem quebra de linha</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Python&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Oceanografia&quot;</span><span class="p">)</span>  <span class="c1"># Resultado: &quot;Python Oceanografia&quot;</span>
+
+<span class="c1"># Com separador customizado</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ulva&quot;</span><span class="p">,</span> <span class="s2">&quot;Gracilaria&quot;</span><span class="p">,</span> <span class="s2">&quot;Sargassum&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot; | &quot;</span><span class="p">)</span>
+<span class="c1"># Resultado: Ulva | Gracilaria | Sargassum</span>
+</code></pre></div>
+
+<hr />
+<h2 id="input-receber-informacoes">📥 Input (Receber Informações)</h2>
+<p><code>input()</code> pede informação do usuário.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Solicitar nome</span>
+<span class="n">nome</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Qual seu nome? &quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bem-vindo, </span><span class="si">{</span><span class="n">nome</span><span class="si">}</span><span class="s2">!&quot;</span><span class="p">)</span>
+
+<span class="c1"># Solicitar número</span>
+<span class="c1"># ⚠️ IMPORTANTE: input() sempre retorna TEXTO!</span>
+<span class="n">idade_texto</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Qual sua idade? &quot;</span><span class="p">)</span>
+<span class="n">idade</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">idade_texto</span><span class="p">)</span>  <span class="c1"># Converter para número</span>
+
+<span class="c1"># Forma abreviada</span>
+<span class="n">idade</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Qual sua idade? &quot;</span><span class="p">))</span>
+</code></pre></div>
+
+<p><strong>Exemplo Completo:</strong></p>
+<p>Crie arquivo <code>coleta_dados.py</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Sistema de cadastro de amostra</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;📝 CADASTRO DE AMOSTRA DE COLETA&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+
+<span class="n">especie</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Espécie coletada: &quot;</span><span class="p">)</span>
+<span class="n">profundidade</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Profundidade (m): &quot;</span><span class="p">))</span>
+<span class="n">temperatura</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Temperatura (°C): &quot;</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✅ Amostra cadastrada:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Espécie: </span><span class="si">{</span><span class="n">especie</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Profundidade: </span><span class="si">{</span><span class="n">profundidade</span><span class="si">}</span><span class="s2">m&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Temperatura: </span><span class="si">{</span><span class="n">temperatura</span><span class="si">}</span><span class="s2">°C&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Execute:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">python</span> <span class="n">coleta_dados</span><span class="p">.</span><span class="n">py</span>
+</code></pre></div>
+
+<p>Resultado:</p>
+<div class="codehilite"><pre><span></span><code>==================================================
+📝 CADASTRO DE AMOSTRA DE COLETA
+==================================================
+Espécie coletada: Ulva lactuca
+Profundidade (m): 5.2
+Temperatura (°C): 22.5
+
+✅ Amostra cadastrada:
+   Espécie: Ulva lactuca
+   Profundidade: 5.2m
+   Temperatura: 22.5°C
+</code></pre></div>
+
+<hr />
+<h2 id="string-texto-operacoes">🔤 String (Texto) - Operações</h2>
+<h3 id="concatenacao-juntar-strings">Concatenação (Juntar Strings)</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Método 1: Usar + (mais antigo)</span>
+<span class="n">nome</span> <span class="o">=</span> <span class="s2">&quot;Caetano&quot;</span>
+<span class="n">sobrenome</span> <span class="o">=</span> <span class="s2">&quot;Ronan&quot;</span>
+<span class="n">completo</span> <span class="o">=</span> <span class="n">nome</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">sobrenome</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">completo</span><span class="p">)</span>  <span class="c1"># Caetano Ronan</span>
+
+<span class="c1"># Método 2: f-string (RECOMENDADO - Python 3.6+)</span>
+<span class="n">especie</span> <span class="o">=</span> <span class="s2">&quot;Ulva lactuca&quot;</span>
+<span class="n">profundidade</span> <span class="o">=</span> <span class="mf">5.2</span>
+<span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Amostra de </span><span class="si">{</span><span class="n">especie</span><span class="si">}</span><span class="s2"> a </span><span class="si">{</span><span class="n">profundidade</span><span class="si">}</span><span class="s2">m&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>  <span class="c1"># Amostra de Ulva lactuca a 5.2m</span>
+
+<span class="c1"># Dentro de f-string, você pode usar expressões!</span>
+<span class="n">temperatura</span> <span class="o">=</span> <span class="mf">22.5</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Temperatura: </span><span class="si">{</span><span class="n">temperatura</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°C&quot;</span><span class="p">)</span>  <span class="c1"># .1f = 1 casa decimal</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Temperatura + 5: </span><span class="si">{</span><span class="n">temperatura</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">5</span><span class="si">}</span><span class="s2">°C&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="propriedades-de-string">Propriedades de String</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">texto</span> <span class="o">=</span> <span class="s2">&quot;Oceanografia&quot;</span>
+
+<span class="c1"># Tamanho</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">texto</span><span class="p">))</span>  <span class="c1"># 12</span>
+
+<span class="c1"># Maiúsculas</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">texto</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>  <span class="c1"># OCEANOGRAFIA</span>
+
+<span class="c1"># Minúsculas</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">texto</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>  <span class="c1"># oceanografia</span>
+
+<span class="c1"># Primeira letra maiúscula</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">texto</span><span class="o">.</span><span class="n">capitalize</span><span class="p">())</span>  <span class="c1"># Oceanografia</span>
+
+<span class="c1"># Substituir texto</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">texto</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;Oceano&quot;</span><span class="p">,</span> <span class="s2">&quot;Bio&quot;</span><span class="p">))</span>  <span class="c1"># Biorafia</span>
+
+<span class="c1"># Dividir em partes</span>
+<span class="n">frase</span> <span class="o">=</span> <span class="s2">&quot;Ulva,Gracilaria,Sargassum&quot;</span>
+<span class="n">especies</span> <span class="o">=</span> <span class="n">frase</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">especies</span><span class="p">)</span>  <span class="c1"># [&#39;Ulva&#39;, &#39;Gracilaria&#39;, &#39;Sargassum&#39;]</span>
+
+<span class="c1"># Verificar se contém</span>
+<span class="k">if</span> <span class="s2">&quot;Ulva&quot;</span> <span class="ow">in</span> <span class="n">frase</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Ulva encontrada!&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="numeros-operacoes">🔢 Números - Operações</h2>
+<h3 id="inteiros-int">Inteiros (int)</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>    <span class="c1"># 13</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span>    <span class="c1"># 7</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">)</span>    <span class="c1"># 30</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span> <span class="o">/</span> <span class="n">b</span><span class="p">)</span>    <span class="c1"># 3.333... (divisão com decimal)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span> <span class="o">//</span> <span class="n">b</span><span class="p">)</span>   <span class="c1"># 3 (divisão inteira)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span> <span class="o">%</span> <span class="n">b</span><span class="p">)</span>    <span class="c1"># 1 (resto da divisão)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span> <span class="o">**</span> <span class="n">b</span><span class="p">)</span>   <span class="c1"># 1000 (10 elevado a 3)</span>
+
+<span class="c1"># Operações com atribuição</span>
+<span class="n">numero</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">numero</span> <span class="o">+=</span> <span class="mi">3</span>  <span class="c1"># numero = numero + 3 → 8</span>
+<span class="n">numero</span> <span class="o">-=</span> <span class="mi">2</span>  <span class="c1"># numero = numero - 2 → 6</span>
+<span class="n">numero</span> <span class="o">*=</span> <span class="mi">2</span>  <span class="c1"># numero = numero * 2 → 12</span>
+<span class="n">numero</span> <span class="o">//=</span> <span class="mi">3</span> <span class="c1"># numero = numero // 3 → 4</span>
+</code></pre></div>
+
+<h3 id="decimais-float">Decimais (float)</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">temperatura</span> <span class="o">=</span> <span class="mf">22.5</span>
+<span class="n">profundidade</span> <span class="o">=</span> <span class="mf">5.0</span>
+<span class="n">salinidade</span> <span class="o">=</span> <span class="mf">35.123456</span>
+
+<span class="c1"># Arredondamento</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">salinidade</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>  <span class="c1"># 35.12 (2 casas decimais)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">salinidade</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>  <span class="c1"># 35.1 (1 casa decimal)</span>
+
+<span class="c1"># Função abs (valor absoluto)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="o">-</span><span class="mf">5.2</span><span class="p">))</span>  <span class="c1"># 5.2</span>
+
+<span class="c1"># Funções matemáticas</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">16</span><span class="p">))</span>  <span class="c1"># 4.0 (raiz quadrada)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>        <span class="c1"># 3.14159...</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="mf">5.2</span><span class="p">))</span>  <span class="c1"># 6 (arredonda para cima)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="mf">5.8</span><span class="p">))</span> <span class="c1"># 5 (arredonda para baixo)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="booleanos-verdadeirofalso">✅ Booleanos (Verdadeiro/Falso)</h2>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Valores booleanos</span>
+<span class="n">verdade</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">falsidade</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="c1"># Comparações retornam booleanos</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">5</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">)</span>      <span class="c1"># True</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">5</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">)</span>      <span class="c1"># False</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">5</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span>     <span class="c1"># True (igual)</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">5</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">)</span>     <span class="c1"># True (diferente)</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">5</span> <span class="o">&gt;=</span> <span class="mi">5</span><span class="p">)</span>     <span class="c1"># True (maior ou igual)</span>
+
+<span class="c1"># Operadores lógicos</span>
+<span class="nb">print</span><span class="p">(</span><span class="kc">True</span> <span class="ow">and</span> <span class="kc">True</span><span class="p">)</span>    <span class="c1"># True</span>
+<span class="nb">print</span><span class="p">(</span><span class="kc">True</span> <span class="ow">and</span> <span class="kc">False</span><span class="p">)</span>   <span class="c1"># False</span>
+<span class="nb">print</span><span class="p">(</span><span class="kc">True</span> <span class="ow">or</span> <span class="kc">False</span><span class="p">)</span>    <span class="c1"># True</span>
+<span class="nb">print</span><span class="p">(</span><span class="ow">not</span> <span class="kc">True</span><span class="p">)</span>         <span class="c1"># False</span>
+
+<span class="c1"># Exemplos práticos</span>
+<span class="n">temperatura</span> <span class="o">=</span> <span class="mf">22.5</span>
+<span class="n">profundidade</span> <span class="o">=</span> <span class="mf">5.2</span>
+
+<span class="c1"># Verificar se coleta foi válida</span>
+<span class="n">valida</span> <span class="o">=</span> <span class="p">(</span><span class="n">temperatura</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">profundidade</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Coleta válida: </span><span class="si">{</span><span class="n">valida</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># True</span>
+</code></pre></div>
+
+<hr />
+<h2 id="conversao-de-tipos">📋 Conversão de Tipos</h2>
+<p>Às vezes você precisa converter um tipo para outro.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># String para Número</span>
+<span class="n">texto_numero</span> <span class="o">=</span> <span class="s2">&quot;123&quot;</span>
+<span class="n">numero</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">texto_numero</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tipo</span><span class="p">)</span>  <span class="c1"># &lt;class &#39;int&#39;&gt;</span>
+
+<span class="c1"># Número para String</span>
+<span class="n">numero</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="n">texto</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">numero</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">texto</span><span class="p">)</span>  <span class="c1"># &quot;42&quot;</span>
+
+<span class="c1"># String para Decimal</span>
+<span class="n">texto_decimal</span> <span class="o">=</span> <span class="s2">&quot;3.14&quot;</span>
+<span class="n">decimal</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">texto_decimal</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">decimal</span><span class="p">)</span>  <span class="c1"># 3.14</span>
+
+<span class="c1"># Número para Boolean</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>     <span class="c1"># False (0 é falso)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>     <span class="c1"># True (número != 0 é verdadeiro)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">))</span>    <span class="c1"># False (string vazia é falsa)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="s2">&quot;Oi&quot;</span><span class="p">))</span>  <span class="c1"># True (string não vazia é verdadeira)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="tipo-de-dado-type">🔍 Tipo de Dado (type)</h2>
+<p>Verificar que tipo é uma variável:</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>              <span class="c1"># &lt;class &#39;int&#39;&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="mf">5.0</span><span class="p">))</span>            <span class="c1"># &lt;class &#39;float&#39;&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="s2">&quot;Olá&quot;</span><span class="p">))</span>          <span class="c1"># &lt;class &#39;str&#39;&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="kc">True</span><span class="p">))</span>           <span class="c1"># &lt;class &#39;bool&#39;&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span>      <span class="c1"># &lt;class &#39;list&#39;&gt;</span>
+
+<span class="c1"># Usar em condição</span>
+<span class="n">valor</span> <span class="o">=</span> <span class="s2">&quot;123&quot;</span>
+<span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">valor</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;É uma string!&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="exemplo-pratico-sistema-de-coleta">🎯 Exemplo Prático: Sistema de Coleta</h2>
+<p>Crie arquivo <code>analise_coleta.py</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🌊 SISTEMA DE ANÁLISE DE COLETA&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+
+<span class="c1"># Receber dados</span>
+<span class="n">especie</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Espécie: &quot;</span><span class="p">)</span>
+<span class="n">profundidade</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Profundidade (m): &quot;</span><span class="p">))</span>
+<span class="n">temperatura</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Temperatura (°C): &quot;</span><span class="p">))</span>
+<span class="n">salinidade</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Salinidade (PSU): &quot;</span><span class="p">))</span>
+
+<span class="c1"># Validações</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 ANÁLISE:&quot;</span><span class="p">)</span>
+
+<span class="c1"># Verificar profundidade</span>
+<span class="k">if</span> <span class="n">profundidade</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+    <span class="n">profundidade_status</span> <span class="o">=</span> <span class="s2">&quot;Rasa&quot;</span>
+<span class="k">elif</span> <span class="n">profundidade</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">:</span>
+    <span class="n">profundidade_status</span> <span class="o">=</span> <span class="s2">&quot;Intermediária&quot;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">profundidade_status</span> <span class="o">=</span> <span class="s2">&quot;Profunda&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Profundidade: </span><span class="si">{</span><span class="n">profundidade</span><span class="si">}</span><span class="s2">m (</span><span class="si">{</span><span class="n">profundidade_status</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+
+<span class="c1"># Verificar temperatura</span>
+<span class="k">if</span> <span class="mi">20</span> <span class="o">&lt;=</span> <span class="n">temperatura</span> <span class="o">&lt;=</span> <span class="mi">25</span><span class="p">:</span>
+    <span class="n">temp_status</span> <span class="o">=</span> <span class="s2">&quot;✅ Ideal&quot;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">temp_status</span> <span class="o">=</span> <span class="s2">&quot;⚠️ Fora do padrão&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Temperatura: </span><span class="si">{</span><span class="n">temperatura</span><span class="si">}</span><span class="s2">°C </span><span class="si">{</span><span class="n">temp_status</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Verificar salinidade</span>
+<span class="n">salinidade_arredondada</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">salinidade</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Salinidade: </span><span class="si">{</span><span class="n">salinidade_arredondada</span><span class="si">}</span><span class="s2"> PSU&quot;</span><span class="p">)</span>
+
+<span class="c1"># Resumo</span>
+<span class="n">valida</span> <span class="o">=</span> <span class="p">(</span><span class="mi">20</span> <span class="o">&lt;=</span> <span class="n">temperatura</span> <span class="o">&lt;=</span> <span class="mi">25</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">profundidade</span> <span class="o">&lt;</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">status_final</span> <span class="o">=</span> <span class="s2">&quot;✅ VÁLIDA&quot;</span> <span class="k">if</span> <span class="n">valida</span> <span class="k">else</span> <span class="s2">&quot;❌ INVÁLIDA&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Status da coleta: </span><span class="si">{</span><span class="n">status_final</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Execute:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">python</span> <span class="n">analise_coleta</span><span class="p">.</span><span class="n">py</span>
+</code></pre></div>
+
+<hr />
+<h2 id="variaveis-boas-praticas">💾 Variáveis - Boas Práticas</h2>
+<h3 id="nomes-de-variaveis-em-python">Nomes de Variáveis em Python</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># ✅ BOM - Descritivo, em inglês ou português claro</span>
+<span class="n">temperatura_media</span> <span class="o">=</span> <span class="mf">22.5</span>
+<span class="n">profundidade_coleta_m</span> <span class="o">=</span> <span class="mf">5.2</span>
+<span class="n">especie_coletada</span> <span class="o">=</span> <span class="s2">&quot;Ulva lactuca&quot;</span>
+<span class="n">numero_amostras</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="c1"># ❌ RUIM - Genérico ou confuso</span>
+<span class="n">t</span> <span class="o">=</span> <span class="mf">22.5</span>
+<span class="n">x</span> <span class="o">=</span> <span class="mf">5.2</span>
+<span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;Ulva lactuca&quot;</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="c1"># ✅ BOM - Constantes em MAIÚSCULA</span>
+<span class="n">PI</span> <span class="o">=</span> <span class="mf">3.14159</span>
+<span class="n">PROFUNDIDADE_MAXIMA</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">TEMPERATURA_IDEAL_MINIMA</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">TEMPERATURA_IDEAL_MAXIMA</span> <span class="o">=</span> <span class="mi">25</span>
+
+<span class="c1"># ❌ EVITAR</span>
+<span class="n">meu_valor_muito_longo_que_ninguem_entende</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="n">_variavel</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># Convenção: começa com _ = privada</span>
+</code></pre></div>
+
+<h3 id="escopo-de-variaveis">Escopo de Variáveis</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Variável global</span>
+<span class="n">mensagem_global</span> <span class="o">=</span> <span class="s2">&quot;Oceanografia UFSC&quot;</span>
+
+<span class="k">if</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="c1"># Variável local</span>
+    <span class="n">mensagem_local</span> <span class="o">=</span> <span class="s2">&quot;LABFICOL&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">mensagem_global</span><span class="p">)</span>  <span class="c1"># ✅ Funciona</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">mensagem_local</span><span class="p">)</span>   <span class="c1"># ✅ Funciona</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">mensagem_global</span><span class="p">)</span>  <span class="c1"># ✅ Funciona</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mensagem_local</span><span class="p">)</span>   <span class="c1"># ❌ ERRO - não existe fora do bloco</span>
+</code></pre></div>
+
+<hr />
+<h2 id="exemplo-completo-calculadora-oceanografica">🎓 Exemplo Completo: Calculadora Oceanográfica</h2>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Calculadora Oceanográfica</span>
+<span class="sd">Calcula propriedades de água marinha</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🌊 CALCULADORA OCEANOGRÁFICA&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># Constantes</span>
+<span class="n">SALINIDADE_PADRAO</span> <span class="o">=</span> <span class="mf">35.0</span>
+<span class="n">DENSIDADE_AGUA_DOCE</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">DENSIDADE_AGUA_SALGADA_COEF</span> <span class="o">=</span> <span class="mf">0.8</span>
+
+<span class="c1"># Entrada de dados</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📥 Digite os parâmetros:&quot;</span><span class="p">)</span>
+<span class="n">profundidade</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Profundidade (m): &quot;</span><span class="p">))</span>
+<span class="n">temperatura</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Temperatura (°C): &quot;</span><span class="p">))</span>
+<span class="n">salinidade</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Salinidade (PSU): &quot;</span><span class="p">))</span>
+
+<span class="c1"># Cálculos</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 RESULTADOS:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Densidade aproximada</span>
+<span class="n">densidade</span> <span class="o">=</span> <span class="mi">1000</span> <span class="o">+</span> <span class="p">(</span><span class="n">salinidade</span> <span class="o">-</span> <span class="n">SALINIDADE_PADRAO</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.78</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Densidade da água: </span><span class="si">{</span><span class="n">densidade</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> kg/m³&quot;</span><span class="p">)</span>
+
+<span class="c1"># Pressão aproximada (1 atm por 10m)</span>
+<span class="n">pressao_atm</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">profundidade</span> <span class="o">/</span> <span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pressão: </span><span class="si">{</span><span class="n">pressao_atm</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> atm&quot;</span><span class="p">)</span>
+
+<span class="c1"># Luz solar (50% em ~5m, ~1% em ~30m)</span>
+<span class="n">penetracao_luz</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.7</span> <span class="o">**</span> <span class="p">(</span><span class="n">profundidade</span> <span class="o">/</span> <span class="mi">10</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Penetração de luz: </span><span class="si">{</span><span class="n">penetracao_luz</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+
+<span class="c1"># Status da coleta</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✓ STATUS DA COLETA:&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="mi">20</span> <span class="o">&lt;=</span> <span class="n">temperatura</span> <span class="o">&lt;=</span> <span class="mi">28</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Temperatura adequada&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;⚠️ Temperatura fora do ideal&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="mi">34</span> <span class="o">&lt;=</span> <span class="n">salinidade</span> <span class="o">&lt;=</span> <span class="mi">36</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Salinidade adequada&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;⚠️ Salinidade fora do ideal&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">profundidade</span> <span class="o">&lt;</span> <span class="mi">50</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Profundidade acessível&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;⚠️ Profundidade muito grande&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="checklist-desta-licao">🎓 Checklist desta Lição</h2>
+<ul>
+<li>[ ] Entendo o que é print() e input()</li>
+<li>[ ] Consigo fazer concatenação de strings</li>
+<li>[ ] Entendo operações com números</li>
+<li>[ ] Sou capaz de converter tipos (int, float, str)</li>
+<li>[ ] Testei pelo menos 3 exemplos</li>
+<li>[ ] Sei o que são variáveis e boas práticas de nomes</li>
+</ul>
+<p>Se marcou tudo, você está pronto para <strong>Estruturas de Dados</strong>! 🎉</p>
+<hr />
+<h2 id="proximo-topico">➡️ Próximo Tópico</h2>
+<p><strong>👉 <a href="02-Estruturas-Dados.md">02-Estruturas-Dados.md</a></strong></p>
+<p>Lá você aprenderá:
+- Listas (arrays)
+- Dicionários
+- Tuplas
+- Conjuntos
+- Operações com coleções</p>
+<hr />
+<h2 id="resumo-de-funcoes-basicas">📝 Resumo de Funções Básicas</h2>
+<table>
+<thead>
+<tr>
+<th>Função</th>
+<th>Uso</th>
+<th>Exemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>print()</code></td>
+<td>Mostrar na tela</td>
+<td><code>print("Olá")</code></td>
+</tr>
+<tr>
+<td><code>input()</code></td>
+<td>Receber do usuário</td>
+<td><code>nome = input("Nome: ")</code></td>
+</tr>
+<tr>
+<td><code>int()</code></td>
+<td>Converter para inteiro</td>
+<td><code>int("5")</code> → 5</td>
+</tr>
+<tr>
+<td><code>float()</code></td>
+<td>Converter para decimal</td>
+<td><code>float("3.14")</code> → 3.14</td>
+</tr>
+<tr>
+<td><code>str()</code></td>
+<td>Converter para string</td>
+<td><code>str(42)</code> → "42"</td>
+</tr>
+<tr>
+<td><code>len()</code></td>
+<td>Tamanho</td>
+<td><code>len("Olá")</code> → 3</td>
+</tr>
+<tr>
+<td><code>type()</code></td>
+<td>Ver tipo</td>
+<td><code>type(5)</code> → <code>&lt;class 'int'&gt;</code></td>
+</tr>
+<tr>
+<td><code>round()</code></td>
+<td>Arredondar</td>
+<td><code>round(3.7)</code> → 4</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>Você está progredindo rápido!</strong> 🚀 Próximo: Estruturas de Dados!</p>
+      </article>
+    </main>
+    <footer role="contentinfo">
+      <p>Gerado automaticamente em 06/01/2026 16:10. Paleta: ColorBrewer BuGn.</p>
+    </footer>
+    <script src="..\assets/site.js"></script>
+  </body>
+</html>

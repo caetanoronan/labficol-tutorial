@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>🗺️ GeoJSON - Dados Geográficos Básicos</title>
+    <link rel="preload" href="..\assets/theme.css" as="style" />
+    <link rel="stylesheet" href="..\assets/theme.css" />
+  </head>
+  <body>
+    <a href="#conteudo" class="skip-link">Pular para conteúdo</a>
+    <header role="banner">
+      <div class="wrap">
+        <h1>🗺️ GeoJSON - Dados Geográficos Básicos</h1>
+        <nav aria-label="Navegação">
+          <a href="..\index.html">Início</a>
+          <a href="https://github.com/caetanoronan/labficol-tutorial">Repositório</a>
+          <a href="https://caetanoronan.github.io/labficol-tutorial/">Site</a>
+        </nav>
+        <div class="controls">
+          <button id="toggleHC" aria-pressed="false" aria-label="Alternar alto contraste">Alto contraste</button>
+          <button id="toggleBT" aria-pressed="false" aria-label="Alternar texto grande">Texto grande</button>
+          <button id="toggleLM" aria-pressed="false" aria-label="Reduzir movimento">Menos movimento</button>
+        </div>
+      </div>
+    </header>
+    <main id="conteudo" role="main">
+      <article class="md-content" aria-label="Conteúdo">
+        <h1 id="geojson-dados-geograficos-basicos">🗺️ GeoJSON - Dados Geográficos Básicos</h1>
+<h2 id="o-que-e-geojson">O que é GeoJSON?</h2>
+<p><strong>GeoJSON</strong> = formato de arquivo para armazenar dados geográficos em JSON.</p>
+<h3 id="por-que-geojson-e-importante">Por que GeoJSON é importante?</h3>
+<div class="codehilite"><pre><span></span><code>Excel/CSV           GeoJSON
+├─ Dados tabulares  ├─ Dados + Geografia
+├─ Sem localização  ├─ Coordenadas incluídas
+└─ Sem mapas        └─ Pronto para mapear
+</code></pre></div>
+
+<p><strong>Usado em:</strong> Leaflet, Folium, QGIS, ArcGIS Online, Google Maps</p>
+<hr />
+<h2 id="coordenadas-geograficas">📍 Coordenadas Geográficas</h2>
+<p>Antes de GeoJSON, você precisa entender coordenadas!</p>
+<h3 id="latitude-e-longitude">Latitude e Longitude</h3>
+<div class="codehilite"><pre><span></span><code>Latitude  (Y) → Norte/Sul → -90° a +90°
+Longitude (X) → Leste/Oeste → -180° a +180°
+
+Brasil:
+├─ Latitude: -33° a +5° (negativo = Sul)
+└─ Longitude: -73° a -34° (negativo = Oeste)
+
+Santa Catarina (exemplo):
+├─ Florianópolis: -27.5969°, -48.5495°
+├─ Praia dos Ingleses: -27.4374°, -48.3923°
+└─ Laguna: -28.4833°, -48.7833°
+</code></pre></div>
+
+<p><strong>Formato padrão:</strong> <code>[longitude, latitude]</code> ⚠️ <strong>Longitude vem PRIMEIRO!</strong></p>
+<hr />
+<h2 id="tipos-de-geometria">📐 Tipos de Geometria</h2>
+<h3 id="1-point-ponto">1. Point (Ponto)</h3>
+<p>Um único local.</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Point&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">-48.5495</span><span class="p">,</span><span class="w"> </span><span class="mf">-27.5969</span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><strong>Uso:</strong> Estação de coleta, localização de espécie</p>
+<h3 id="2-linestring-linha">2. LineString (Linha)</h3>
+<p>Sequência de pontos conectados.</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;LineString&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">[</span><span class="mf">-48.5495</span><span class="p">,</span><span class="w"> </span><span class="mf">-27.5969</span><span class="p">],</span>
+<span class="w">    </span><span class="p">[</span><span class="mf">-48.5500</span><span class="p">,</span><span class="w"> </span><span class="mf">-27.6000</span><span class="p">],</span>
+<span class="w">    </span><span class="p">[</span><span class="mf">-48.5505</span><span class="p">,</span><span class="w"> </span><span class="mf">-27.6030</span><span class="p">]</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><strong>Uso:</strong> Transecto, rota de barco, corrente marinha</p>
+<h3 id="3-polygon-poligono">3. Polygon (Polígono)</h3>
+<p>Área fechada.</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Polygon&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">[</span>
+<span class="w">      </span><span class="p">[</span><span class="mf">-48.5495</span><span class="p">,</span><span class="w"> </span><span class="mf">-27.5969</span><span class="p">],</span>
+<span class="w">      </span><span class="p">[</span><span class="mf">-48.5500</span><span class="p">,</span><span class="w"> </span><span class="mf">-27.5969</span><span class="p">],</span>
+<span class="w">      </span><span class="p">[</span><span class="mf">-48.5500</span><span class="p">,</span><span class="w"> </span><span class="mf">-27.6000</span><span class="p">],</span>
+<span class="w">      </span><span class="p">[</span><span class="mf">-48.5495</span><span class="p">,</span><span class="w"> </span><span class="mf">-27.6000</span><span class="p">],</span>
+<span class="w">      </span><span class="p">[</span><span class="mf">-48.5495</span><span class="p">,</span><span class="w"> </span><span class="mf">-27.5969</span><span class="p">]</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>⚠️ <strong>Primeiro e último ponto devem ser iguais!</strong></p>
+<p><strong>Uso:</strong> Área de proteção, zona de coleta, habitat de espécie</p>
+<hr />
+<h2 id="estrutura-completa-de-geojson">🎯 Estrutura Completa de GeoJSON</h2>
+<h3 id="feature-um-objeto-geografico">Feature (Um objeto geográfico)</h3>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Feature&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;geometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Point&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">-48.5495</span><span class="p">,</span><span class="w"> </span><span class="mf">-27.5969</span><span class="p">]</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;nome&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Praia dos Ingleses&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;especie&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Ulva lactuca&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;profundidade_m&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">5.2</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;temperatura_c&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">22.5</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;data_coleta&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-06&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><strong>Partes:</strong>
+- <code>geometry</code>: Localização geográfica
+- <code>properties</code>: Dados descritivos (qualquer coisa!)</p>
+<h3 id="featurecollection-multiplos-objetos">FeatureCollection (Múltiplos objetos)</h3>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FeatureCollection&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;features&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Feature&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;geometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Point&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">-48.5495</span><span class="p">,</span><span class="w"> </span><span class="mf">-27.5969</span><span class="p">]</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;especie&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Ulva lactuca&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;profundidade_m&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">5.2</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Feature&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;geometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Point&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">-48.3923</span><span class="p">,</span><span class="w"> </span><span class="mf">-27.4374</span><span class="p">]</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;especie&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Gracilaria&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;profundidade_m&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">7.8</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<hr />
+<h2 id="criar-geojson-com-python">🐍 Criar GeoJSON com Python</h2>
+<h3 id="instalar-bibliotecas">Instalar Bibliotecas</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">pip</span> <span class="n">install</span> <span class="n">geojson</span>
+</code></pre></div>
+
+<h3 id="exemplo-1-criar-ponto-simples">Exemplo 1: Criar Ponto Simples</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">json</span>
+
+<span class="c1"># Criar Feature (ponto)</span>
+<span class="n">ponto_coleta</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Feature&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;geometry&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Point&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">48.5495</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.5969</span><span class="p">]</span>  <span class="c1"># [lon, lat]</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;nome&quot;</span><span class="p">:</span> <span class="s2">&quot;Estação 1 - Praia dos Ingleses&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;especie&quot;</span><span class="p">:</span> <span class="s2">&quot;Ulva lactuca&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;profundidade_m&quot;</span><span class="p">:</span> <span class="mf">5.2</span><span class="p">,</span>
+        <span class="s2">&quot;temperatura_c&quot;</span><span class="p">:</span> <span class="mf">22.5</span><span class="p">,</span>
+        <span class="s2">&quot;salinidade_psu&quot;</span><span class="p">:</span> <span class="mf">35.0</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1"># Salvar em arquivo</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;ponto_coleta.geojson&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">ponto_coleta</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ GeoJSON criado: ponto_coleta.geojson&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="exemplo-2-multiplas-estacoes-de-coleta">Exemplo 2: Múltiplas Estações de Coleta</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">json</span>
+
+<span class="c1"># Dados de coleta (exemplo LABFICOL)</span>
+<span class="n">coletas</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">&quot;nome&quot;</span><span class="p">:</span> <span class="s2">&quot;Ingleses - Norte&quot;</span><span class="p">,</span> <span class="s2">&quot;lon&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">48.3923</span><span class="p">,</span> <span class="s2">&quot;lat&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">27.4374</span><span class="p">,</span> 
+     <span class="s2">&quot;especie&quot;</span><span class="p">:</span> <span class="s2">&quot;Ulva lactuca&quot;</span><span class="p">,</span> <span class="s2">&quot;prof&quot;</span><span class="p">:</span> <span class="mf">5.2</span><span class="p">,</span> <span class="s2">&quot;temp&quot;</span><span class="p">:</span> <span class="mf">22.5</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;nome&quot;</span><span class="p">:</span> <span class="s2">&quot;Ingleses - Sul&quot;</span><span class="p">,</span> <span class="s2">&quot;lon&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">48.3950</span><span class="p">,</span> <span class="s2">&quot;lat&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">27.4450</span><span class="p">,</span> 
+     <span class="s2">&quot;especie&quot;</span><span class="p">:</span> <span class="s2">&quot;Gracilaria&quot;</span><span class="p">,</span> <span class="s2">&quot;prof&quot;</span><span class="p">:</span> <span class="mf">7.8</span><span class="p">,</span> <span class="s2">&quot;temp&quot;</span><span class="p">:</span> <span class="mf">23.1</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;nome&quot;</span><span class="p">:</span> <span class="s2">&quot;Barra da Lagoa&quot;</span><span class="p">,</span> <span class="s2">&quot;lon&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">48.4200</span><span class="p">,</span> <span class="s2">&quot;lat&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">27.5750</span><span class="p">,</span> 
+     <span class="s2">&quot;especie&quot;</span><span class="p">:</span> <span class="s2">&quot;Sargassum&quot;</span><span class="p">,</span> <span class="s2">&quot;prof&quot;</span><span class="p">:</span> <span class="mf">3.1</span><span class="p">,</span> <span class="s2">&quot;temp&quot;</span><span class="p">:</span> <span class="mf">22.8</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;nome&quot;</span><span class="p">:</span> <span class="s2">&quot;Laguna&quot;</span><span class="p">,</span> <span class="s2">&quot;lon&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">48.7833</span><span class="p">,</span> <span class="s2">&quot;lat&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">28.4833</span><span class="p">,</span> 
+     <span class="s2">&quot;especie&quot;</span><span class="p">:</span> <span class="s2">&quot;Laminaria&quot;</span><span class="p">,</span> <span class="s2">&quot;prof&quot;</span><span class="p">:</span> <span class="mf">10.5</span><span class="p">,</span> <span class="s2">&quot;temp&quot;</span><span class="p">:</span> <span class="mf">21.2</span><span class="p">}</span>
+<span class="p">]</span>
+
+<span class="c1"># Criar FeatureCollection</span>
+<span class="n">features</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">coleta</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">coletas</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">feature</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Feature&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;geometry&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Point&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">coleta</span><span class="p">[</span><span class="s2">&quot;lon&quot;</span><span class="p">],</span> <span class="n">coleta</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">]]</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span>
+            <span class="s2">&quot;nome&quot;</span><span class="p">:</span> <span class="n">coleta</span><span class="p">[</span><span class="s2">&quot;nome&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;especie&quot;</span><span class="p">:</span> <span class="n">coleta</span><span class="p">[</span><span class="s2">&quot;especie&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;profundidade_m&quot;</span><span class="p">:</span> <span class="n">coleta</span><span class="p">[</span><span class="s2">&quot;prof&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;temperatura_c&quot;</span><span class="p">:</span> <span class="n">coleta</span><span class="p">[</span><span class="s2">&quot;temp&quot;</span><span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">features</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
+
+<span class="n">geojson_collection</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;FeatureCollection&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="n">features</span>
+<span class="p">}</span>
+
+<span class="c1"># Salvar</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;coletas_labficol.geojson&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">geojson_collection</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ GeoJSON criado com </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="p">)</span><span class="si">}</span><span class="s2"> estações&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="exemplo-3-criar-poligono-area-de-estudo">Exemplo 3: Criar Polígono (Área de Estudo)</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">json</span>
+
+<span class="c1"># Área de proteção marinha (exemplo)</span>
+<span class="n">area_protecao</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Feature&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;geometry&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Polygon&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[[</span>
+            <span class="p">[</span><span class="o">-</span><span class="mf">48.5495</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.5969</span><span class="p">],</span>  <span class="c1"># Ponto 1</span>
+            <span class="p">[</span><span class="o">-</span><span class="mf">48.5400</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.5969</span><span class="p">],</span>  <span class="c1"># Ponto 2</span>
+            <span class="p">[</span><span class="o">-</span><span class="mf">48.5400</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.6100</span><span class="p">],</span>  <span class="c1"># Ponto 3</span>
+            <span class="p">[</span><span class="o">-</span><span class="mf">48.5495</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.6100</span><span class="p">],</span>  <span class="c1"># Ponto 4</span>
+            <span class="p">[</span><span class="o">-</span><span class="mf">48.5495</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.5969</span><span class="p">]</span>   <span class="c1"># Fecha (igual ao primeiro)</span>
+        <span class="p">]]</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;nome&quot;</span><span class="p">:</span> <span class="s2">&quot;Área de Proteção Marinha - Ingleses&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;tipo&quot;</span><span class="p">:</span> <span class="s2">&quot;Zona de coleta proibida&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;area_km2&quot;</span><span class="p">:</span> <span class="mf">12.5</span><span class="p">,</span>
+        <span class="s2">&quot;criacao&quot;</span><span class="p">:</span> <span class="s2">&quot;2020-01-01&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1"># Salvar</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;area_protecao.geojson&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">area_protecao</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Área de proteção criada&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="ler-geojson">📊 Ler GeoJSON</h2>
+<h3 id="exemplo-carregar-e-processar">Exemplo: Carregar e Processar</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">json</span>
+
+<span class="c1"># Carregar arquivo</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;coletas_labficol.geojson&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">dados</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="c1"># Acessar features</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total de pontos: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">dados</span><span class="p">[</span><span class="s1">&#39;features&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Iterar sobre features</span>
+<span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">dados</span><span class="p">[</span><span class="s2">&quot;features&quot;</span><span class="p">]:</span>
+    <span class="n">props</span> <span class="o">=</span> <span class="n">feature</span><span class="p">[</span><span class="s2">&quot;properties&quot;</span><span class="p">]</span>
+    <span class="n">coords</span> <span class="o">=</span> <span class="n">feature</span><span class="p">[</span><span class="s2">&quot;geometry&quot;</span><span class="p">][</span><span class="s2">&quot;coordinates&quot;</span><span class="p">]</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📍 </span><span class="si">{</span><span class="n">props</span><span class="p">[</span><span class="s1">&#39;nome&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Espécie: </span><span class="si">{</span><span class="n">props</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Localização: </span><span class="si">{</span><span class="n">coords</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">coords</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Profundidade: </span><span class="si">{</span><span class="n">props</span><span class="p">[</span><span class="s1">&#39;profundidade_m&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">m&quot;</span><span class="p">)</span>
+
+<span class="c1"># Filtrar por espécie</span>
+<span class="n">ulvas</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">dados</span><span class="p">[</span><span class="s2">&quot;features&quot;</span><span class="p">]</span> 
+         <span class="k">if</span> <span class="n">f</span><span class="p">[</span><span class="s2">&quot;properties&quot;</span><span class="p">][</span><span class="s2">&quot;especie&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Ulva lactuca&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🌿 Encontradas </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">ulvas</span><span class="p">)</span><span class="si">}</span><span class="s2"> amostras de Ulva lactuca&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="validar-geojson-online">🌐 Validar GeoJSON Online</h2>
+<p>Antes de usar em mapas, valide seu GeoJSON:</p>
+<p><strong>Ferramentas:</strong>
+1. <strong>geojson.io</strong> - http://geojson.io
+   - Cole seu GeoJSON
+   - Visualize no mapa
+   - Edite geometrias</p>
+<ol>
+<li><strong>GeoJSONLint</strong> - https://geojsonlint.com</li>
+<li>Valida sintaxe</li>
+<li>Mostra erros</li>
+</ol>
+<hr />
+<h2 id="exemplo-pratico-sistema-de-cadastro">🎯 Exemplo Prático: Sistema de Cadastro</h2>
+<p>Crie arquivo <code>cadastro_coletas.py</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="k">def</span> <span class="nf">criar_ponto_coleta</span><span class="p">(</span><span class="n">nome</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">especie</span><span class="p">,</span> <span class="n">profundidade</span><span class="p">,</span> <span class="n">temperatura</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Cria um Feature GeoJSON para coleta&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Feature&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;geometry&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Point&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">]</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;nome&quot;</span><span class="p">:</span> <span class="n">nome</span><span class="p">,</span>
+            <span class="s2">&quot;especie&quot;</span><span class="p">:</span> <span class="n">especie</span><span class="p">,</span>
+            <span class="s2">&quot;profundidade_m&quot;</span><span class="p">:</span> <span class="n">profundidade</span><span class="p">,</span>
+            <span class="s2">&quot;temperatura_c&quot;</span><span class="p">:</span> <span class="n">temperatura</span><span class="p">,</span>
+            <span class="s2">&quot;data_cadastro&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">adicionar_coleta</span><span class="p">(</span><span class="n">arquivo</span><span class="p">,</span> <span class="n">nova_coleta</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Adiciona uma coleta ao GeoJSON existente&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Tentar carregar arquivo existente</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">arquivo</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">dados</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+        <span class="c1"># Criar novo se não existe</span>
+        <span class="n">dados</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;FeatureCollection&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[]</span>
+        <span class="p">}</span>
+
+    <span class="c1"># Adicionar nova coleta</span>
+    <span class="n">dados</span><span class="p">[</span><span class="s2">&quot;features&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nova_coleta</span><span class="p">)</span>
+
+    <span class="c1"># Salvar</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">arquivo</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">dados</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">dados</span><span class="p">[</span><span class="s2">&quot;features&quot;</span><span class="p">])</span>
+
+<span class="k">def</span> <span class="nf">listar_coletas</span><span class="p">(</span><span class="n">arquivo</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Lista todas as coletas&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">arquivo</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">dados</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;📊 COLETAS CADASTRADAS&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">feature</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dados</span><span class="p">[</span><span class="s2">&quot;features&quot;</span><span class="p">],</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">props</span> <span class="o">=</span> <span class="n">feature</span><span class="p">[</span><span class="s2">&quot;properties&quot;</span><span class="p">]</span>
+            <span class="n">coords</span> <span class="o">=</span> <span class="n">feature</span><span class="p">[</span><span class="s2">&quot;geometry&quot;</span><span class="p">][</span><span class="s2">&quot;coordinates&quot;</span><span class="p">]</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">. </span><span class="si">{</span><span class="n">props</span><span class="p">[</span><span class="s1">&#39;nome&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Espécie: </span><span class="si">{</span><span class="n">props</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Coordenadas: </span><span class="si">{</span><span class="n">coords</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">°, </span><span class="si">{</span><span class="n">coords</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">°&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Profundidade: </span><span class="si">{</span><span class="n">props</span><span class="p">[</span><span class="s1">&#39;profundidade_m&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">m&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Temperatura: </span><span class="si">{</span><span class="n">props</span><span class="p">[</span><span class="s1">&#39;temperatura_c&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">°C&quot;</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">dados</span><span class="p">[</span><span class="s1">&#39;features&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2"> coletas&quot;</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;❌ Nenhum arquivo encontrado&quot;</span><span class="p">)</span>
+
+<span class="c1"># Sistema interativo</span>
+<span class="k">def</span> <span class="nf">menu</span><span class="p">():</span>
+    <span class="n">arquivo</span> <span class="o">=</span> <span class="s2">&quot;minhas_coletas.geojson&quot;</span>
+
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🌊 SISTEMA DE CADASTRO DE COLETAS&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;1 - Adicionar coleta&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;2 - Listar coletas&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;3 - Sair&quot;</span><span class="p">)</span>
+
+        <span class="n">opcao</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Escolha: &quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">opcao</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📝 Nova Coleta:&quot;</span><span class="p">)</span>
+            <span class="n">nome</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Nome da estação: &quot;</span><span class="p">)</span>
+            <span class="n">lat</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Latitude: &quot;</span><span class="p">))</span>
+            <span class="n">lon</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Longitude: &quot;</span><span class="p">))</span>
+            <span class="n">especie</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Espécie: &quot;</span><span class="p">)</span>
+            <span class="n">prof</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Profundidade (m): &quot;</span><span class="p">))</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Temperatura (°C): &quot;</span><span class="p">))</span>
+
+            <span class="n">coleta</span> <span class="o">=</span> <span class="n">criar_ponto_coleta</span><span class="p">(</span><span class="n">nome</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">especie</span><span class="p">,</span> <span class="n">prof</span><span class="p">,</span> <span class="n">temp</span><span class="p">)</span>
+            <span class="n">total</span> <span class="o">=</span> <span class="n">adicionar_coleta</span><span class="p">(</span><span class="n">arquivo</span><span class="p">,</span> <span class="n">coleta</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Coleta adicionada! Total: </span><span class="si">{</span><span class="n">total</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">opcao</span> <span class="o">==</span> <span class="s2">&quot;2&quot;</span><span class="p">:</span>
+            <span class="n">listar_coletas</span><span class="p">(</span><span class="n">arquivo</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">opcao</span> <span class="o">==</span> <span class="s2">&quot;3&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;👋 Até logo!&quot;</span><span class="p">)</span>
+            <span class="k">break</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">menu</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Execute:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">python</span> <span class="n">cadastro_coletas</span><span class="p">.</span><span class="n">py</span>
+</code></pre></div>
+
+<hr />
+<h2 id="visualizar-no-geojsonio">🗺️ Visualizar no geojson.io</h2>
+<p>Depois de criar seus GeoJSON:</p>
+<ol>
+<li>Abra: http://geojson.io</li>
+<li>Arraste seu arquivo <code>.geojson</code></li>
+<li>Veja no mapa interativo! 🗺️</li>
+</ol>
+<p>Ou cole o JSON diretamente no editor.</p>
+<hr />
+<h2 id="boas-praticas">🎓 Boas Práticas</h2>
+<p>✅ <strong>Faça:</strong>
+- Use <code>[longitude, latitude]</code> nesta ordem
+- Feche polígonos (primeiro = último ponto)
+- Valide GeoJSON antes de usar
+- Use UTF-8 para acentos</p>
+<p>❌ <strong>Evite:</strong>
+- Coordenadas invertidas
+- Polígonos não fechados
+- Muitos decimais (4-6 é suficiente)
+- Arquivos gigantes (use simplificação)</p>
+<hr />
+<h2 id="checklist-desta-licao">🎓 Checklist desta Lição</h2>
+<ul>
+<li>[ ] Entendo o que é GeoJSON</li>
+<li>[ ] Sei a diferença entre Point, LineString e Polygon</li>
+<li>[ ] Consigo criar GeoJSON com Python</li>
+<li>[ ] Sei ler e processar arquivos GeoJSON</li>
+<li>[ ] Validei pelo menos um GeoJSON no geojson.io</li>
+<li>[ ] Criei um sistema de cadastro</li>
+</ul>
+<p>Se marcou tudo, você está pronto para <strong>GeoPandas</strong>! 🎉</p>
+<hr />
+<h2 id="proximo-topico">➡️ Próximo Tópico</h2>
+<p><strong>👉 <a href="02-GeoPandas-Intro.md">02-GeoPandas-Intro.md</a></strong></p>
+<p>Lá você aprenderá:
+- Usar GeoPandas para análise geoespacial
+- Operações com geometrias
+- Análise espacial
+- Juntar dados geográficos</p>
+<hr />
+<h2 id="resumo-de-tipos">📝 Resumo de Tipos</h2>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Geometria</th>
+<th>Uso</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Point</strong></td>
+<td>Um ponto</td>
+<td>Estação de coleta</td>
+</tr>
+<tr>
+<td><strong>LineString</strong></td>
+<td>Linha</td>
+<td>Transecto, rota</td>
+</tr>
+<tr>
+<td><strong>Polygon</strong></td>
+<td>Área</td>
+<td>Zona de estudo</td>
+</tr>
+<tr>
+<td><strong>MultiPoint</strong></td>
+<td>Vários pontos</td>
+<td>Cluster de coletas</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>Você agora domina GeoJSON básico!</strong> 🗺️ Próximo: GeoPandas! 🐼</p>
+      </article>
+    </main>
+    <footer role="contentinfo">
+      <p>Gerado automaticamente em 06/01/2026 16:10. Paleta: ColorBrewer BuGn.</p>
+    </footer>
+    <script src="..\assets/site.js"></script>
+  </body>
+</html>
