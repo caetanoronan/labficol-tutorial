@@ -1,82 +1,364 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Tutorial LABFICOL — Oceanografia & Ficologia</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial Python para Oceanografia | LABFICOL - UFSC</title>
+    <meta name="description" content="Tutorial completo de Python, análise de dados geoespaciais, visualização web e machine learning aplicado à oceanografia e ficologia">
     <style>
-      :root { --bg:#0f172a; --fg:#e2e8f0; --accent:#22c55e; --muted:#94a3b8; }
-      body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: var(--bg); color: var(--fg); }
-      .wrap { max-width: 900px; margin: 0 auto; padding: 32px; }
-      h1 { font-size: 2rem; margin: 0 0 16px; }
-      p { color: var(--muted); }
-      .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 24px; }
-      .card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 16px; }
-      .card h2 { font-size: 1.1rem; margin: 0 0 8px; }
-      .card ul { margin: 6px 0 0; padding-left: 18px; }
-      a { color: var(--accent); text-decoration: none; }
-      a:hover { text-decoration: underline; }
-      footer { margin-top: 32px; font-size: 0.9rem; color: var(--muted); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #e5f5f9 0%, #99d8c9 50%, #2ca25f 100%);
+            min-height: 100vh;
+            color: #062b1e;
+            line-height: 1.6;
+        }
+        
+        .hero {
+            background: linear-gradient(120deg, #2ca25f, #1e7d5a);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .hero .meta {
+            margin-top: 20px;
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .intro {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-left: 6px solid #2ca25f;
+        }
+        
+        .intro h2 {
+            color: #2ca25f;
+            margin-bottom: 15px;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .feature {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border-top: 4px solid #2ca25f;
+        }
+        
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .feature h3 {
+            color: #2ca25f;
+            margin-bottom: 10px;
+        }
+        
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .module-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-left: 6px solid #2ca25f;
+            transition: all 0.3s;
+        }
+        
+        .module-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 8px 24px rgba(44, 162, 95, 0.2);
+        }
+        
+        .module-card h2 {
+            color: #2ca25f;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .module-number {
+            background: #2ca25f;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .module-description {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+        
+        .module-links {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .module-links li {
+            margin: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .module-links li::before {
+            content: "📄";
+            position: absolute;
+            left: 0;
+        }
+        
+        .module-links a {
+            color: #2ca25f;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .module-links a:hover {
+            color: #238b53;
+            text-decoration: underline;
+            padding-left: 5px;
+        }
+        
+        .index-link {
+            display: inline-block;
+            background: #e5f5f9;
+            color: #2ca25f;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: all 0.2s;
+            border: 2px solid #99d8c9;
+        }
+        
+        .index-link:hover {
+            background: #2ca25f;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        footer {
+            background: rgba(255,255,255,0.9);
+            padding: 30px 20px;
+            text-align: center;
+            margin-top: 60px;
+            color: #666;
+        }
+        
+        footer a {
+            color: #2ca25f;
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 1.8rem; }
+            .modules-grid { grid-template-columns: 1fr; }
+        }
     </style>
-  </head>
-  <body>
-    <div class="wrap">
-      <h1>Tutorial LABFICOL — Oceanografia & Ficologia</h1>
-      <p>Bem-vindo! Este site resume os módulos e links principais do tutorial. O conteúdo detalhado está no repositório GitHub (atualize o link abaixo após publicar).</p>
-      <p><strong>Repositório:</strong> <a href="https://github.com/caetanoronan/labficol-tutorial" id="repoLink">https://github.com/caetanoronan/labficol-tutorial</a></p>
-
-      <div class="grid">
-        <div class="card">
-          <h2>Nível Iniciante</h2>
-          <ul>
-            <li><a href="./html/0-Fundamentos/01-Introducao.html">Fundamentos</a></li>
-            <li><a href="./html/0-Fundamentos/index.html">Fundamentos (completo)</a></li>
-            <li><a href="./html/1-Python-Essencial/01-Sintaxe-Basica.html">Python Essencial</a></li>
-            <li><a href="./html/2-Analise-Geoespacial/01-GeoJSON-Basico.html">Análise Geoespacial</a></li>
-          </ul>
-        </div>
-        <div class="card">
-          <h2>Visualização Web</h2>
-          <ul>
-            <li><a href="./html/3-Visualizacao-Web/01-HTML5-Basico.html">HTML5 Básico</a></li>
-            <li><a href="./html/3-Visualizacao-Web/03-Leaflet-Mapas.html">Leaflet — Mapas</a></li>
-            <li><a href="./html/3-Visualizacao-Web/04-Git-GitHub-Pages.html">Publicar com GitHub Pages</a></li>
-          </ul>
-        </div>
-        <div class="card">
-          <h2>Casos Práticos</h2>
-          <ul>
-            <li><a href="./html/4-Casos-Praticos/01-Monitoramento-Costeiro.html">Monitoramento Costeiro</a></li>
-            <li><a href="./html/4-Casos-Praticos/03-Dashboard-Web-Completo.html">Dashboard Web Completo</a></li>
-          </ul>
-        </div>
-        <div class="card">
-          <h2>Avançado</h2>
-          <ul>
-            <li><a href="./html/5-Estatistica-Aplicada/01-Estatistica-Descritiva.html">Estatística Aplicada</a></li>
-            <li><a href="./html/6-Machine-Learning/02-Classificacao-Avancada.html">Classificação Avançada</a></li>
-            <li><a href="./html/6-Machine-Learning/03-Clusterizacao-PCA.html">Clusterização & PCA</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <footer>
-        <p>Após ativar o GitHub Pages (branch <code>main</code>, pasta <code>docs/</code>), este índice ficará disponível publicamente.</p>
-      </footer>
+</head>
+<body>
+    <div class="hero">
+        <h1>🌊 Tutorial Python para Oceanografia</h1>
+        <p>Análise de Dados, Visualização Geoespacial e Machine Learning aplicados à Oceanografia e Ficologia</p>
+        <p class="meta">LABFICOL - Universidade Federal de Santa Catarina</p>
     </div>
-    <script>
-      // Opcional: preencher automaticamente repoLink se hospedado no GitHub Pages
-      (function(){
-        try {
-          const host = location.hostname.toLowerCase();
-          const el = document.getElementById('repoLink');
-          if (host.includes('github.io')) {
-            const org = host.split('.')[0];
-            el.href = `https://github.com/${org}/NOME-DO-REPO`;
-            el.textContent = el.href;
-          }
-        } catch {}
-      })();
-    </script>
-  </body>
+    
+    <div class="container">
+        <div class="intro">
+            <h2>📚 Sobre o Tutorial</h2>
+            <p>Este tutorial completo foi desenvolvido para capacitar estudantes e pesquisadores em técnicas modernas de análise de dados aplicadas às ciências marinhas. Do básico ao avançado, você aprenderá Python, análise geoespacial, visualização de dados e machine learning de forma prática e aplicada.</p>
+            <p style="margin-top: 15px;"><strong>🎯 Total:</strong> 7 módulos • 27 lições • 7 glossários completos • Sistema de progresso • Busca integrada</p>
+            <p style="margin-top: 10px;"><strong>🔗 Repositório GitHub:</strong> <a href="https://github.com/caetanoronan/labficol-tutorial" target="_blank">caetanoronan/labficol-tutorial</a></p>
+        </div>
+        
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">📊</div>
+                <h3>Progresso Salvo</h3>
+                <p>Marque lições como completas e acompanhe seu progresso automaticamente</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔍</div>
+                <h3>Busca Inteligente</h3>
+                <p>Encontre qualquer conceito em tempo real com busca integrada</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📖</div>
+                <h3>Glossários A-Z</h3>
+                <p>Referência completa de termos técnicos em cada módulo</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">💻</div>
+                <h3>Código Copiável</h3>
+                <p>Todos os exemplos com botão para copiar direto para seu editor</p>
+            </div>
+        </div>
+        
+        <h2 style="text-align: center; color: #2ca25f; margin: 50px 0 30px;">📚 Módulos do Curso</h2>
+        
+        <div class="modules-grid">
+            <!-- Módulo 0 -->
+            <div class="module-card">
+                <h2><span class="module-number">0</span> Fundamentos</h2>
+                <p class="module-description">Introdução à programação, configuração de ambiente e conceitos básicos essenciais</p>
+                <ul class="module-links">
+                    <li><a href="./html/0-Fundamentos/00-Glossario.html">📖 Glossário</a></li>
+                    <li><a href="./html/0-Fundamentos/01-Introducao.html">Introdução</a></li>
+                    <li><a href="./html/0-Fundamentos/02-Configurar-Ambiente.html">Configurar Ambiente</a></li>
+                    <li><a href="./html/0-Fundamentos/03-Conceitos-Basicos.html">Conceitos Básicos</a></li>
+                </ul>
+                <a href="./html/0-Fundamentos/index.html" class="index-link">📑 Ver Módulo Completo</a>
+            </div>
+            
+            <!-- Módulo 1 -->
+            <div class="module-card">
+                <h2><span class="module-number">1</span> Python Essencial</h2>
+                <p class="module-description">Sintaxe, estruturas de dados, funções e módulos da linguagem Python</p>
+                <ul class="module-links">
+                    <li><a href="./html/1-Python-Essencial/00-Glossario.html">📖 Glossário</a></li>
+                    <li><a href="./html/1-Python-Essencial/01-Sintaxe-Basica.html">Sintaxe Básica</a></li>
+                    <li><a href="./html/1-Python-Essencial/02-Estruturas-Dados.html">Estruturas de Dados</a></li>
+                    <li><a href="./html/1-Python-Essencial/03-Funcoes-Modulos.html">Funções e Módulos</a></li>
+                </ul>
+                <a href="./html/1-Python-Essencial/index.html" class="index-link">📑 Ver Módulo Completo</a>
+            </div>
+            
+            <!-- Módulo 2 -->
+            <div class="module-card">
+                <h2><span class="module-number">2</span> Análise Geoespacial</h2>
+                <p class="module-description">GeoJSON, GeoPandas e criação de mapas interativos com Folium</p>
+                <ul class="module-links">
+                    <li><a href="./html/2-Analise-Geoespacial/00-Glossario.html">📖 Glossário</a></li>
+                    <li><a href="./html/2-Analise-Geoespacial/01-GeoJSON-Basico.html">GeoJSON Básico</a></li>
+                    <li><a href="./html/2-Analise-Geoespacial/02-GeoPandas-Intro.html">GeoPandas Introdução</a></li>
+                    <li><a href="./html/2-Analise-Geoespacial/03-Mapas-Folium.html">Mapas com Folium</a></li>
+                </ul>
+                <a href="./html/2-Analise-Geoespacial/index.html" class="index-link">📑 Ver Módulo Completo</a>
+            </div>
+            
+            <!-- Módulo 3 -->
+            <div class="module-card">
+                <h2><span class="module-number">3</span> Visualização Web</h2>
+                <p class="module-description">HTML5, JavaScript, Leaflet e publicação com GitHub Pages</p>
+                <ul class="module-links">
+                    <li><a href="./html/3-Visualizacao-Web/00-Glossario.html">📖 Glossário</a></li>
+                    <li><a href="./html/3-Visualizacao-Web/01-HTML5-Basico.html">HTML5 Básico</a></li>
+                    <li><a href="./html/3-Visualizacao-Web/02-JavaScript-Essencial.html">JavaScript Essencial</a></li>
+                    <li><a href="./html/3-Visualizacao-Web/03-Leaflet-Mapas.html">Leaflet - Mapas</a></li>
+                    <li><a href="./html/3-Visualizacao-Web/04-Git-GitHub-Pages.html">Git & GitHub Pages</a></li>
+                </ul>
+                <a href="./html/3-Visualizacao-Web/index.html" class="index-link">📑 Ver Módulo Completo</a>
+            </div>
+            
+            <!-- Módulo 4 -->
+            <div class="module-card">
+                <h2><span class="module-number">4</span> Casos Práticos</h2>
+                <p class="module-description">Aplicações reais: monitoramento costeiro, distribuição espacial e dashboards</p>
+                <ul class="module-links">
+                    <li><a href="./html/4-Casos-Praticos/00-Glossario.html">📖 Glossário</a></li>
+                    <li><a href="./html/4-Casos-Praticos/01-Monitoramento-Costeiro.html">Monitoramento Costeiro</a></li>
+                    <li><a href="./html/4-Casos-Praticos/02-Distribuicao-Espacial.html">Distribuição Espacial</a></li>
+                    <li><a href="./html/4-Casos-Praticos/03-Dashboard-Web-Completo.html">Dashboard Web Completo</a></li>
+                </ul>
+                <a href="./html/4-Casos-Praticos/index.html" class="index-link">📑 Ver Módulo Completo</a>
+            </div>
+            
+            <!-- Módulo 5 -->
+            <div class="module-card">
+                <h2><span class="module-number">5</span> Estatística Aplicada</h2>
+                <p class="module-description">Estatística descritiva, testes de hipótese, correlação e regressão</p>
+                <ul class="module-links">
+                    <li><a href="./html/5-Estatistica-Aplicada/00-Glossario.html">📖 Glossário</a></li>
+                    <li><a href="./html/5-Estatistica-Aplicada/01-Estatistica-Descritiva.html">Estatística Descritiva</a></li>
+                    <li><a href="./html/5-Estatistica-Aplicada/02-Testes-Hipotese.html">Testes de Hipótese</a></li>
+                    <li><a href="./html/5-Estatistica-Aplicada/03-Correlacao-Regressao.html">Correlação e Regressão</a></li>
+                </ul>
+                <a href="./html/5-Estatistica-Aplicada/index.html" class="index-link">📑 Ver Módulo Completo</a>
+            </div>
+            
+            <!-- Módulo 6 -->
+            <div class="module-card">
+                <h2><span class="module-number">6</span> Machine Learning</h2>
+                <p class="module-description">Classificação avançada, clusterização e redução de dimensionalidade (PCA)</p>
+                <ul class="module-links">
+                    <li><a href="./html/6-Machine-Learning/00-Glossario.html">📖 Glossário</a></li>
+                    <li><a href="./html/6-Machine-Learning/01-Intro-Machine-Learning.html">Introdução ao ML</a></li>
+                    <li><a href="./html/6-Machine-Learning/02-Classificacao-Avancada.html">Classificação Avançada</a></li>
+                    <li><a href="./html/6-Machine-Learning/03-Clusterizacao-PCA.html">Clusterização & PCA</a></li>
+                </ul>
+                <a href="./html/6-Machine-Learning/index.html" class="index-link">📑 Ver Módulo Completo</a>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><strong>Tutorial Python para Oceanografia</strong></p>
+        <p>Desenvolvido no LABFICOL - Universidade Federal de Santa Catarina</p>
+        <p style="margin-top: 10px;">
+            <a href="https://github.com/caetanoronan/labficol-tutorial" target="_blank">📂 Repositório GitHub</a> | 
+            <a href="https://github.com/caetanoronan/labficol-tutorial/issues" target="_blank">💬 Reportar Problema</a>
+        </p>
+        <p style="margin-top: 15px; font-size: 0.9rem; color: #999;">
+            Última atualização: Janeiro 2026 | Paleta de Cores: ColorBrewer BuGn
+        </p>
+    </footer>
+</body>
 </html>
