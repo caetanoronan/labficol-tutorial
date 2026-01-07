@@ -208,6 +208,87 @@
             text-decoration: underline;
         }
         
+        /* Seção de Referências */
+        .references {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 40px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-left: 6px solid #2ca25f;
+        }
+        
+        .references h2 {
+            color: #2ca25f;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+        
+        .reference-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #99d8c9;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .reference-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .reference-item a {
+            color: #2ca25f;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .reference-item a:hover {
+            color: #1e7d5a;
+            text-decoration: underline;
+        }
+        
+        .reference-description {
+            color: #555;
+            margin-top: 8px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .reference-icon {
+            font-size: 1.5rem;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        
+        /* Dark mode para referências */
+        body.dark-mode .references {
+            background: #2a2a2a;
+        }
+        
+        body.dark-mode .references h2 {
+            color: #4ade80;
+        }
+        
+        body.dark-mode .reference-item {
+            background: #1e1e1e;
+            border-left-color: #4ade80;
+        }
+        
+        body.dark-mode .reference-item a {
+            color: #4ade80;
+        }
+        
+        body.dark-mode .reference-item a:hover {
+            color: #22c55e;
+        }
+        
+        body.dark-mode .reference-description {
+            color: #b0b0b0;
+        }
+        
         @media (max-width: 768px) {
             .hero h1 { font-size: 1.8rem; }
             .modules-grid { grid-template-columns: 1fr; }
@@ -491,6 +572,20 @@
                     <li><a href="./html/6-Machine-Learning/03-Clusterizacao-PCA.html">Clusterização & PCA</a></li>
                 </ul>
                 <a href="./html/6-Machine-Learning/index.html" class="index-link">📑 Ver Módulo Completo</a>
+            </div>
+        </div>
+        
+        <!-- Seção de Referências -->
+        <div class="references">
+            <h2><span class="reference-icon">📚</span>Referências</h2>
+            <div class="reference-item">
+                <a href="https://arthurberbert-ifsc.github.io/Livros-Python_Aplicado_Geoprocessamento/index.html#apresentacao" target="_blank" rel="noopener">
+                    Python Aplicado ao Geoprocessamento
+                </a>
+                <p class="reference-description">
+                    Livro digital completo sobre Python aplicado ao Geoprocessamento, desenvolvido por Arthur Berbert (IFSC). 
+                    Material complementar com conceitos, exemplos práticos e aplicações em análise espacial.
+                </p>
             </div>
         </div>
     </div>
