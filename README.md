@@ -381,20 +381,6 @@ Este tutorial é de **uso livre para fins educacionais**.
 - [ ] Produzo mapas interativos
 - [ ] Publico resultados online
 
----
-
-## 🌟 Depoimentos
-
-> *"Este tutorial mudou completamente minha forma de trabalhar com dados de pesquisa. Agora consigo analisar centenas de amostras em minutos!"*  
-> — Estudante de Mestrado em Oceanografia
-
-> *"Finalmente um tutorial que fala a língua dos biólogos. Os exemplos com macroalgas me ajudaram muito!"*  
-> — Doutorando em Ficologia
-
-> *"Usei este material em minha disciplina de Bioinformática. Os alunos adoraram!"*  
-> — Professor de Graduação
-
----
 
 ## 📈 Roadmap Futuro
 
