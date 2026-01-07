@@ -212,9 +212,156 @@
             .hero h1 { font-size: 1.8rem; }
             .modules-grid { grid-template-columns: 1fr; }
         }
+        
+        /* ================================
+           MODO ESCURO (DARK MODE)
+           ================================ */
+        
+        /* Botão de Toggle Dark Mode */
+        .dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #2ca25f;
+            border-radius: 50px;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: #062b1e;
+        }
+        
+        .dark-mode-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+        }
+        
+        /* Estilos do Modo Escuro */
+        body.dark-mode {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1e3a32 100%);
+            color: #e0e0e0;
+        }
+        
+        body.dark-mode .dark-mode-toggle {
+            background: rgba(30, 30, 30, 0.95);
+            border-color: #4ade80;
+            color: #e0e0e0;
+        }
+        
+        body.dark-mode .hero {
+            background: linear-gradient(120deg, #1e5a3f, #0f3d2a);
+        }
+        
+        body.dark-mode .intro {
+            background: #2a2a2a;
+            color: #e0e0e0;
+            border-left-color: #4ade80;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+        
+        body.dark-mode .intro h2 {
+            color: #4ade80;
+        }
+        
+        body.dark-mode .intro a {
+            color: #4ade80;
+        }
+        
+        body.dark-mode .intro a:hover {
+            color: #22c55e;
+        }
+        
+        body.dark-mode .feature {
+            background: #2a2a2a;
+            color: #e0e0e0;
+            border-top-color: #4ade80;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+        
+        body.dark-mode .feature:hover {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+        }
+        
+        body.dark-mode .feature h3 {
+            color: #4ade80;
+        }
+        
+        body.dark-mode .module-card {
+            background: #2a2a2a;
+            color: #e0e0e0;
+            border-left-color: #4ade80;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+        
+        body.dark-mode .module-card:hover {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+        }
+        
+        body.dark-mode .module-card h2 {
+            color: #e0e0e0;
+        }
+        
+        body.dark-mode .module-number {
+            background: linear-gradient(135deg, #1e5a3f, #4ade80);
+            color: #fff;
+        }
+        
+        body.dark-mode .module-description {
+            color: #b0b0b0;
+        }
+        
+        body.dark-mode .module-links li a {
+            color: #4ade80;
+            background: #1f1f1f;
+        }
+        
+        body.dark-mode .module-links li a:hover {
+            background: #1e5a3f;
+            color: #fff;
+        }
+        
+        body.dark-mode .index-link {
+            background: linear-gradient(135deg, #1e5a3f, #22c55e);
+            color: #fff;
+        }
+        
+        body.dark-mode .index-link:hover {
+            background: linear-gradient(135deg, #22c55e, #4ade80);
+        }
+        
+        body.dark-mode footer {
+            background: #1a1a1a;
+            color: #b0b0b0;
+            border-top-color: #4ade80;
+        }
+        
+        body.dark-mode footer a {
+            color: #4ade80;
+        }
+        
+        body.dark-mode footer a:hover {
+            color: #22c55e;
+        }
+        
+        body.dark-mode h2 {
+            color: #4ade80 !important;
+        }
     </style>
 </head>
 <body>
+    <!-- Botão de Toggle Dark Mode -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()" aria-label="Alternar modo escuro">
+        <span id="dark-mode-icon">🌙</span>
+        <span id="dark-mode-text">Escuro</span>
+    </button>
+    
     <div class="hero">
         <h1>🌊 Tutorial Python</h1>
         <p>Análise de Dados, Visualização Geoespacial e Machine Learning aplicados à Oceanografia e Ficologia</p>
@@ -364,5 +511,39 @@
             Última atualização: Janeiro 2026 | Paleta de Cores: ColorBrewer BuGn
         </p>
     </footer>
+    
+    <script>
+        // Sistema de Dark Mode com persistência
+        function toggleDarkMode() {
+            const body = document.body;
+            const icon = document.getElementById('dark-mode-icon');
+            const text = document.getElementById('dark-mode-text');
+            
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                icon.textContent = '☀️';
+                text.textContent = 'Claro';
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                icon.textContent = '🌙';
+                text.textContent = 'Escuro';
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        }
+        
+        // Verificar preferência salva ao carregar a página
+        document.addEventListener('DOMContentLoaded', function() {
+            const darkMode = localStorage.getItem('darkMode');
+            const icon = document.getElementById('dark-mode-icon');
+            const text = document.getElementById('dark-mode-text');
+            
+            if (darkMode === 'enabled') {
+                document.body.classList.add('dark-mode');
+                icon.textContent = '☀️';
+                text.textContent = 'Claro';
+            }
+        });
+    </script>
 </body>
 </html>
