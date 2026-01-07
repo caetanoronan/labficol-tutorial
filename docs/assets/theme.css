@@ -1,0 +1,228 @@
+/* Tema acessivel LABFICOL - ColorBrewer BuGn */
+:root {
+  --bu-1: #e5f5f9;
+  --bu-2: #99d8c9;
+  --bu-3: #2ca25f;
+  --bg: #0f172a;
+  --fg: #e2e8f0;
+  --muted: #94a3b8;
+  --focus: #f59e0b;
+  --radius: 14px;
+  --shadow-1: 0 10px 30px rgba(0,0,0,0.15);
+  --shadow-2: 0 16px 40px rgba(0,0,0,0.18);
+  --border: rgba(0,0,0,0.12);
+}
+
+body.hc { --bg: #000; --fg: #fff; --muted: #ddd; --bu-1: #000; --bu-2: #888; --bu-3: #fff; }
+body.big-text { font-size: 18px; }
+body.low-motion { scroll-behavior: auto; }
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { 
+  margin: 0; 
+  background: var(--bg); 
+  color: var(--fg); 
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; 
+  line-height: 1.6; 
+}
+
+.skip-link { position: absolute; left: -999px; top: -999px; }
+.skip-link:focus { 
+  left: 12px; 
+  top: 12px; 
+  background: var(--bu-3); 
+  color: #fff; 
+  padding: 8px 12px; 
+  border-radius: 8px; 
+}
+
+header { 
+  background: rgba(255,255,255,0.06); 
+  color: var(--fg); 
+  padding: 20px; 
+}
+header .wrap { max-width: 1000px; margin: 0 auto; }
+header h1 { margin: 0; font-size: 1.8rem; }
+header nav { margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap; }
+header nav a { color: var(--bu-2); font-weight: 600; }
+
+.controls { display: flex; gap: 8px; margin-top: 8px; }
+.controls button { 
+  background: rgba(255,255,255,0.1); 
+  color: var(--fg); 
+  border: 1px solid rgba(255,255,255,0.2); 
+  border-radius: 8px; 
+  padding: 6px 10px; 
+  cursor: pointer; 
+}
+.controls button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+main { max-width: 1000px; margin: 24px auto; padding: 0 16px; }
+main h1, main h2, main h3 { color: var(--fg); }
+main a { color: var(--bu-2); }
+main a:hover { color: var(--bu-3); }
+
+blockquote { border-left: 4px solid var(--bu-2); padding-left: 12px; color: var(--muted); }
+code, pre { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; }
+pre { padding: 10px; overflow: auto; }
+
+.table-wrap { overflow-x: auto; border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; }
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,0.12); }
+th { background: rgba(255,255,255,0.06); }
+
+footer { max-width: 1000px; margin: 24px auto; padding: 0 16px 24px; color: var(--muted); }
+
+a:focus-visible, button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+.module-layout { display: grid; grid-template-columns: 280px 1fr; gap: 24px; align-items: start; }
+.module-toc { position: sticky; top: 16px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 12px; }
+.module-toc h2 { font-size: 1rem; margin: 0 0 8px; color: var(--muted); }
+.module-toc ul { list-style: none; margin: 0; padding: 0; }
+.module-toc li { margin: 6px 0; }
+.module-toc a { color: var(--fg); text-decoration: none; }
+.module-toc a:hover { color: var(--bu-2); }
+.module-content { display: grid; gap: 24px; }
+.module-section { 
+  background: rgba(255,255,255,0.04); 
+  border: 1px solid rgba(255,255,255,0.10); 
+  border-radius: var(--radius); 
+  padding: 18px; 
+  box-shadow: var(--shadow-1); 
+}
+.module-section h2 { margin-top: 0; border-left: 8px solid var(--bu-3); padding-left: 12px; }
+
+[hidden] { display: none !important; }
+
+@media (max-width: 900px) {
+  .module-layout { grid-template-columns: 1fr; }
+  .module-toc { position: static; }
+}
+
+body.presentation {
+  background: linear-gradient(135deg, #e5f5f9 0%, #99d8c9 50%, #2ca25f 100%) !important;
+  min-height: 100vh;
+  color: #062b1e !important;
+}
+
+body.presentation header {
+  background: linear-gradient(120deg, #2ca25f, #1e7d5a) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+body.presentation header h1 {
+  color: #fff !important;
+}
+
+body.presentation header nav a {
+  color: #fff !important;
+  background: rgba(255,255,255,0.2);
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+
+body.presentation .controls button {
+  background: rgba(255,255,255,0.3) !important;
+  color: #fff !important;
+  border-color: rgba(255,255,255,0.4) !important;
+}
+
+body.presentation .module-section {
+  background: #fff !important;
+  border: 3px solid #99d8c9 !important;
+  box-shadow: var(--shadow-2);
+}
+
+body.presentation .module-section h2 {
+  color: #2ca25f !important;
+  border-left-color: #2ca25f !important;
+}
+
+body.presentation .module-section h3 {
+  color: #2ca25f !important;
+}
+
+body.presentation .module-section p,
+body.presentation .module-section li {
+  color: #062b1e !important;
+}
+
+body.presentation .module-section code {
+  background: #e5f5f9 !important;
+  color: #062b1e !important;
+}
+
+body.presentation .module-section pre {
+  background: #e5f5f9 !important;
+  border-left: 6px solid #2ca25f !important;
+}
+
+.hero {
+  background: linear-gradient(120deg, #99d8c9, #2ca25f) !important;
+  border: 3px solid #1e7d5a !important;
+  border-left: 12px solid #1e7d5a !important;
+  border-radius: 14px;
+  padding: 24px;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow-2);
+}
+
+.hero h2 {
+  margin: 0 0 12px;
+  color: #fff !important;
+  font-size: 2rem;
+}
+
+.hero h3 {
+  margin: 16px 0 10px;
+  color: #fff !important;
+  font-size: 1.4rem;
+}
+
+.hero p {
+  color: #fff !important;
+  font-size: 1.08rem;
+}
+
+.hero ul {
+  margin: 10px 0;
+  padding-left: 24px;
+  color: #fff !important;
+}
+
+.hero li {
+  color: #fff !important;
+  margin: 6px 0;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.chip {
+  background: #1e7d5a !important;
+  color: #fff !important;
+  border: 2px solid #156048 !important;
+  border-radius: 999px;
+  padding: 9px 14px;
+  font-weight: 700;
+  font-size: 0.92rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}

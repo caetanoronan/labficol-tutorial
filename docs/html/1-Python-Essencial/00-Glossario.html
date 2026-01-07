@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>🧭 Clusterização (K-Means) e PCA</title>
+    <title>📖 Glossário - Python Essencial</title>
     <style>
       * { box-sizing: border-box; }
       body { 
@@ -678,111 +678,147 @@
   <body class="presentation">
     <header role="banner">
       <div class="wrap">
-        <h1>🧭 Clusterização (K-Means) e PCA</h1>
+        <h1>📖 Glossário - Python Essencial</h1>
 
       </div>
     </header>
     <main id="conteudo" role="main">
       <article class="md-content" aria-label="Conteúdo">
-        <h1 id="clusterizacao-k-means-e-pca">🧭 Clusterização (K-Means) e PCA</h1>
-<h2 id="objetivo">🎯 Objetivo</h2>
-<p>Agrupar coletas por similaridade e reduzir dimensionalidade para visualização e interpretação.</p>
-<p>— K-Means: agrupa pontos em K clusters.
-— PCA: projeta dados em componentes principais.</p>
-<hr />
-<h2 id="setup">📦 Setup</h2>
-<div class="codehilite"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>scikit-learn<span class="w"> </span>pandas<span class="w"> </span>numpy<span class="w"> </span>matplotlib<span class="w"> </span>seaborn
+        <h1 id="glossario-python-essencial">📖 Glossário - Python Essencial</h1>
+<h2 id="a">A</h2>
+<p><strong>Argumentos</strong>: Valores passados para uma função quando ela é chamada.</p>
+<p><strong>Array</strong>: Estrutura de dados que armazena múltiplos valores em sequência (em Python, use listas).</p>
+<p><strong>Atribuição</strong>: Operação que define o valor de uma variável (ex: <code>x = 10</code>).</p>
+<h2 id="b">B</h2>
+<p><strong>Booleano (bool)</strong>: Tipo de dado que pode ser <code>True</code> ou <code>False</code>.</p>
+<p><strong>Break</strong>: Comando para interromper um loop prematuramente.</p>
+<h2 id="c">C</h2>
+<p><strong>Class (Classe)</strong>: Modelo para criar objetos com atributos e métodos específicos.</p>
+<p><strong>Comentário</strong>: Texto no código que não é executado, usado para explicações (inicia com <code>#</code>).</p>
+<p><strong>Comprehension</strong>: Sintaxe concisa para criar listas, dicionários ou conjuntos (ex: <code>[x**2 for x in range(10)]</code>).</p>
+<p><strong>Condição</strong>: Expressão que avalia para True ou False, usada em if/while.</p>
+<p><strong>Continue</strong>: Comando que pula para a próxima iteração de um loop.</p>
+<h2 id="d">D</h2>
+<p><strong>def</strong>: Palavra-chave para definir uma função em Python.</p>
+<p><strong>Dicionário (dict)</strong>: Estrutura de dados que mapeia chaves a valores (ex: <code>{"nome": "Ana", "idade": 25}</code>).</p>
+<p><strong>Docstring</strong>: String de documentação no início de funções/classes (entre <code>"""</code>).</p>
+<h2 id="e">E</h2>
+<p><strong>elif</strong>: Abreviação de "else if", usado para condições adicionais em estruturas if.</p>
+<p><strong>else</strong>: Cláusula executada quando condição if/elif é falsa.</p>
+<p><strong>Escopo</strong>: Região do código onde uma variável é acessível.</p>
+<p><strong>Exceção</strong>: Erro que ocorre durante a execução do programa.</p>
+<h2 id="f">F</h2>
+<p><strong>f-string</strong>: Formatação de strings com variáveis embutidas (ex: <code>f"Nome: {nome}"</code>).</p>
+<p><strong>False</strong>: Valor booleano que representa falso.</p>
+<p><strong>Float</strong>: Tipo de dado numérico com ponto decimal (números reais).</p>
+<p><strong>for</strong>: Loop que itera sobre uma sequência (lista, string, range, etc).</p>
+<h2 id="g">G</h2>
+<p><strong>Global</strong>: Variável acessível em todo o programa, fora de funções.</p>
+<h2 id="i">I</h2>
+<p><strong>if</strong>: Estrutura condicional que executa código apenas se condição for verdadeira.</p>
+<p><strong>import</strong>: Comando para carregar módulos/bibliotecas em seu programa.</p>
+<p><strong>in</strong>: Operador que verifica se elemento está em uma sequência.</p>
+<p><strong>Indentação</strong>: Espaços/tabs no início da linha que definem blocos de código em Python.</p>
+<p><strong>IndexError</strong>: Erro quando tenta acessar índice inexistente em lista.</p>
+<p><strong>int</strong>: Tipo de dado numérico inteiro (sem decimais).</p>
+<p><strong>is</strong>: Operador que verifica identidade de objetos (se são o mesmo objeto).</p>
+<p><strong>Iteração</strong>: Uma execução de um loop.</p>
+<p><strong>Iterável</strong>: Objeto que pode ser percorrido em loop (lista, tupla, string, etc).</p>
+<h2 id="k">K</h2>
+<p><strong>KeyError</strong>: Erro quando tenta acessar chave inexistente em dicionário.</p>
+<p><strong>Keyword argument</strong>: Argumento de função especificado por nome (ex: <code>func(nome="Ana")</code>).</p>
+<h2 id="l">L</h2>
+<p><strong>Lambda</strong>: Função anônima de uma linha (ex: <code>lambda x: x**2</code>).</p>
+<p><strong>len()</strong>: Função que retorna tamanho de sequência.</p>
+<p><strong>Lista (list)</strong>: Sequência ordenada e mutável de elementos <code>[1, 2, 3]</code>.</p>
+<p><strong>Local</strong>: Variável acessível apenas dentro da função onde foi criada.</p>
+<h2 id="m">M</h2>
+<p><strong>Método</strong>: Função associada a um objeto.</p>
+<p><strong>Mutável</strong>: Objeto que pode ser modificado após criação (listas, dicionários).</p>
+<h2 id="n">N</h2>
+<p><strong>None</strong>: Valor especial que representa ausência de valor.</p>
+<p><strong>not</strong>: Operador lógico de negação.</p>
+<h2 id="o">O</h2>
+<p><strong>Objeto</strong>: Instância de uma classe com dados e métodos.</p>
+<p><strong>Operador</strong>: Símbolo para operações (<code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>==</code>, <code>&gt;</code>, etc).</p>
+<p><strong>or</strong>: Operador lógico OU.</p>
+<h2 id="p">P</h2>
+<p><strong>Parâmetro</strong>: Variável na definição de função que recebe argumentos.</p>
+<p><strong>pass</strong>: Comando que não faz nada, usado como placeholder.</p>
+<p><strong>print()</strong>: Função para exibir saída no console.</p>
+<p><strong>PEP 8</strong>: Guia de estilo oficial para código Python.</p>
+<h2 id="r">R</h2>
+<p><strong>range()</strong>: Função que gera sequência de números.</p>
+<p><strong>return</strong>: Comando que retorna valor de uma função.</p>
+<h2 id="s">S</h2>
+<p><strong>Set (conjunto)</strong>: Coleção não ordenada de elementos únicos <code>{1, 2, 3}</code>.</p>
+<p><strong>Slice (fatia)</strong>: Operação para obter subsequência <code>lista[1:5]</code>.</p>
+<p><strong>str (string)</strong>: Tipo de dado textual (sequência de caracteres).</p>
+<p><strong>SyntaxError</strong>: Erro de sintaxe, código escrito incorretamente.</p>
+<h2 id="t">T</h2>
+<p><strong>True</strong>: Valor booleano que representa verdadeiro.</p>
+<p><strong>try/except</strong>: Estrutura para capturar e tratar exceções.</p>
+<p><strong>Tupla (tuple)</strong>: Sequência ordenada e imutável <code>(1, 2, 3)</code>.</p>
+<p><strong>type()</strong>: Função que retorna tipo de um objeto.</p>
+<h2 id="v">V</h2>
+<p><strong>ValueError</strong>: Erro quando função recebe argumento de tipo correto mas valor inadequado.</p>
+<p><strong>Variável</strong>: Nome que armazena valor que pode mudar.</p>
+<h2 id="w">W</h2>
+<p><strong>while</strong>: Loop que executa enquanto condição for verdadeira.</p>
+<h2 id="exemplos-praticos">Exemplos Práticos</h2>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Variáveis e tipos</span>
+<span class="n">nome</span> <span class="o">=</span> <span class="s2">&quot;Maria&quot;</span>  <span class="c1"># string</span>
+<span class="n">idade</span> <span class="o">=</span> <span class="mi">25</span>      <span class="c1"># int</span>
+<span class="n">altura</span> <span class="o">=</span> <span class="mf">1.65</span>   <span class="c1"># float</span>
+<span class="n">ativo</span> <span class="o">=</span> <span class="kc">True</span>    <span class="c1"># bool</span>
+
+<span class="c1"># Lista (mutável)</span>
+<span class="n">frutas</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;maçã&quot;</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">,</span> <span class="s2">&quot;uva&quot;</span><span class="p">]</span>
+<span class="n">frutas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;laranja&quot;</span><span class="p">)</span>
+
+<span class="c1"># Tupla (imutável)</span>
+<span class="n">coordenadas</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+
+<span class="c1"># Dicionário</span>
+<span class="n">pessoa</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;nome&quot;</span><span class="p">:</span> <span class="s2">&quot;João&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;idade&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+    <span class="s2">&quot;cidade&quot;</span><span class="p">:</span> <span class="s2">&quot;Florianópolis&quot;</span>
+<span class="p">}</span>
+
+<span class="c1"># Função</span>
+<span class="k">def</span> <span class="nf">calcular_area</span><span class="p">(</span><span class="n">largura</span><span class="p">,</span> <span class="n">altura</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calcula área de retângulo&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">largura</span> <span class="o">*</span> <span class="n">altura</span>
+
+<span class="c1"># Condicional</span>
+<span class="k">if</span> <span class="n">idade</span> <span class="o">&gt;=</span> <span class="mi">18</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Maior de idade&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Menor de idade&quot;</span><span class="p">)</span>
+
+<span class="c1"># Loop for</span>
+<span class="k">for</span> <span class="n">fruta</span> <span class="ow">in</span> <span class="n">frutas</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">fruta</span><span class="p">)</span>
+
+<span class="c1"># Loop while</span>
+<span class="n">contador</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">contador</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">contador</span><span class="p">)</span>
+    <span class="n">contador</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="c1"># Comprehension</span>
+<span class="n">quadrados</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+
+<span class="c1"># Try/except</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">resultado</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">/</span> <span class="mi">0</span>
+<span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Divisão por zero!&quot;</span><span class="p">)</span>
 </code></pre></div>
 
 <hr />
-<h2 id="dataset-de-caracteristicas">🔢 Dataset de Características</h2>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
-
-<span class="n">n</span> <span class="o">=</span> <span class="mi">120</span>
-
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-    <span class="s1">&#39;biomassa_g&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">280</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span>
-    <span class="s1">&#39;temperatura_c&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span>
-    <span class="s1">&#39;salinidade_psu&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">35.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span>
-    <span class="s1">&#39;profundidade_m&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">4.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
-<span class="p">})</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
-</code></pre></div>
-
-<hr />
-<h2 id="k-means-agrupamento">🎛️ K-Means (Agrupamento)</h2>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
-
-<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;biomassa_g&#39;</span><span class="p">,</span> <span class="s1">&#39;temperatura_c&#39;</span><span class="p">,</span> <span class="s1">&#39;salinidade_psu&#39;</span><span class="p">,</span> <span class="s1">&#39;profundidade_m&#39;</span><span class="p">]]</span>
-<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
-<span class="n">X_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-
-<span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-<span class="n">kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span>
-
-<span class="n">labels</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">labels_</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;cluster&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">labels</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;cluster&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
-</code></pre></div>
-
-<p>— Cada cluster agrupa coletas com padrões semelhantes.</p>
-<h3 id="visualizacao-2d-pca">Visualização 2D (PCA)</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-
-<span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">X_pca</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">X_pca</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">X_pca</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">hue</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;cluster&#39;</span><span class="p">],</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;Set2&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;K-Means clusters (PCA 2D)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;PC1 (</span><span class="si">{</span><span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">% var.)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;PC2 (</span><span class="si">{</span><span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">% var.)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span> <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;clusters_pca.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div>
-
-<hr />
-<h2 id="pca-componentes-e-cargas">📐 PCA: Componentes e Cargas</h2>
-<div class="codehilite"><pre><span></span><code><span class="n">componentes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pca</span><span class="o">.</span><span class="n">components_</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;PC1&#39;</span><span class="p">,</span> <span class="s1">&#39;PC2&#39;</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Cargas dos componentes:&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">componentes</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Variância explicada:&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
-</code></pre></div>
-
-<p>Interpretação:
-- Cargas altas (positivas/negativas) mostram variáveis que mais pesam em cada PC.</p>
-<hr />
-<h2 id="escolha-de-k-elbow-method">🔍 Escolha de K (Elbow Method)</h2>
-<div class="codehilite"><pre><span></span><code><span class="n">inertias</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">):</span>
-    <span class="n">km</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span>
-    <span class="n">inertias</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">km</span><span class="o">.</span><span class="n">inertia_</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">inertias</span><span class="p">,</span> <span class="s1">&#39;o--&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Número de clusters (K)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Inércia&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Elbow Method&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span> <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;elbow.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div>
-
-<p>— Ponto de inflexão sugere bom K.</p>
-<hr />
-<h2 id="boas-praticas">✅ Boas Práticas</h2>
-<ul>
-<li>Padronizar dados antes de K-Means</li>
-<li>Interpretar PCA com cargas das variáveis</li>
-<li>Validar clusters (silhouette score)</li>
-<li>Evitar inferências causais com clusters</li>
-</ul>
-<p>— Com isso, você consegue agrupar e visualizar padrões em dados complexos.</p>
+<p>💡 <strong>Dica</strong>: Use <code>help(função)</code> no Python para ver documentação de qualquer função!</p>
       </article>
     </main>
     <footer role="contentinfo">

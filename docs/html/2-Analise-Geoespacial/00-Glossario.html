@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>🧭 Clusterização (K-Means) e PCA</title>
+    <title>📖 Glossário - Análise Geoespacial</title>
     <style>
       * { box-sizing: border-box; }
       body { 
@@ -678,111 +678,144 @@
   <body class="presentation">
     <header role="banner">
       <div class="wrap">
-        <h1>🧭 Clusterização (K-Means) e PCA</h1>
+        <h1>📖 Glossário - Análise Geoespacial</h1>
 
       </div>
     </header>
     <main id="conteudo" role="main">
       <article class="md-content" aria-label="Conteúdo">
-        <h1 id="clusterizacao-k-means-e-pca">🧭 Clusterização (K-Means) e PCA</h1>
-<h2 id="objetivo">🎯 Objetivo</h2>
-<p>Agrupar coletas por similaridade e reduzir dimensionalidade para visualização e interpretação.</p>
-<p>— K-Means: agrupa pontos em K clusters.
-— PCA: projeta dados em componentes principais.</p>
-<hr />
-<h2 id="setup">📦 Setup</h2>
-<div class="codehilite"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>scikit-learn<span class="w"> </span>pandas<span class="w"> </span>numpy<span class="w"> </span>matplotlib<span class="w"> </span>seaborn
+        <h1 id="glossario-analise-geoespacial">📖 Glossário - Análise Geoespacial</h1>
+<h2 id="a">A</h2>
+<p><strong>Atributo (Feature Attribute)</strong>: Informação descritiva associada a uma feição geográfica (nome, população, área, etc).</p>
+<h2 id="b">B</h2>
+<p><strong>Bounding Box</strong>: Retângulo que delimita a extensão mínima de um conjunto de geometrias.</p>
+<p><strong>Buffer</strong>: Operação que cria área ao redor de geometria com distância específica.</p>
+<h2 id="c">C</h2>
+<p><strong>Centroide</strong>: Ponto central de uma geometria.</p>
+<p><strong>CRS (Coordinate Reference System)</strong>: Sistema de coordenadas que define como posições geográficas são representadas.</p>
+<p><strong>CSV (Comma-Separated Values)</strong>: Formato de arquivo tabular com valores separados por vírgula.</p>
+<h2 id="d">D</h2>
+<p><strong>DataFrame</strong>: Estrutura de dados tabular do pandas com linhas e colunas.</p>
+<p><strong>Dissolve</strong>: Operação que combina geometrias adjacentes em uma única.</p>
+<h2 id="e">E</h2>
+<p><strong>EPSG</strong>: Código numérico que identifica sistemas de coordenadas (ex: EPSG:4326 = WGS84).</p>
+<p><strong>Extent</strong>: Limites geográficos (min/max X e Y) de uma área.</p>
+<h2 id="f">F</h2>
+<p><strong>Feature (Feição)</strong>: Entidade geográfica com geometria e atributos (ponto, linha ou polígono).</p>
+<p><strong>Feature Collection</strong>: Coleção de múltiplas feições GeoJSON.</p>
+<h2 id="g">G</h2>
+<p><strong>Geocodificação</strong>: Processo de converter endereços em coordenadas.</p>
+<p><strong>GeoDataFrame</strong>: DataFrame do GeoPandas com coluna de geometrias.</p>
+<p><strong>Geografia</strong>: Ciência que estuda a superfície terrestre e distribuição espacial de fenômenos.</p>
+<p><strong>GeoJSON</strong>: Formato JSON para codificar estruturas de dados geográficos.</p>
+<p><strong>GeoPandas</strong>: Biblioteca Python para manipular dados geoespaciais.</p>
+<p><strong>Geometria</strong>: Representação matemática de forma espacial (ponto, linha, polígono).</p>
+<p><strong>GIS (Geographic Information System)</strong>: Sistema para capturar, armazenar, analisar e gerenciar dados espaciais.</p>
+<h2 id="i">I</h2>
+<p><strong>Interseção (Intersection)</strong>: Operação que retorna geometria comum entre duas outras.</p>
+<h2 id="l">L</h2>
+<p><strong>Latitude</strong>: Coordenada que indica posição norte-sul (0° no Equador, -90° a +90°).</p>
+<p><strong>Layer (Camada)</strong>: Conjunto de dados geográficos relacionados.</p>
+<p><strong>LineString</strong>: Geometria GeoJSON representando linha conectando pontos.</p>
+<p><strong>Longitude</strong>: Coordenada que indica posição leste-oeste (0° em Greenwich, -180° a +180°).</p>
+<h2 id="m">M</h2>
+<p><strong>Mapa</strong>: Representação visual de informações geográficas.</p>
+<p><strong>Mapa de calor (Heatmap)</strong>: Visualização que usa cor para mostrar densidade/intensidade.</p>
+<p><strong>Marker (Marcador)</strong>: Ícone que indica localização em mapa.</p>
+<p><strong>Mercator</strong>: Projeção cilíndrica comum em mapas web.</p>
+<p><strong>MultiPoint/MultiLineString/MultiPolygon</strong>: Geometrias compostas por múltiplas partes.</p>
+<h2 id="o">O</h2>
+<p><strong>Overlay</strong>: Operação que combina duas camadas espaciais.</p>
+<h2 id="p">P</h2>
+<p><strong>Plotly</strong>: Biblioteca Python para visualizações interativas.</p>
+<p><strong>Point (Ponto)</strong>: Geometria mais simples representando localização (X, Y).</p>
+<p><strong>Polygon (Polígono)</strong>: Geometria fechada representando área.</p>
+<p><strong>Projeção</strong>: Transformação de coordenadas 3D (Terra) para 2D (mapa).</p>
+<h2 id="r">R</h2>
+<p><strong>Raster</strong>: Dados espaciais em formato de grade de pixels (imagens, elevação).</p>
+<p><strong>Reprojetar</strong>: Converter dados de um CRS para outro.</p>
+<h2 id="s">S</h2>
+<p><strong>Shapefile</strong>: Formato popular de arquivo para dados vetoriais GIS (.shp, .shx, .dbf).</p>
+<p><strong>SIG (Sistema de Informação Geográfica)</strong>: Termo em português para GIS.</p>
+<p><strong>Spatial Join</strong>: Operação que une atributos baseado em relação espacial.</p>
+<h2 id="t">T</h2>
+<p><strong>Tiles (Ladrilhos)</strong>: Pequenas imagens que compõem mapa web em diferentes zooms.</p>
+<p><strong>Topology (Topologia)</strong>: Relações espaciais entre geometrias (adjacência, interseção, etc).</p>
+<h2 id="u">U</h2>
+<p><strong>Union</strong>: Operação que combina geometrias em uma única.</p>
+<h2 id="v">V</h2>
+<p><strong>Vetor</strong>: Dados geográficos representados por pontos, linhas e polígonos.</p>
+<p><strong>Visualização</strong>: Representação gráfica de dados para facilitar compreensão.</p>
+<h2 id="w">W</h2>
+<p><strong>WGS84 (World Geodetic System 1984)</strong>: Sistema de coordenadas geográficas padrão (EPSG:4326).</p>
+<h2 id="z">Z</h2>
+<p><strong>Zoom</strong>: Nível de detalhe de visualização em mapa (maior número = mais próximo).</p>
+<h2 id="exemplos-praticos">Exemplos Práticos</h2>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">Point</span><span class="p">,</span> <span class="n">Polygon</span>
+
+<span class="c1"># Criar GeoDataFrame de pontos</span>
+<span class="n">dados</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;nome&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Ingleses&#39;</span><span class="p">,</span> <span class="s1">&#39;Lagoa&#39;</span><span class="p">,</span> <span class="s1">&#39;Centro&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;geometry&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="mf">48.4</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.4</span><span class="p">),</span>
+        <span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="mf">48.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.6</span><span class="p">),</span>
+        <span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="mf">48.55</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.58</span><span class="p">)</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">(</span><span class="n">dados</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="s2">&quot;EPSG:4326&quot;</span><span class="p">)</span>
+
+<span class="c1"># Criar buffer de 1 km</span>
+<span class="n">gdf_buffer</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="s2">&quot;EPSG:31982&quot;</span><span class="p">)</span>  <span class="c1"># Projetar para metros</span>
+<span class="n">gdf_buffer</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf_buffer</span><span class="o">.</span><span class="n">buffer</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+
+<span class="c1"># Ler shapefile</span>
+<span class="n">praias</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s2">&quot;praias.shp&quot;</span><span class="p">)</span>
+
+<span class="c1"># Interseção espacial</span>
+<span class="n">praias_proximas</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">sjoin</span><span class="p">(</span><span class="n">praias</span><span class="p">,</span> <span class="n">gdf_buffer</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;inner&#39;</span><span class="p">)</span>
+
+<span class="c1"># Salvar como GeoJSON</span>
+<span class="n">praias_proximas</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="s2">&quot;praias_proximas.geojson&quot;</span><span class="p">,</span> <span class="n">driver</span><span class="o">=</span><span class="s1">&#39;GeoJSON&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plotar</span>
+<span class="n">praias</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
 </code></pre></div>
 
+<h2 id="sistemas-de-coordenadas-comuns">Sistemas de Coordenadas Comuns</h2>
+<table>
+<thead>
+<tr>
+<th>EPSG</th>
+<th>Nome</th>
+<th>Uso</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4326</td>
+<td>WGS84</td>
+<td>GPS, Google Maps, coordenadas geográficas</td>
+</tr>
+<tr>
+<td>3857</td>
+<td>Web Mercator</td>
+<td>Mapas web (Google, OpenStreetMap)</td>
+</tr>
+<tr>
+<td>31982</td>
+<td>SIRGAS 2000 / UTM 22S</td>
+<td>Brasil - SC, RS (coordenadas métricas)</td>
+</tr>
+<tr>
+<td>4674</td>
+<td>SIRGAS 2000</td>
+<td>Brasil - coordenadas geográficas</td>
+</tr>
+</tbody>
+</table>
 <hr />
-<h2 id="dataset-de-caracteristicas">🔢 Dataset de Características</h2>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
-
-<span class="n">n</span> <span class="o">=</span> <span class="mi">120</span>
-
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-    <span class="s1">&#39;biomassa_g&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">280</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span>
-    <span class="s1">&#39;temperatura_c&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span>
-    <span class="s1">&#39;salinidade_psu&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">35.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span>
-    <span class="s1">&#39;profundidade_m&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">4.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
-<span class="p">})</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
-</code></pre></div>
-
-<hr />
-<h2 id="k-means-agrupamento">🎛️ K-Means (Agrupamento)</h2>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
-
-<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;biomassa_g&#39;</span><span class="p">,</span> <span class="s1">&#39;temperatura_c&#39;</span><span class="p">,</span> <span class="s1">&#39;salinidade_psu&#39;</span><span class="p">,</span> <span class="s1">&#39;profundidade_m&#39;</span><span class="p">]]</span>
-<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
-<span class="n">X_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-
-<span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-<span class="n">kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span>
-
-<span class="n">labels</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">labels_</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;cluster&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">labels</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;cluster&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
-</code></pre></div>
-
-<p>— Cada cluster agrupa coletas com padrões semelhantes.</p>
-<h3 id="visualizacao-2d-pca">Visualização 2D (PCA)</h3>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-
-<span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">X_pca</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">X_pca</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">X_pca</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">hue</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;cluster&#39;</span><span class="p">],</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;Set2&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;K-Means clusters (PCA 2D)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;PC1 (</span><span class="si">{</span><span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">% var.)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;PC2 (</span><span class="si">{</span><span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">% var.)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span> <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;clusters_pca.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div>
-
-<hr />
-<h2 id="pca-componentes-e-cargas">📐 PCA: Componentes e Cargas</h2>
-<div class="codehilite"><pre><span></span><code><span class="n">componentes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pca</span><span class="o">.</span><span class="n">components_</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;PC1&#39;</span><span class="p">,</span> <span class="s1">&#39;PC2&#39;</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Cargas dos componentes:&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">componentes</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Variância explicada:&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
-</code></pre></div>
-
-<p>Interpretação:
-- Cargas altas (positivas/negativas) mostram variáveis que mais pesam em cada PC.</p>
-<hr />
-<h2 id="escolha-de-k-elbow-method">🔍 Escolha de K (Elbow Method)</h2>
-<div class="codehilite"><pre><span></span><code><span class="n">inertias</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">):</span>
-    <span class="n">km</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span>
-    <span class="n">inertias</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">km</span><span class="o">.</span><span class="n">inertia_</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">inertias</span><span class="p">,</span> <span class="s1">&#39;o--&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Número de clusters (K)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Inércia&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Elbow Method&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span> <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;elbow.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div>
-
-<p>— Ponto de inflexão sugere bom K.</p>
-<hr />
-<h2 id="boas-praticas">✅ Boas Práticas</h2>
-<ul>
-<li>Padronizar dados antes de K-Means</li>
-<li>Interpretar PCA com cargas das variáveis</li>
-<li>Validar clusters (silhouette score)</li>
-<li>Evitar inferências causais com clusters</li>
-</ul>
-<p>— Com isso, você consegue agrupar e visualizar padrões em dados complexos.</p>
+<p>💡 <strong>Dica</strong>: Use sempre <code>gdf.crs</code> para verificar o sistema de coordenadas do seu GeoDataFrame!</p>
       </article>
     </main>
     <footer role="contentinfo">
