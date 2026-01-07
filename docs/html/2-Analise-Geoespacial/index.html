@@ -1400,7 +1400,7 @@ Santa Catarina (exemplo):
 <h3 id="exemplo-2-multiplas-estacoes-de-coleta">Exemplo 2: Múltiplas Estações de Coleta</h3>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">json</span>
 
-<span class="c1"># Dados de coleta (exemplo LAFIC)</span>
+<span class="c1"># Dados de coleta (exemplo LABFICOL)</span>
 <span class="n">coletas</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">{</span><span class="s2">&quot;nome&quot;</span><span class="p">:</span> <span class="s2">&quot;Ingleses - Norte&quot;</span><span class="p">,</span> <span class="s2">&quot;lon&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">48.3923</span><span class="p">,</span> <span class="s2">&quot;lat&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">27.4374</span><span class="p">,</span> 
      <span class="s2">&quot;especie&quot;</span><span class="p">:</span> <span class="s2">&quot;Ulva lactuca&quot;</span><span class="p">,</span> <span class="s2">&quot;prof&quot;</span><span class="p">:</span> <span class="mf">5.2</span><span class="p">,</span> <span class="s2">&quot;temp&quot;</span><span class="p">:</span> <span class="mf">22.5</span><span class="p">},</span>
@@ -1437,7 +1437,7 @@ Santa Catarina (exemplo):
 <span class="p">}</span>
 
 <span class="c1"># Salvar</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;coletas_LAFIC.geojson&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;coletas_labficol.geojson&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
     <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">geojson_collection</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ GeoJSON criado com </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="p">)</span><span class="si">}</span><span class="s2"> estações&quot;</span><span class="p">)</span>
@@ -1480,7 +1480,7 @@ Santa Catarina (exemplo):
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">json</span>
 
 <span class="c1"># Carregar arquivo</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;coletas_LAFIC.geojson&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;coletas_labficol.geojson&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
     <span class="n">dados</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
 <span class="c1"># Acessar features</span>
@@ -1660,7 +1660,7 @@ Santa Catarina (exemplo):
 <p>Se marcou tudo, você está pronto para <strong>GeoPandas</strong>! 🎉</p>
 <hr />
 <h2 id="proximo-topico">➡️ Próximo Tópico</h2>
-<p><strong>👉 <a href="02-GeoPandas-Intro.html">02-GeoPandas-Intro.html</a></strong></p>
+<p><strong>👉 <a href="02-GeoPandas-Intro.md">02-GeoPandas-Intro.md</a></strong></p>
 <p>Lá você aprenderá:
 - Usar GeoPandas para análise geoespacial
 - Operações com geometrias
@@ -1766,7 +1766,7 @@ Santa Catarina (exemplo):
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
 
 <span class="c1"># Carregar GeoJSON</span>
-<span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s2">&quot;coletas_LAFIC.geojson&quot;</span><span class="p">)</span>
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s2">&quot;coletas_labficol.geojson&quot;</span><span class="p">)</span>
 
 <span class="c1"># Informações</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">gdf</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>
@@ -1802,11 +1802,11 @@ Santa Catarina (exemplo):
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="c1"># Criar dados</span>
-<span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s2">&quot;coletas_LAFIC.geojson&quot;</span><span class="p">)</span>
+<span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s2">&quot;coletas_labficol.geojson&quot;</span><span class="p">)</span>
 
 <span class="c1"># Plot básico</span>
 <span class="n">gdf</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Estações de Coleta - LAFIC&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Estações de Coleta - LABFICOL&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Longitude&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Latitude&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
@@ -1870,12 +1870,12 @@ Santa Catarina (exemplo):
 <h3 id="calcular-distancias">Calcular Distâncias</h3>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">Point</span>
 
-<span class="c1"># Ponto de referência (LAFIC - UFSC)</span>
-<span class="n">LAFIC</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="mf">48.5495</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.5969</span><span class="p">)</span>
+<span class="c1"># Ponto de referência (LABFICOL - UFSC)</span>
+<span class="n">labficol</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="mf">48.5495</span><span class="p">,</span> <span class="o">-</span><span class="mf">27.5969</span><span class="p">)</span>
 
-<span class="c1"># Calcular distância de cada coleta ao LAFIC</span>
+<span class="c1"># Calcular distância de cada coleta ao LABFICOL</span>
 <span class="c1"># Nota: distância em graus (aproximação!)</span>
-<span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;distancia_graus&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">LAFIC</span><span class="p">)</span>
+<span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;distancia_graus&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">labficol</span><span class="p">)</span>
 
 <span class="c1"># Converter para km (1 grau ≈ 111 km)</span>
 <span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;distancia_km&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;distancia_graus&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">111</span>
@@ -1988,7 +1988,7 @@ Santa Catarina (exemplo):
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">Point</span>
 
-<span class="c1"># 1. CRIAR DADOS DE EXEMPLO (LAFIC)</span>
+<span class="c1"># 1. CRIAR DADOS DE EXEMPLO (LABFICOL)</span>
 <span class="n">dados</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>
     <span class="s1">&#39;local&#39;</span><span class="p">:</span> <span class="p">[</span>
@@ -2014,7 +2014,7 @@ Santa Catarina (exemplo):
 <span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="n">geometry</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="s2">&quot;EPSG:4326&quot;</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🌊 ANÁLISE DE DISTRIBUIÇÃO DE MACROALGAS - LAFIC/UFSC&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🌊 ANÁLISE DE DISTRIBUIÇÃO DE MACROALGAS - LABFICOL/UFSC&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
 
 <span class="c1"># 3. ESTATÍSTICAS GERAIS</span>
@@ -2092,7 +2092,7 @@ Santa Catarina (exemplo):
 <p>Se marcou tudo, você está pronto para <strong>Mapas Interativos</strong>! 🎉</p>
 <hr />
 <h2 id="proximo-topico">➡️ Próximo Tópico</h2>
-<p><strong>👉 <a href="03-Mapas-Folium.html">03-Mapas-Folium.html</a></strong></p>
+<p><strong>👉 <a href="03-Mapas-Folium.md">03-Mapas-Folium.md</a></strong></p>
 <p>Lá você aprenderá:
 - Criar mapas interativos com Folium
 - Adicionar marcadores e popups
@@ -2609,7 +2609,7 @@ Santa Catarina (exemplo):
 <span class="s1">            padding: 10px;</span>
 <span class="s1">            font-family: Arial;&quot;&gt;</span>
 <span class="s1">    &lt;h3 style=&quot;margin: 0; color: #2E86AB;&quot;&gt;</span>
-<span class="s1">        🌊 Distribuição de Macroalgas - LAFIC/UFSC</span>
+<span class="s1">        🌊 Distribuição de Macroalgas - LABFICOL/UFSC</span>
 <span class="s1">    &lt;/h3&gt;</span>
 <span class="s1">    &lt;p style=&quot;margin: 5px 0; font-size: 12px;&quot;&gt;</span>
 <span class="s1">        Total de coletas: &lt;b&gt;</span><span class="si">{}</span><span class="s1">&lt;/b&gt; | Espécies: &lt;b&gt;</span><span class="si">{}</span><span class="s1">&lt;/b&gt;</span>
@@ -2620,8 +2620,8 @@ Santa Catarina (exemplo):
 <span class="n">mapa</span><span class="o">.</span><span class="n">get_root</span><span class="p">()</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">folium</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="n">titulo_html</span><span class="p">))</span>
 
 <span class="c1"># 9. SALVAR</span>
-<span class="n">mapa</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;dashboard_coletas_LAFIC.html&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Dashboard criado: dashboard_coletas_LAFIC.html&quot;</span><span class="p">)</span>
+<span class="n">mapa</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;dashboard_coletas_labficol.html&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Dashboard criado: dashboard_coletas_labficol.html&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📊 </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">gdf</span><span class="p">)</span><span class="si">}</span><span class="s2"> coletas mapeadas&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🌿 </span><span class="si">{</span><span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;especie&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span><span class="si">}</span><span class="s2"> espécies diferentes&quot;</span><span class="p">)</span>
 </code></pre></div>
@@ -2686,10 +2686,12 @@ Santa Catarina (exemplo):
 </table>
 <hr />
 <p><strong>Você é um expert em mapas interativos!</strong> 🗺️✨</p>
-<p>Abra seus mapas HTML no navegador e compartilhe com sua equipe do LAFIC! 🌊</p></section></div>
+<p>Abra seus mapas HTML no navegador e compartilhe com sua equipe do LABFICOL! 🌊</p></section></div>
       </article>
     </main>
-    <footer role="contentinfo"></footer>
+    <footer role="contentinfo">
+      <p>Gerado automaticamente em 07/01/2026 10:41. Paleta: ColorBrewer BuGn.</p>
+    </footer>
     
     <!-- External JavaScript Files -->
     <script src="../../assets/progress.js"></script>

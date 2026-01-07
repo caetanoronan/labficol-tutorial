@@ -1239,7 +1239,7 @@ Santa Catarina (exemplo):
 <h3 id="exemplo-2-multiplas-estacoes-de-coleta">Exemplo 2: Múltiplas Estações de Coleta</h3>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">json</span>
 
-<span class="c1"># Dados de coleta (exemplo LAFIC)</span>
+<span class="c1"># Dados de coleta (exemplo LABFICOL)</span>
 <span class="n">coletas</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">{</span><span class="s2">&quot;nome&quot;</span><span class="p">:</span> <span class="s2">&quot;Ingleses - Norte&quot;</span><span class="p">,</span> <span class="s2">&quot;lon&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">48.3923</span><span class="p">,</span> <span class="s2">&quot;lat&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">27.4374</span><span class="p">,</span> 
      <span class="s2">&quot;especie&quot;</span><span class="p">:</span> <span class="s2">&quot;Ulva lactuca&quot;</span><span class="p">,</span> <span class="s2">&quot;prof&quot;</span><span class="p">:</span> <span class="mf">5.2</span><span class="p">,</span> <span class="s2">&quot;temp&quot;</span><span class="p">:</span> <span class="mf">22.5</span><span class="p">},</span>
@@ -1276,7 +1276,7 @@ Santa Catarina (exemplo):
 <span class="p">}</span>
 
 <span class="c1"># Salvar</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;coletas_LAFIC.geojson&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;coletas_labficol.geojson&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
     <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">geojson_collection</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ GeoJSON criado com </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="p">)</span><span class="si">}</span><span class="s2"> estações&quot;</span><span class="p">)</span>
@@ -1319,7 +1319,7 @@ Santa Catarina (exemplo):
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">json</span>
 
 <span class="c1"># Carregar arquivo</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;coletas_LAFIC.geojson&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;coletas_labficol.geojson&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
     <span class="n">dados</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
 <span class="c1"># Acessar features</span>
@@ -1499,7 +1499,7 @@ Santa Catarina (exemplo):
 <p>Se marcou tudo, você está pronto para <strong>GeoPandas</strong>! 🎉</p>
 <hr />
 <h2 id="proximo-topico">➡️ Próximo Tópico</h2>
-<p><strong>👉 <a href="02-GeoPandas-Intro.html">02-GeoPandas-Intro.html</a></strong></p>
+<p><strong>👉 <a href="02-GeoPandas-Intro.md">02-GeoPandas-Intro.md</a></strong></p>
 <p>Lá você aprenderá:
 - Usar GeoPandas para análise geoespacial
 - Operações com geometrias
@@ -1542,7 +1542,9 @@ Santa Catarina (exemplo):
 <p><strong>Você agora domina GeoJSON básico!</strong> 🗺️ Próximo: GeoPandas! 🐼</p>
       </article>
     </main>
-    <footer role="contentinfo"></footer>
+    <footer role="contentinfo">
+      <p>Gerado automaticamente em 07/01/2026 10:41. Paleta: ColorBrewer BuGn.</p>
+    </footer>
     
     <!-- External JavaScript Files -->
     <script src="../../assets/progress.js"></script>
