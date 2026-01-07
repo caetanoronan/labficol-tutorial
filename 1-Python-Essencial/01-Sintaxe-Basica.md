@@ -418,7 +418,7 @@ mensagem_global = "Oceanografia UFSC"
 
 if True:
     # Variável local
-    mensagem_local = "LABFICOL"
+    mensagem_local = "LAFIC"
     print(mensagem_global)  # ✅ Funciona
     print(mensagem_local)   # ✅ Funciona
 

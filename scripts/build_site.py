@@ -11,6 +11,11 @@ OUT = DOCS / "html"
 ASSETS = DOCS / "assets"
 REPO_URL = "https://github.com/caetanoronan/labficol-tutorial"
 SITE_URL = "https://caetanoronan.github.io/labficol-tutorial/"
+LAFIC_NAME = "Laboratório de Ficologia (LAFIC)"
+AUTHOR_INFO = """Ronan Armando Caetano<br>
+            Pós-Graduação em Oceanografia - UFSC<br>
+            Bacharel em Ciências Biológicas - UFSC<br>
+            Técnico em Geoprocessamento e Técnico em Saneamento - IFSC"""
 
 MODULES = [
     "0-Fundamentos",
