@@ -2188,8 +2188,200 @@ Quer que eu implemente a **Opção 3** agora? É a melhor relação custo-benef�
 
 ---
 
-**Versão:** 1.1.0  
-**Data:** 06 de Janeiro de 2026  
+## 📱 FASE 7: DARK MODE E MELHORIAS FINAIS (Janeiro 2026)
+
+### 7.1 Implementação de Dark Mode
+**Data:** 07/01/2026  
+**Objetivo:** Adicionar modo escuro com persistência em todas as páginas
+
+**Problema inicial:**
+- Usuário solicitou dark mode para melhor leitura noturna
+- Primeira tentativa: Adicionar via PowerShell em página inicial → Sucesso
+- Segunda tentativa: Adicionar em TODOS os 36 HTMLs via PowerShell → **FALHA CRÍTICA**
+
+**Problema crítico encontrado:**
+```
+UTF-8 Double-Encoding Corruption
+- PowerShell scripts corrompiam caracteres multibyte
+- Emojis: 📚 → ðŸ"š, 🌙 → ðŸŒ™, ☀️ → â˜€ï¸
+- Acentos: á → Ã¡, é → Ã©, ó → Ã³, ç → Ã§, ã → Ã£
+- Usuário reportou: "Agora piorou... O que está bloqueando a funcionalidade?"
+```
+
+**Solução implementada:**
+1. ❌ Tentativa falha: Múltiplos scripts PowerShell com diferentes encodings
+2. ❌ Tentativa falha: Scripts Python com re-encoding
+3. ✅ **SOLUÇÃO FINAL:** Script Python puro (`add_dark_mode_footer.py`)
+
+**Código que funciona:**
+```python
+# add_dark_mode_footer.py
+content = html_file.read_text(encoding='utf-8')  # Lê corretamente
+html_file.write_text(content, encoding='utf-8')   # Salva corretamente
+```
+
+**CSS do Dark Mode (350+ linhas):**
+```css
+body.dark-mode {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0d2419 100%);
+    color: #e5e5e5;
+}
+
+.dark-mode-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid #2ca25f;
+    border-radius: 50px;
+    padding: 10px 18px;
+    z-index: 10000;
+}
+```
+
+**JavaScript com persistência:**
+```javascript
+function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    localStorage.setItem('darkMode', 
+        document.body.classList.contains('dark-mode') ? 'enabled' : 'disabled');
+}
+
+// Auto-ativar se salvo
+document.addEventListener('DOMContentLoaded', function() {
+    if (localStorage.getItem('darkMode') === 'enabled') {
+        document.body.classList.add('dark-mode');
+    }
+});
+```
+
+---
+
+### 7.2 Footer com Informações do Autor
+**Objetivo:** Adicionar rodapé completo em todas as 36 páginas
+
+**Conteúdo do footer:**
+```html
+<footer>
+    <p><strong>📚 Tutorial Python</strong></p>
+    <div class="footer-links">
+        <a href="https://github.com/caetanoronan/labficol-tutorial">📂 Repositório GitHub</a> | 
+        <a href="https://github.com/caetanoronan/labficol-tutorial/issues">💬 Reportar Problema</a>
+    </div>
+    <div class="footer-author">
+        <strong>Autor:</strong> Ronan Armando Caetano<br>
+        Pós-Graduando em Oceanografia - UFSC<br>
+        Bacharel em Ciências Biológicas - UFSC<br>
+        Técnico em Geoprocessamento e Técnico em Saneamento - IFSC
+    </div>
+    <p class="footer-meta">
+        Última atualização: Janeiro 2026 | Paleta de Cores: ColorBrewer BuGn
+    </p>
+</footer>
+```
+
+**Problema encontrado:**
+- Footer duplicado: Um antigo com "Gerado automaticamente em 06/01/2026 18:30" e um novo
+- Usuário reportou: "MAis está informação de atualização permanece!"
+
+**Solução:**
+```python
+# remove_old_footer.py
+old_footer_pattern = r'\s*<footer role="contentinfo">\s*<p>Gerado automaticamente.*?</p>\s*</footer>\s*'
+new_content = re.sub(old_footer_pattern, '\n    ', content, flags=re.DOTALL)
+```
+
+---
+
+### 7.3 Seção de Referências
+**Objetivo:** Adicionar materiais complementares na página inicial
+
+**Implementação:**
+```html
+<div class="references">
+    <h2><span class="reference-icon">📚</span>Referências</h2>
+    <div class="reference-item">
+        <a href="https://arthurberbert-ifsc.github.io/Livros-Python_Aplicado_Geoprocessamento/">
+            Python Aplicado ao Geoprocessamento
+        </a>
+        <p class="reference-description">
+            Livro digital completo sobre Python aplicado ao Geoprocessamento...
+        </p>
+    </div>
+    <div class="reference-item">
+        <a href="https://arthurberbert-ifsc.github.io/Livro-Banco-de-Dados/">
+            Banco de Dados
+        </a>
+        <p class="reference-description">
+            Livro digital sobre Banco de Dados...
+        </p>
+    </div>
+</div>
+```
+
+**CSS com suporte a dark mode:**
+```css
+.references {
+    background: white;
+    border-left: 6px solid #2ca25f;
+    padding: 30px;
+    border-radius: 12px;
+}
+
+body.dark-mode .references {
+    background: #2a2a2a;
+}
+
+body.dark-mode .reference-item {
+    background: #1e1e1e;
+    border-left-color: #4ade80;
+}
+```
+
+---
+
+### 7.4 Correções e Ajustes Finais
+
+**Cronologia de commits:**
+1. `dccc9cb` - Correção UTF-8 usando Python ao invés de PowerShell
+2. `e8346ee` - Remoção de footer duplicado "Gerado automaticamente"
+3. `58eb512` - Adição da seção de Referências
+4. `c332d7c` - Adição do segundo livro de referência (Banco de Dados)
+
+**Resultado final:**
+- ✅ 36 páginas HTML com dark mode funcional
+- ✅ UTF-8 perfeito (emojis e acentos corretos)
+- ✅ Footer único e completo em todas as páginas
+- ✅ Seção de Referências na página inicial
+- ✅ Design responsivo e acessível
+- ✅ Persistência de preferências (localStorage)
+
+---
+
+### 7.5 Lições Aprendidas (UTF-8 e Encoding)
+
+**O que NÃO funciona:**
+```powershell
+# PowerShell - EVITAR para UTF-8 com emojis
+[System.IO.File]::WriteAllText($file.FullName, $content, [System.Text.UTF8Encoding]::new($false))
+# Resultado: Double-encoding mesmo com UTF8Encoding explícito
+```
+
+**O que FUNCIONA:**
+```python
+# Python - USAR SEMPRE
+content = file.read_text(encoding='utf-8')
+file.write_text(content, encoding='utf-8')
+# Resultado: UTF-8 perfeito, emojis e acentos corretos
+```
+
+**Regra de ouro:**
+> Para manipular HTML gerado por Python com caracteres UTF-8 multibyte (emojis, acentos portugueses), SEMPRE use Python para modificações. PowerShell causa double-encoding.
+
+---
+
+**Versão:** 2.0.0  
+**Data:** 07 de Janeiro de 2026  
 **Autor:** Documentação gerada durante desenvolvimento colaborativo  
 **Licença:** MIT (ou conforme projeto)
 

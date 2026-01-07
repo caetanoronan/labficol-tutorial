@@ -1,13 +1,23 @@
-# 🌊 Tutorial de Programação para Biologia e Oceanografia
+# 🌊 Tutorial Python
 
 > **Tutorial completo e autoexplicativo para alunos de cursos técnicos, graduação e pós-graduação**  
-> Desenvolvido para o **LABFICOL/UFSC** - Laboratório de Ficologia da Universidade Federal de Santa Catarina
+> Desenvolvido no **Laboratório de Ficologia (LAFIC) - UFSC**
+
+🌐 **Site oficial:** https://caetanoronan.github.io/labficol-tutorial/
 
 ---
 
 ## 📋 Sobre Este Tutorial
 
 Este tutorial foi desenvolvido especialmente para **biólogos, oceanógrafos e pesquisadores** que querem aprender programação aplicada à pesquisa científica. Não são necessários conhecimentos prévios em programação!
+
+### ✨ Novidades (Janeiro 2026)
+
+- 🌙 **Dark Mode** - Modo escuro em todas as páginas com persistência
+- 📱 **Design Responsivo** - Paleta ColorBrewer BuGn com suporte a tema claro e escuro
+- 📚 **Seção de Referências** - Links para materiais complementares
+- 👤 **Informações do Autor** - Footer completo em todas as páginas
+- ✅ **UTF-8 Perfeito** - Emojis e acentos portugueses corretos
 
 ### 🎯 Objetivos
 
@@ -409,13 +419,21 @@ Este tutorial é de **uso livre para fins educacionais**.
 
 ---
 
+## 📚 Referências e Materiais Complementares
+
+- **[Python Aplicado ao Geoprocessamento](https://arthurberbert-ifsc.github.io/Livros-Python_Aplicado_Geoprocessamento/index.html)** - Arthur Berbert (IFSC)
+- **[Banco de Dados](https://arthurberbert-ifsc.github.io/Livro-Banco-de-Dados/index.html)** - Arthur Berbert (IFSC)
+
+---
+
 ## 🎊 Agradecimentos
 
 Este tutorial não seria possível sem:
 
-- **LABFICOL/UFSC** - Pelo suporte à pesquisa e educação
+- **LAFIC/UFSC** - Laboratório de Ficologia da UFSC
 - **Comunidade Python Brasil** - Pela inspiração e recursos
 - **OpenStreetMap & Leaflet** - Pelas ferramentas de mapeamento gratuitas
+- **Arthur Berbert (IFSC)** - Pelos excelentes materiais de referência
 - **Todos os estudantes** - Que testaram e deram feedback
 
 ---
@@ -498,11 +516,13 @@ Para considerar que você domina cada módulo:
 
 | Recurso | Link |
 |---------|------|
-| **Começar** | [01-Introducao.md](0-Fundamentos/01-Introducao.md) |
-| **Configurar** | [02-Configurar-Ambiente.md](0-Fundamentos/02-Configurar-Ambiente.md) |
-| **Python** | [1-Python-Essencial](1-Python-Essencial/) |
-| **Mapas** | [2-Analise-Geoespacial](2-Analise-Geoespacial/) |
-| **GitHub** | [github.com/caetanoronan](https://github.com/caetanoronan) |
+| **📖 Site HTML** | [caetanoronan.github.io/labficol-tutorial](https://caetanoronan.github.io/labficol-tutorial/) |
+| **🚀 Começar** | [01-Introducao.md](0-Fundamentos/01-Introducao.md) |
+| **⚙️ Configurar** | [02-Configurar-Ambiente.md](0-Fundamentos/02-Configurar-Ambiente.md) |
+| **🐍 Python** | [1-Python-Essencial](1-Python-Essencial/) |
+| **🗺️ Mapas** | [2-Analise-Geoespacial](2-Analise-Geoespacial/) |
+| **📂 GitHub** | [github.com/caetanoronan/labficol-tutorial](https://github.com/caetanoronan/labficol-tutorial) |
+| **💬 Issues** | [Reportar Problema](https://github.com/caetanoronan/labficol-tutorial/issues) |
 
 ---
 
@@ -517,6 +537,15 @@ Para considerar que você domina cada módulo:
 ### ⭐ Se este tutorial foi útil, compartilhe com colegas!
 
 **Desenvolvido com 💙 para a comunidade de Biologia e Oceanografia**
+
+---
+
+### 👨‍🎓 Autor
+
+**Ronan Armando Caetano**  
+Pós-Graduando em Oceanografia - UFSC  
+Bacharel em Ciências Biológicas - UFSC  
+Técnico em Geoprocessamento e Técnico em Saneamento - IFSC
 
 *Última atualização: Janeiro 2026*
 
