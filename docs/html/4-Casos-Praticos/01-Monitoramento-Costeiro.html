@@ -674,88 +674,11 @@
         transform: translateY(-2px);
       }
     
-      
-      /* Footer Styling */
-      footer {
-        background: linear-gradient(120deg, #e5f5f9, #99d8c9);
-        color: #062b1e;
-        padding: 30px 20px;
-        margin-top: 60px;
-        border-top: 4px solid #2ca25f;
-        text-align: center;
-        font-size: 0.95rem;
-        line-height: 1.8;
-      }
-      
-      footer strong {
-        color: #1e7d5a;
-        font-size: 1.1rem;
-      }
-      
-      footer a {
-        color: #2ca25f;
-        text-decoration: none;
-        font-weight: 600;
-        transition: color 0.3s;
-      }
-      
-      footer a:hover {
-        color: #1e7d5a;
-        text-decoration: underline;
-      }
-      
-      footer .footer-links {
-        margin: 15px 0;
-        font-size: 1rem;
-      }
-      
-      footer .footer-author {
-        margin: 20px 0;
-        padding: 15px;
-        background: rgba(255, 255, 255, 0.6);
-        border-radius: 8px;
-        display: inline-block;
-      }
-      
-      footer .footer-meta {
-        margin-top: 15px;
-        font-size: 0.85rem;
-        color: #0f3d2a;
-        opacity: 0.8;
-      }
-      
-      /* Dark Mode - Footer */
-      body.dark-mode footer {
-        background: linear-gradient(120deg, #0a0a0a, #1a1a1a);
-        color: #b0b0b0;
-        border-top-color: #4ade80;
-      }
-      
-      body.dark-mode footer strong {
-        color: #4ade80;
-      }
-      
-      body.dark-mode footer a {
-        color: #4ade80;
-      }
-      
-      body.dark-mode footer a:hover {
-        color: #22c55e;
-      }
-      
-      body.dark-mode footer .footer-author {
-        background: rgba(30, 30, 30, 0.6);
-      }
-      
-      body.dark-mode footer .footer-meta {
-        color: #888;
-      }
-
       /* ================================
          MODO ESCURO (DARK MODE)
          ================================ */
       
-      /* BotÃ£o de Toggle Dark Mode */
+      /* Botão de Toggle Dark Mode */
       .dark-mode-toggle {
         position: fixed;
         top: 20px;
@@ -878,7 +801,7 @@
         background: #222 !important;
       }
       
-      /* BotÃµes */
+      /* Botões */
       body.dark-mode button,
       body.dark-mode .copy-btn {
         background: #1e5a3f !important;
@@ -1059,18 +982,96 @@
         color: #e5e5e5 !important;
       }
       
-      /* Syntax Highlighting - mantÃ©m tema escuro VS Code */
+      /* Syntax Highlighting - mantém tema escuro VS Code */
       body.dark-mode .codehilite {
         background: #0a0a0a !important;
       }
+      
+      /* Footer Styling */
+      footer {
+        background: linear-gradient(120deg, #e5f5f9, #99d8c9);
+        color: #062b1e;
+        padding: 30px 20px;
+        margin-top: 60px;
+        border-top: 4px solid #2ca25f;
+        text-align: center;
+        font-size: 0.95rem;
+        line-height: 1.8;
+      }
+      
+      footer strong {
+        color: #1e7d5a;
+        font-size: 1.1rem;
+      }
+      
+      footer a {
+        color: #2ca25f;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s;
+      }
+      
+      footer a:hover {
+        color: #1e7d5a;
+        text-decoration: underline;
+      }
+      
+      footer .footer-links {
+        margin: 15px 0;
+        font-size: 1rem;
+      }
+      
+      footer .footer-author {
+        margin: 20px 0;
+        padding: 15px;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 8px;
+        display: inline-block;
+      }
+      
+      footer .footer-meta {
+        margin-top: 15px;
+        font-size: 0.85rem;
+        color: #0f3d2a;
+        opacity: 0.8;
+      }
+      
+      /* Dark Mode - Footer */
+      body.dark-mode footer {
+        background: linear-gradient(120deg, #0a0a0a, #1a1a1a);
+        color: #b0b0b0;
+        border-top-color: #4ade80;
+      }
+      
+      body.dark-mode footer strong {
+        color: #4ade80;
+      }
+      
+      body.dark-mode footer a {
+        color: #4ade80;
+      }
+      
+      body.dark-mode footer a:hover {
+        color: #22c55e;
+      }
+      
+      body.dark-mode footer .footer-author {
+        background: rgba(30, 30, 30, 0.6);
+      }
+      
+      body.dark-mode footer .footer-meta {
+        color: #888;
+      }
+
     </style>
   </head>
   <body class="presentation">
-    <!-- BotÃ£o de Toggle Dark Mode -->
+    <!-- Botão de Toggle Dark Mode -->
     <button class="dark-mode-toggle" onclick="toggleDarkMode()" aria-label="Alternar modo escuro" title="Alternar tema claro/escuro">
-      <span id="dark-mode-icon">ðŸŒ™</span>
+      <span id="dark-mode-icon">🌙</span>
       <span id="dark-mode-text">Escuro</span>
     </button>
+
     <header role="banner">
       <div class="wrap">
         <h1>📊 Caso Prático 1: Monitoramento Costeiro</h1>
@@ -1089,7 +1090,7 @@
 - Gerar relatórios visuais</p>
 <hr />
 <h2 id="contexto-da-pesquisa">📋 Contexto da Pesquisa</h2>
-<p>O LABFICOL realiza coletas mensais em 5 praias de Florianópolis para monitorar:
+<p>O LAFIC realiza coletas mensais em 5 praias de Florianópolis para monitorar:
 - Abundância de espécies
 - Parâmetros físico-químicos
 - Variações sazonais</p>
@@ -1285,7 +1286,7 @@
 <span class="c1"># Configurar estilo</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;seaborn-v0_8-darkgrid&#39;</span><span class="p">)</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;📊 Monitoramento Costeiro LABFICOL - 2025&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;📊 Monitoramento Costeiro LAFIC - 2025&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
 
 <span class="c1"># --- GRÁFICO 1: Biomassa temporal por espécie ---</span>
 <span class="n">ax1</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
@@ -1420,14 +1421,14 @@
 <hr />
 <h2 id="proximo-caso-pratico">➡️ Próximo Caso Prático</h2>
 <ul>
-<li><strong>02-Distribuicao-Espacial.md</strong> (Análise geoespacial com mapas)</li>
+<li><strong>02-Distribuicao-Espacial.html</strong> (Análise geoespacial com mapas)</li>
 </ul>
 <hr />
 <p><strong>Parabéns!</strong> Você criou um sistema completo de análise científica! 🌊📊</p>
       </article>
     </main>
     <footer role="contentinfo">
-      <p>Gerado automaticamente em 07/01/2026 10:41. Paleta: ColorBrewer BuGn.</p>
+      <p>Gerado automaticamente em 06/01/2026 18:30. Paleta: ColorBrewer BuGn.</p>
     </footer>
     
     <!-- External JavaScript Files -->
@@ -1499,7 +1500,7 @@
     <script src="../assets/site.js"></script>
   
     <script>
-      // Sistema de Dark Mode com persistÃªncia
+      // Sistema de Dark Mode com persistência
       function toggleDarkMode() {
         const body = document.body;
         const icon = document.getElementById('dark-mode-icon');
@@ -1508,17 +1509,17 @@
         body.classList.toggle('dark-mode');
         
         if (body.classList.contains('dark-mode')) {
-          icon.textContent = 'â˜€ï¸';
+          icon.textContent = '☀️';
           text.textContent = 'Claro';
           localStorage.setItem('darkMode', 'enabled');
         } else {
-          icon.textContent = 'ðŸŒ™';
+          icon.textContent = '🌙';
           text.textContent = 'Escuro';
           localStorage.setItem('darkMode', 'disabled');
         }
       }
       
-      // Verificar preferÃªncia salva ao carregar a pÃ¡gina
+      // Verificar preferência salva ao carregar a página
       document.addEventListener('DOMContentLoaded', function() {
         const darkMode = localStorage.getItem('darkMode');
         const icon = document.getElementById('dark-mode-icon');
@@ -1526,27 +1527,29 @@
         
         if (darkMode === 'enabled') {
           document.body.classList.add('dark-mode');
-          icon.textContent = 'â˜€ï¸';
+          icon.textContent = '☀️';
           text.textContent = 'Claro';
         }
       });
     </script>
+
   
     <footer>
-      <p><strong>ðŸ“š Tutorial Python</strong></p>
+      <p><strong>📚 Tutorial Python</strong></p>
       <div class="footer-links">
-        <a href="https://github.com/caetanoronan/labficol-tutorial" target="_blank" rel="noopener">ðŸ“‚ RepositÃ³rio GitHub</a> | 
-        <a href="https://github.com/caetanoronan/labficol-tutorial/issues" target="_blank" rel="noopener">ðŸ’¬ Reportar Problema</a>
+        <a href="https://github.com/caetanoronan/labficol-tutorial" target="_blank" rel="noopener">📂 Repositório GitHub</a> | 
+        <a href="https://github.com/caetanoronan/labficol-tutorial/issues" target="_blank" rel="noopener">💬 Reportar Problema</a>
       </div>
       <div class="footer-author">
         <strong>Autor:</strong> Ronan Armando Caetano<br>
-        PÃ³s-Graduando em Oceanografia - UFSC<br>
-        Bacharel em CiÃªncias BiolÃ³gicas - UFSC<br>
-        TÃ©cnico em Geoprocessamento e TÃ©cnico em Saneamento - IFSC
+        Pós-Graduando em Oceanografia - UFSC<br>
+        Bacharel em Ciências Biológicas - UFSC<br>
+        Técnico em Geoprocessamento e Técnico em Saneamento - IFSC
       </div>
       <p class="footer-meta">
-        Ãšltima atualizaÃ§Ã£o: Janeiro 2026 | Paleta de Cores: ColorBrewer BuGn
+        Última atualização: Janeiro 2026 | Paleta de Cores: ColorBrewer BuGn
       </p>
     </footer>
+
   </body>
 </html>
